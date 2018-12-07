@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "register-service-worker": "^1.5.2",
+    "vant": "^1.4.8",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -21,7 +23,11 @@
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "babel-plugin-import": "^1.11.0",
+    "lib-flexible": "^0.3.2",
     "node-sass": "^4.9.0",
+    "postcss-pxtorem": "^4.0.1",
+    "qs": "^6.6.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }
