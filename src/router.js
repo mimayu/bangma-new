@@ -26,6 +26,16 @@ export default new Router({
       path: '/visit',
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: () => import(/* webpackChunkName: "order" */ './views/sale/order')
+    },
+    {
+      path: '/cancel',
+      name: 'cancel',
+      component: () => import(/* webpackChunkName: "cancel" */ './views/sale/cancel')
     }
   ]
 })
