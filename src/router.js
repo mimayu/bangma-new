@@ -36,6 +36,11 @@ export default new Router({
       path: '/cancel',
       name: 'cancel',
       component: () => import(/* webpackChunkName: "cancel" */ './views/sale/cancel')
+    },
+    {
+      path: '/allUser',
+      name: 'allUser',
+      component: () => import(/* webpackChunkName: "allUser" */ './views/sale/allUser')
     }
   ]
 })

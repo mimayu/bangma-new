@@ -3,3 +3,4 @@
     - register // 注册
 - Sale
     - visit  // 上门页面
+    - allUser // 全部客户
