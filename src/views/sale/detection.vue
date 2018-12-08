@@ -1,48 +1,35 @@
 <template>
   <div class="detection">
-    <!--<Tabs value="name1">
-        <TabPane label="基检未约" name="name1">
-            <detectionList></detectionList>
-        </TabPane>
-        <TabPane label="基检预约" name="name2">
+    <Tabs v-model="active">
+      <Tab title="基检未约" >
           <detectionList></detectionList>
-        </TabPane>
-        <TabPane label="基检确认" name="name3">
+      </Tab>
+      <Tab title="基检预约">
           <detectionList></detectionList>
-        </TabPane>
-        <TabPane label="基检取消" name="name4">
-          <detectionList :data="data_cancel" title="基检取消"></detectionList>
-        </TabPane>
-    </Tabs>-->
-    <van-tabs v-model="active">
-      <van-tab title="基检未约" >
+      </Tab>
+      <Tab title="基检确认">
           <detectionList></detectionList>
-      </van-tab>
-      <van-tab title="基检预约">
+      </Tab>
+      <Tab title="基检取消">
           <detectionList></detectionList>
-      </van-tab>
-      <van-tab title="基检确认">
-          <detectionList></detectionList>
-      </van-tab>
-      <van-tab title="基检取消">
-          <detectionList></detectionList>
-      </van-tab>
-    </van-tabs>
+      </Tab>
+    </Tabs>
     <footerNav></footerNav>
   </div>
 </template>
 
 <script>
+import { Tab, Tabs } from 'vant';
 import { getCustomer } from '@/server';
-// import footerNav from './modPage/footerNav' // 引入login.vue组件
 import detectionList from '../../components/detectionList' // 引入login.vue组件
-// import footerNav from "../../components/footerNav"; // 引入页脚
+import footerNav from "../../components/footerNav"; // 引入页脚
 
 
 export default {
   name: 'detection',
   data () {
     return {
+      active: 1,
       data_under: [],
       data_order: [],
       data_confirm: [],
@@ -50,6 +37,8 @@ export default {
     }
   },
   components: {
+    Tab,
+    Tabs,
     'footerNav': footerNav,
     'detectionList':  detectionList
   },
@@ -59,7 +48,7 @@ export default {
       page: 1,
       keywords: ''
     }
-    this.getInfo(params);
+    // this.getInfo(params);
   },
   methods: {
     getInfo(params, type) {

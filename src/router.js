@@ -41,6 +41,11 @@ export default new Router({
       path: '/allUser',
       name: 'allUser',
       component: () => import(/* webpackChunkName: "allUser" */ './views/sale/allUser')
+    },
+    {
+      path: '/detection',
+      name: 'detection',
+      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection.vue')
     }
   ]
 })
