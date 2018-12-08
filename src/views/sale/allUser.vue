@@ -1,20 +1,34 @@
 <template>
     <div class="allUser">
-    <detectionList></detectionList>
-    <footerNav></footerNav>
+        <Row>
+            <Col span="8">
+                <Cell title="删选" is-link arrow-direction="down" />
+            </Col>
+            <Col span="8">
+                <Cell title="时间" is-link arrow-direction="down" />
+            </Col>
+            <Col span="8">
+                <Cell title="搜索" />
+            </Col>
+        </Row>
+        <footerNav></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Popup, DatetimePicker } from 'vant';
+    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col } from 'vant';
     import footerNav from "../../components/footerNav"; // 引入页脚
     import detectionList from "../../components/detectionList"; // 引入用户列表
 
     export default {
         name: 'visit',
         components: {
-            // filtrate: filtrate,
-            detectionList: detectionList,
+            Cell,
+            CellGroup,
+            Popup,
+            DatetimePicker,
+            Row,
+            Col,
             footerNav: footerNav
         },
         data() {

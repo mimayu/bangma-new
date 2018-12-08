@@ -28,9 +28,8 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.footerNav{
+  .footerNav{
     background: #fff;
     position: fixed;
     width: 100%; display: flex;left: 0;bottom: 0;
@@ -39,12 +38,14 @@ export default {
     padding-top: 7px;
     box-shadow:0px 0px 9px #eee;
     z-index: 999;
-
   }
- .alink{
-      flex: 1;text-align: center;height: 45px;line-height: 18px;
-      font-weight: 500;font-size: 10px;
-    }
+  .alink{
+    flex: 1;
+    text-align: center;
+    height: 45px;
+    line-height: 18px;
+    font-weight: 500;font-size: 10px;
+  }
   .home_icon{
     width:18px;
     height:18px;
