@@ -19,13 +19,11 @@
 </template>
 
 <script>
-import { Tab, Tabs } from 'vant';
 import { getCustomer } from '@/server';
 import detectionList from '../../components/detectionList' // 引入login.vue组件
 import footerNav from "../../components/footerNav"; // 引入页脚
 
 import { Tab, Tabs } from 'vant';
-// Vue.use(Tab).use(Tabs);
 
 export default {
   
@@ -44,7 +42,6 @@ export default {
     Tabs,
     'footerNav': footerNav,
     'detectionList':  detectionList,
-    Tab:Tabs,
   },
   created() {
     let params = {
