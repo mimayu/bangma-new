@@ -34,15 +34,19 @@
 
 <script>
 import { getCustomer } from '@/server';
-// import footerNav from './modPage/footerNav' // 引入login.vue组件
+import footerNav from '../../components/footerNav' // 引入login.vue组件
 import detectionList from '../../components/detectionList' // 引入login.vue组件
 // import footerNav from "../../components/footerNav"; // 引入页脚
 
+import { Tab, Tabs } from 'vant';
+// Vue.use(Tab).use(Tabs);
 
 export default {
+  
   name: 'detection',
   data () {
     return {
+      active: 2,
       data_under: [],
       data_order: [],
       data_confirm: [],
@@ -51,7 +55,8 @@ export default {
   },
   components: {
     'footerNav': footerNav,
-    'detectionList':  detectionList
+    'detectionList':  detectionList,
+    Tab:Tabs,
   },
   created() {
     let params = {
