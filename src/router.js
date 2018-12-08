@@ -26,6 +26,11 @@ export default new Router({
       path: '/visit',
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
+    },
+      {
+      path: '/allUser',
+      name: 'allUser',
+      component: () => import(/* webpackChunkName: "visit" */ './views/sale/allUser')
     }
   ]
 })
