@@ -71,7 +71,7 @@
   };
 </script>
 
-<style scoped lang='less'>
+<style scoped lang='scss'>
 .list {
   // margin: 0 10px;
   background: #eee;  padding-bottom: 50px;

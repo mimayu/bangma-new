@@ -1,6 +1,6 @@
 <template>
     <div class="allUser">
-       全部客户ddd
+    <detectionList></detectionList>
     <footerNav></footerNav>
     </div>
 </template>
@@ -8,12 +8,13 @@
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker } from 'vant';
     import footerNav from "../../components/footerNav"; // 引入页脚
+    import detectionList from "../../components/detectionList"; // 引入用户列表
 
     export default {
         name: 'visit',
         components: {
             // filtrate: filtrate,
-            // detectionList: detectionList,
+            detectionList: detectionList,
             footerNav: footerNav
         },
         data() {
