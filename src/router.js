@@ -23,6 +23,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "register" */ './views/login/register')
     },
     {
+      path: '/home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "detection" */ './views/sale/home.vue')
+    },
+    {
       path: '/visit',
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
@@ -46,6 +51,11 @@ export default new Router({
       path: '/detection',
       name: 'detection',
       component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection.vue')
+    },
+    {
+      path: '/signStatus',
+      name: 'signStatus',
+      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus.vue')
     }
   ]
 })
