@@ -50,17 +50,22 @@ export default new Router({
     {
       path: '/detection',
       name: 'detection',
-      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection.vue')
+      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection')
     },
     {
       path: '/signStatus',
       name: 'signStatus',
-      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus.vue')
+      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus')
     },
     {
       path: '/record',
       name: 'record',
-      component: () => import(/* webpackChunkName: "record" */ './views/sale/record.vue')
+      component: () => import(/* webpackChunkName: "record" */ './views/sale/record')
+    },
+    {
+      path: '/quotation',
+      name: 'quotation',
+      component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotation')
     }
   ]
 })
