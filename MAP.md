@@ -5,3 +5,6 @@
     - visit  // 上门页面
     - allUser // 全部客户
     - detection  // 基检列表
+    - signStatus  // 签约状态
+    - quotation  // 报价
+    - record  // 销售 记录

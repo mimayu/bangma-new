@@ -23,6 +23,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "register" */ './views/login/register')
     },
     {
+      path: '/home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "home" */ './views/sale/home')
+    },
+    {
       path: '/visit',
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
@@ -40,17 +45,32 @@ export default new Router({
     {
       path: '/allUser',
       name: 'allUser',
-      component: () => import(/* webpackChunkName: "visit" */ './views/sale/allUser')
+      component: () => import(/* webpackChunkName: "allUser" */ './views/sale/allUser')
     },
     {
       path: '/detection',
       name: 'detection',
-      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection.vue')
+      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection')
     },
     {
       path: '/assign',
       name: 'assign',
-      component: () => import(/* webpackChunkName: "detection" */ './views/assign/assign.vue')
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
+    },
+    {
+      path: '/signStatus',
+      name: 'signStatus',
+      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus')
+    },
+    {
+      path: '/record',
+      name: 'record',
+      component: () => import(/* webpackChunkName: "record" */ './views/sale/record')
+    },
+    {
+      path: '/quotation',
+      name: 'quotation',
+      component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotation')
     }
   ]
 })
