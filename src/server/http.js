@@ -1,15 +1,18 @@
 import axios from 'axios';
 import qs from 'qs';
 
+let baseURL = 'http://www.51bangma.com'; //项目域名地址\
+
+if (process.env.NODE_ENV === 'development') {
+    baseURL = "";
+}
+
 const Axios = axios.create({
-    baseURL: '/',
-    timeout: 10000,
-    responseType: 'json',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-    }
+    baseURL: baseURL,
+    timeout: 5000,
+    withCredentials: true 
 });
+
 const CancelToken = axios.CancelToken;
 const requestMap = new Map();
 

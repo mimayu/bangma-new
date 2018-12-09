@@ -2,16 +2,16 @@
   <div class="detection">
     <Tabs v-model="active">
       <Tab title="基检未约" >
-          <detectionList></detectionList>
+        <detectionList></detectionList>
       </Tab>
       <Tab title="基检预约">
-          <detectionList></detectionList>
+        <detectionList></detectionList>
       </Tab>
       <Tab title="基检确认">
-          <detectionList></detectionList>
+        <detectionList></detectionList>
       </Tab>
       <Tab title="基检取消">
-          <detectionList></detectionList>
+        <detectionList  :data="data_cancel" title="基检取消"></detectionList>
       </Tab>
     </Tabs>
     <footerNav></footerNav>
@@ -19,14 +19,12 @@
 </template>
 
 <script>
-import { getCustomer } from '@/server';
-import detectionList from '../../components/detectionList' // 引入login.vue组件
-import footerNav from "../../components/footerNav"; // 引入页脚
-
 import { Tab, Tabs } from 'vant';
+import { getCustomer } from '@/server';
+import detectionList from '@/components/detectionList' // 引入login.vue组件
+import footerNav from "@/components/footerNav"; // 引入页脚
 
 export default {
-  
   name: 'detection',
   data () {
     return {
@@ -49,13 +47,12 @@ export default {
       page: 1,
       keywords: ''
     }
-    // this.getInfo(params);
+    this.getInfo(params);
   },
   methods: {
     getInfo(params, type) {
       getCustomer(params).then(
         res => {
-          console.log('res', res);
           this.data_cancel = res.list;
         }
       )

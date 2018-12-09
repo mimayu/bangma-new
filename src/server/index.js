@@ -1,11 +1,22 @@
 import {
     postShangmenAdd,
     postYuyueAdd,
-    postQuxiaoAdd
+    postQuxiaoAdd,
+    getCustomer,
+    getQutoe
 } from './sale'
+
+import {
+    postLogin,
+    postRegiste
+} from './login'
 
 export {
     postShangmenAdd,
     postYuyueAdd,
-    postQuxiaoAdd
+    postQuxiaoAdd,
+    getCustomer,
+    getQutoe,
+    postLogin,
+    postRegiste
 }
