@@ -56,6 +56,11 @@ export default new Router({
       path: '/signStatus',
       name: 'signStatus',
       component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus.vue')
+    },
+    {
+      path: '/record',
+      name: 'record',
+      component: () => import(/* webpackChunkName: "record" */ './views/sale/record.vue')
     }
   ]
 })
