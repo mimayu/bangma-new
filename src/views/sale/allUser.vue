@@ -2,7 +2,7 @@
     <div class="allUser">
         <Row>
             <Col span="8">
-                <Cell title="筛选" is-link arrow-direction="down" />
+                <Cell title="筛选" is-link arrow-direction="down" @click="choseType"/>
             </Col>
             <Col span="8">
                 <Cell title="时间" is-link arrow-direction="down" @click="choseTime" />
@@ -118,6 +118,9 @@
             };
         },
         methods: {
+            choseType() {
+                this.typeShow = true;
+            },
             choseTime() {
                 this.timeShow = true;
             },
@@ -125,7 +128,7 @@
 
             },
             handleCancel() {
-                
+
             }
         }
     }
