@@ -46,6 +46,11 @@ export default new Router({
       path: '/detection',
       name: 'detection',
       component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection.vue')
+    },
+    {
+      path: '/assign',
+      name: 'assign',
+      component: () => import(/* webpackChunkName: "detection" */ './views/assign/assign.vue')
     }
   ]
 })
