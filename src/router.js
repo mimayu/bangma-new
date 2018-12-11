@@ -81,6 +81,11 @@ export default new Router({
       path: '/testCamer',
       name: 'testCamer',
       component: () => import(/* webpackChunkName: "testCamer" */ './views/sale/testCamer')
+    },
+    {
+      path: '/quotationList',
+      name: 'quotationList',
+      component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotationList')
     }
   ]
 })
