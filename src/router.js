@@ -71,6 +71,16 @@ export default new Router({
       path: '/quotation',
       name: 'quotation',
       component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotation')
+    },
+    {
+      path: '/customInfo',
+      name: 'customInfo',
+      component: () => import(/* webpackChunkName: "customInfo" */ './views/sale/customInfo')
+    },
+    {
+      path: '/testCamer',
+      name: 'testCamer',
+      component: () => import(/* webpackChunkName: "testCamer" */ './views/sale/testCamer')
     }
   ]
 })
