@@ -11,6 +11,10 @@ import {
     postRegiste
 } from './login'
 
+import {
+    postAssign
+} from './assign'
+
 export {
     postShangmenAdd,
     postYuyueAdd,
@@ -18,5 +22,6 @@ export {
     getCustomer,
     getQutoe,
     postLogin,
-    postRegiste
+    postRegiste,
+    postAssign
 }
