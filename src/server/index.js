@@ -12,7 +12,8 @@ import {
 } from './login'
 
 import {
-    postAssign
+    postAssign,
+    postAddCustomer
 } from './assign'
 
 export {
@@ -23,5 +24,6 @@ export {
     getQutoe,
     postLogin,
     postRegiste,
-    postAssign
+    postAssign,
+    postAddCustomer
 }
