@@ -72,6 +72,11 @@ export default new Router({
       name: 'customInfo',
       component: () => import(/* webpackChunkName: "customInfo" */ './views/sale/customInfo')
     },
+     {
+      path: '/quotationDetail',
+      name: 'quotationDetail',
+      component: () => import(/* webpackChunkName: "priceDetail" */ './views/sale/quotationDetail')
+    },
     {
       path: '/testCamer',
       name: 'testCamer',
@@ -116,6 +121,11 @@ export default new Router({
       path: '/setting',
       name: 'setting',
       component: () => import(/* webpackChunkName: "setting" */ './views/my/setting')
+    },
+    {
+      path: '/structure',
+      name: 'structure',
+      component: () => import(/* webpackChunkName: "setting" */ './views/my/structure')
     }
   ]
 })

@@ -8,6 +8,8 @@
     - signStatus  // 签约状态
     - quotation  // 报价
     - record  // 销售 记录
+    - quotationDetail  //报价详情
+    
 - assign
     - allStall // 全部员工
     - assign // 分配
