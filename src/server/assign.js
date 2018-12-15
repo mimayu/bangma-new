@@ -16,7 +16,21 @@ const postAddCustomer = (params) => {
     return request('/api/addcustomer/', params);
 }
 
+/**
+ * 员工列表
+ * @param {*} params 
+ */
+const getAllStaff = (params) => {
+    return request('/api/accountlist/', params, 'GET');
+}
+
+const getAssignList = (params) => {
+    return request('/api/customer_tobeallocated/', params, 'GET');
+}
+
 export {
     postAssign,
-    postAddCustomer
+    postAddCustomer,
+    getAllStaff,
+    getAssignList
 }

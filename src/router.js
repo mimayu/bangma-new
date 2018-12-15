@@ -53,11 +53,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection')
     },
     {
-      path: '/assign',
-      name: 'assign',
-      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
-    },
-    {
       path: '/signStatus',
       name: 'signStatus',
       component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus')
@@ -86,6 +81,41 @@ export default new Router({
       path: '/quotationList',
       name: 'quotationList',
       component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotationList')
+    },
+    {
+      path: '/assign',
+      name: 'assign',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
+    },
+    {
+      path: '/allStaff',
+      name: 'allStaff',
+      component: () => import(/* webpackChunkName: "allStaff" */ './views/assign/allStaff')
+    },
+    {
+      path: '/assignList',
+      name: 'assignList',
+      component: () => import(/* webpackChunkName: "assignList" */ './views/assign/assignList')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: "profile" */ './views/my/profile')
+    },
+    {
+      path: '/my',
+      name: 'my',
+      component: () => import(/* webpackChunkName: "my" */ './views/my/my')
+    },
+    {
+      path: '/organization',
+      name: 'organization',
+      component: () => import(/* webpackChunkName: "organization" */ './views/my/organization')
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: () => import(/* webpackChunkName: "setting" */ './views/my/setting')
     }
   ]
 })

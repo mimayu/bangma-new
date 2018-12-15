@@ -13,8 +13,16 @@ import {
 
 import {
     postAssign,
-    postAddCustomer
+    postAddCustomer,
+    getAllStaff,
+    getAssignList
 } from './assign'
+
+import {
+    getProfile,
+    getOrganization,
+    doLogout
+} from './my'
 
 export {
     postShangmenAdd,
@@ -25,5 +33,10 @@ export {
     postLogin,
     postRegiste,
     postAssign,
-    postAddCustomer
+    postAddCustomer,
+    getAllStaff,
+    getAssignList,
+    getProfile,
+    getOrganization,
+    doLogout
 }

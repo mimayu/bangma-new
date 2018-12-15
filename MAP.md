@@ -8,3 +8,13 @@
     - signStatus  // 签约状态
     - quotation  // 报价
     - record  // 销售 记录
+- assign
+    - allStall // 全部员工
+    - assign // 分配
+    - assignList // 分配列表
+- my
+    -profile // 我的页面入口
+    -my // 我的信息
+    -oraganization // 组织信息
+    -job //工作信息
+    -setting //设置 
