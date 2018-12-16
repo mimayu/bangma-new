@@ -1,51 +1,22 @@
 <template>
     <div class="assign_container">
-        <Radio-group v-model="radio">
+        <Radio-group v-model="radio" @change="handleChange">
             <Cell-group>
-                <Cell value="查看" is-link>
+                <Cell value="查看" is-link v-for="(item, index) in lists" :key="item.iId">
                     <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="1"></Radio>
-                    </template>
-                </Cell>
-                <Cell value="查看" is-link>
-                    <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="2"></Radio>
-                    </template>
-                </Cell>
-                <Cell value="查看" is-link>
-                    <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="3"></Radio>
-                    </template>
-                </Cell>
-                <Cell value="查看" is-link>
-                    <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="4"></Radio>
-                    </template>
-                </Cell>
-                <Cell value="查看" is-link>
-                    <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="5"></Radio>
-                    </template>
-                </Cell>
-                <Cell value="查看" is-link>
-                    <template slot="title">
-                        <span class="custom-text">黄晓明</span>
-                        <Radio class="custom-radio" name="6"></Radio>
+                        <span class="custom-text">{{item.sName}}</span>
+                        <Radio class="custom-radio" :name="item.iId"></Radio>
                     </template>
                 </Cell>
             </Cell-group>
         </Radio-group>
+        <Button size="large" type="primary" @click="handleSubmit">保存</Button>
     </div>
 </template>
 
 <script>
     import { postAssign } from '@/server';
-    import { CellGroup, Cell, RadioGroup, Radio } from 'vant';
+    import { CellGroup, Cell, RadioGroup, Radio, Button } from 'vant';
 
     export default {
         name: 'postAssign',
@@ -53,26 +24,50 @@
             CellGroup,
             Cell,
             RadioGroup,
-            Radio
+            Radio,
+            Button
         },
         created() {
             this.getAssign()
         },
         data() {
             return {
-               radio: '1'
+               lists: [],
+               radio: 0,
+               iSalesId: 0
             };
         },
         methods: {
             getAssign() {
+                let { id } = this.$route.params;
                 let params = {
-                    'iCustomerId': 1,
-                    'iSalesId': 1,
+                    'iCustomerId': id || 1,
                     'doAction': ''
                 }
                 postAssign(params).then(
                     res => {
+                        if(res.success == 1) {
+                            this.lists = res.accountlist
+                        }
+                    }
+                )
+            },
+            handleChange(res) {
+                this.iSalesId = res;
+            },
+            handleSubmit() {
+                let { id } = this.$route.params;
+                let params = {
+                    'iCustomerId': id,
+                    'iSalesId': this.iSalesId,
+                    'doAction': 1
+                }
+                postAssign(params).then(
+                    res => {
                         console.log('res', res);
+                        if(res.success == 1) {
+                            
+                        }
                     }
                 )
             }

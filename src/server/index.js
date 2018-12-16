@@ -3,7 +3,8 @@ import {
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
-    getQutoe
+    getQutoe,
+    getEstate
 } from './sale'
 
 import {
@@ -30,6 +31,7 @@ export {
     postQuxiaoAdd,
     getCustomer,
     getQutoe,
+    getEstate,
     postLogin,
     postRegiste,
     postAssign,

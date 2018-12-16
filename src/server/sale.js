@@ -40,10 +40,19 @@ const getQutoe = (params) => {
     return request('/api/baojia/', params, 'get');
 }
 
+/**
+ * 获取匹配小区信息
+ * @param {*} params 
+ */
+const getEstate = (params) => {
+    return request('/api/getXiaoquList/', params, 'get');
+}
+
 export {
     postShangmenAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
-    getQutoe
+    getQutoe,
+    getEstate
 }
