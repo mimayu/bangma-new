@@ -1,7 +1,7 @@
 <template>
     <div class="profile_container">
         <Cell-group class="group">
-            <Cell title="董春华" label="男" is-link @click="goMy"/>
+            <Cell :title="account.sName" :label="changeGender(account.sSex)" is-link @click="goMy"/>
         </Cell-group>
         <Cell-group class="group">
             <Cell title="工作信息" is-link @click="goJob"/>
@@ -31,17 +31,29 @@
         },
         data() {
             return {
-                
+                account: {
+                    sName: '',
+                    sSex: 'M'
+                }
             };
         },
         created() {
             this.getProfile()
         },
         methods: {
+            changeGender(gener) {
+                return gener == 'M' ? '男' : '女';
+            },
             getProfile() {
                 getProfile().then(
                     res => {
-                        console.log('res', res);
+                        if(res.success == 1) {
+                            this.account = res.account;
+                            console.log(121, this.$store)
+                            this.$store.dispatch("setUser", res.account);
+                        }else {
+                            Toast(res.msg)
+                        }
                     }
                 )
             },
@@ -49,7 +61,7 @@
                 this.$router.push('/my');
             },
             goJob() {
-                this.$router.push('/my');
+                this.$router.push('/job');
             },
             goOrganization() {
                 this.$router.push('/organization');

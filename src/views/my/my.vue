@@ -1,15 +1,22 @@
 <template>
     <div class="my_container">
         <Cell-group class="group">
-            <Cell title="姓名" value="董春华" />
-            <Cell title="性别" value="男" />
-            <Cell title="年龄" value="28岁" />
-            <Cell title="手机号" value="15588997766" />
-            <Cell title="住址" value="远景路97弄48号2103室" />
-            <Cell title="故乡" value="江苏省南通市" />
-            <Cell title="身份证" value="021356198709093521" />
-            <Cell title="学历" value="本科" />
-            <Cell title="专业" value="水电" />
+            <Cell title="姓名" :value="user.sName" />
+        </Cell-group>
+        <Cell-group class="group">
+            <Cell title="性别" :value="changeGender(user.sSex)" />
+        </Cell-group>
+        <Cell-group class="group">
+            <Cell title="年龄" :value="user.iAge" />
+        </Cell-group>
+        <Cell-group class="group">
+            <Cell title="手机号" :value="user.sMobilePhone" />
+        </Cell-group>
+        <Cell-group class="group">
+            <Cell title="住址" :value="user.sAddress" />
+        </Cell-group>
+        <Cell-group class="group">
+            <Cell title="故乡" :value="user.iHometown " />
         </Cell-group>
         <footerNav class="footer"></footerNav>
     </div>
@@ -32,11 +39,15 @@
                 
             };
         },
-        created() {
-
+        computed:{
+            user: function() {
+                return this.$store.getters.getUser;
+            }
         },
         methods: {
-            
+           changeGender(gener) {
+                return gener == 'M' ? '男' : '女';
+            }, 
         }
     }
 </script>
@@ -44,7 +55,6 @@
 <style lang="scss">
     .my_container {
         .group {
-            margin-bottom: 10px;
             .van-cell {
                 background: rgba(242, 242, 242, 1);
             }

@@ -1,21 +1,17 @@
 <template>
     <div class="organization_container">
-        <h3>管理层</h3>
-        <Cell-group class="group">
-            <Cell title="毛阿敏" value="(老板)" />
-        </Cell-group>
-        <h3>业务部</h3>
-        <Cell-group class="group">
-            <Cell title="姓名" value="董春华" />
-        </Cell-group>
-        <Cell-group class="group">
-            <Cell title="性别" value="男" />
-        </Cell-group>
+        <section v-for="items in departments" :key="items.iId">
+            <h3>{{items.sName}}</h3>
+            <Cell-group class="group" v-for="item in items.accounts" :key="item.iId">
+                <Cell :title="item.sName" :value="item.role_name" />
+            </Cell-group>
+        </section>
         <footerNav class="footer"></footerNav>
     </div>
 </template>
 
 <script>
+    import { getOrganization } from '@/server';
     import { Cell, CellGroup, Toast } from 'vant';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
@@ -29,14 +25,20 @@
         },
         data() {
             return {
-                
+                departments: []
             };
         },
         created() {
-
+            this.getOrganization();
         },
         methods: {
-            
+            getOrganization() {
+                getOrganization().then(
+                    res => {
+                        this.departments = res.departments;
+                    }
+                )
+            }
         }
     }
 </script>

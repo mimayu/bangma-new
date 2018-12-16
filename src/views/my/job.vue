@@ -1,9 +1,9 @@
 <template>
     <div class="my_container">
         <Cell-group class="group">
-            <Cell title="部门" value="销售部" />
-            <Cell title="角色" value="业务员" />
-            <Cell title="分组" value="猛龙组" />
+            <Cell title="部门" :value="user.departmentname || '-'" />
+            <Cell title="角色" :value="user.rolename || '-'" />
+            <Cell title="分组" :value="user.groupname || '-'" />
         </Cell-group>
         <footerNav class="footer"></footerNav>
     </div>
@@ -26,8 +26,10 @@
                 
             };
         },
-        created() {
-
+        computed:{
+            user: function() {
+                return this.$store.getters.getUser;
+            }
         },
         methods: {
             

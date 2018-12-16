@@ -1,7 +1,7 @@
 <template>
     <div class="setting_container">
         <Cell-group class="group">
-            <Cell title="用户名" value="13774387155" />
+            <Cell title="用户名" :value="user.sName" />
             <Cell title="密码" value="修改密码" is-link/>
         </Cell-group>
         <Button size="large" @click="handleQuit">退出登录</Button>
@@ -28,11 +28,15 @@
                 
             };
         },
+        computed:{
+            user: function() {
+                return this.$store.getters.getUser;
+            }
+        },
         methods: {
             handleQuit() {
                 doLogout().then(
                     res => {
-                        console.log('res', res);
                         if(res.success == 1) {
                             Toast('退出成功')
                         }else {

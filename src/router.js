@@ -123,9 +123,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "setting" */ './views/my/setting')
     },
     {
-      path: '/structure',
-      name: 'structure',
-      component: () => import(/* webpackChunkName: "setting" */ './views/my/structure')
+      path: '/job',
+      name: 'job',
+      component: () => import(/* webpackChunkName: "job" */ './views/my/job')
     }
   ]
 })
