@@ -103,6 +103,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "assignList" */ './views/assign/assignList')
     },
     {
+      path: '/addCustom',
+      name: 'addCustom',
+      component: () => import(/* webpackChunkName: "addCustom" */ './views/assign/addCustom')
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "profile" */ './views/my/profile')
