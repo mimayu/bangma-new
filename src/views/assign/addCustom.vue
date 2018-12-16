@@ -19,10 +19,18 @@
                 v-model="address"
                 label="住址"
             />
-            <Field
-                v-model="plot"
-                label="小区名称"
-            />
+            <div class="estate">
+                <Field
+                    v-model="plot"
+                    label="小区名称"
+                >
+                </Field>
+                <ul class="estate_list">
+                    <li v-for="item in estateLists">
+                        {{item.sName}}
+                    </li>
+                </ul>
+            </div>
             <Cell title="户型" is-link @click="choseHouseType"/>
             <Field
                 v-model="phone"
@@ -152,7 +160,7 @@
                     '其它',
                     '露台'
                 ],
-
+                estateLists: []
             };
         },
         created() {
@@ -270,6 +278,7 @@
                 }
                 getEstate(params).then(
                     res => {
+                        this.estateLists = res.value
                         console.log('res', res);
                     }
                 )
@@ -280,6 +289,21 @@
 
 <style lang="scss">
     .addCustom_container {
-
+        .estate {
+            position: relative;
+        }
+        .estate_list {
+            position: absolute;
+            width: calc(100% - 90px);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 99;
+            left: 105px;
+            background: red;
+            li {
+                line-height: 40px;
+                padding-right: 15px;
+            }
+        }
     }
 </style>
