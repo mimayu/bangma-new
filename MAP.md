@@ -21,3 +21,5 @@
     -oraganization // 组织信息
     -job //工作信息
     -setting //设置 
+- remind
+    -remind //提醒事件

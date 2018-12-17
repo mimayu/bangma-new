@@ -132,5 +132,11 @@ export default new Router({
       name: 'job',
       component: () => import(/* webpackChunkName: "job" */ './views/my/job')
     }
+    ,
+    {
+      path: '/remind',
+      name: 'remind',
+      component: () => import(/* webpackChunkName: "remind" */ './views/remind/remind')
+    }
   ]
 })
