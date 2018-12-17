@@ -60,7 +60,7 @@
                 let params = {
                     'iCustomerId': id,
                     'iSalesId': this.iSalesId,
-                    'doAction': 1
+                    'doAction': 'assign'
                 }
                 postAssign(params).then(
                     res => {
