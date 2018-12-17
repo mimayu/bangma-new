@@ -13,10 +13,12 @@
         </Row>
         <div class="content">
             <Cell-group class="group">
-                <Cell title="订单号" />
-                    <template slot="value">
-                        <span class="custom-text">003652</span>
-                        <span>112</span>
+                <Cell title="订单号">
+                    <template>
+                        <div class="custom_wrap">
+                            <span class="order_id">003652</span>
+                            <span class="status">基检未约</span>
+                        </div>
                     </template>
                 </Cell>
                 <Cell title="姓名" value="毛女士" />
@@ -170,6 +172,16 @@
             margin: 0;
             background: red;
             border-radius: 5px;
+        }
+        .custom_wrap {
+            display: flex;
+        }
+        .order_id {
+            flex: 1;
+        }
+        .status {
+            width: 60px;
+            text-align: center;
         }
     }
 </style>
