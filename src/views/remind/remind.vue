@@ -1,5 +1,6 @@
 <template>
     <div class="remind">
+        <vue-event-calendar :events="demoEvents"></vue-event-calendar>
         <dl class="remind-list">
             <dt class="on">10:55</dt>
             <dd class="orderNum">
@@ -54,11 +55,19 @@
           
             footerNav: footerNav
         },
-        data() {
-            return {
-                
-            };
-        },
+         data () {
+    return {
+      demoEvents: [{
+        date: '2016/11/12', // Required
+        title: 'Foo' // Required
+      }, {
+        date: '2016/12/15',
+        title: 'Bar',
+        desc: 'description',
+        customClass: 'disabled highlight' // Custom classes to an calendar cell
+      }]
+    }
+  },
         computed:{
             user: function() {
                 return this.$store.getters.getUser;
