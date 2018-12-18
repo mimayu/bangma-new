@@ -23,6 +23,38 @@
                 </section>
               </section>
               </li>
+              <li v-for="item in details">
+              <h3>卫生间</h3>
+              <section class="info">
+                <h4>立邦底材体系之墙面涂刷基层界面剂及造毛处理</h4>
+                <p class="pricem">单价：￥25   单位：m</p>
+                <span class="price">小计
+                  <b class="red" v-show="item.count > 0">{{getSinglePrice(item.price,item.count)}}</b>
+                  <b class="red" v-show="item.count <= 0">0</b>
+                </span>
+                <section class="price-edit">
+                  <a class="minus" @click="minusCart(item)">-</a>
+                  <span>{{item.count}}</span>
+                  <a class="add" @click="addCart(item)">+</a>
+                </section>
+              </section>
+              </li>
+              <li v-for="item in details">
+              <h3>卫生间</h3>
+              <section class="info">
+                <h4>立邦底材体系之墙面涂刷基层界面剂及造毛处理</h4>
+                <p class="pricem">单价：￥25   单位：m</p>
+                <span class="price">小计
+                  <b class="red" v-show="item.count > 0">{{getSinglePrice(item.price,item.count)}}</b>
+                  <b class="red" v-show="item.count <= 0">0</b>
+                </span>
+                <section class="price-edit">
+                  <a class="minus" @click="minusCart(item)">-</a>
+                  <span>{{item.count}}</span>
+                  <a class="add" @click="addCart(item)">+</a>
+                </section>
+              </section>
+              </li>
             </ul>
           </section>
           <div class="footer"> 
@@ -133,15 +165,15 @@ export default {
   }
   .pricem{padding:10px 0;}
   .price-edit{
-    position:absolute;right:10px; width:105px;bottom:0;
+    position:absolute;right:10px; width:105px;bottom:0;right:10px;
     // display:flex;
     a{
       flex:1;width:23px;height:23px; border-radius:13px; text-align:center;
-      line-height:18px;border:2px solid #F7F8F9;padding:0;display:inline-block;    vertical-align: middle;
+      line-height:23px;border:2px solid #F7F8F9;padding:0;display:inline-block;    vertical-align: middle;
     }
     span{
       flex:2;font-size:12px; color:#000; background:#F7F8F9;border-radius:13px;     vertical-align: middle;
-      text-align:center;line-height:23px;display:inline-block;padding:0 10px;
+      text-align:center;line-height:23px;display:inline-block;padding:0 10px;margin:0 10px;
       }
     .add{
       background:#1E97FF;color:#fff;
@@ -152,7 +184,10 @@ export default {
   }
   .price{font-size: 16px;color: #FF5C12;}
   .info{
+    h4{font-size:14px;}
+    p{font-size:12px; color:#999;}
     position:relative;padding:10px ;
+    .price{font-size:16px;}
     &:before{
       width:5px;display:inline-block;content:"";position:absolute;left:0;top:0;
       background: #1E97FF;height:100%;
