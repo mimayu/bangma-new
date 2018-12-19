@@ -23,3 +23,5 @@
     -setting //设置 
 - remind
     -remind //提醒事件
+- boss
+    -gzProgress //工长进度看板

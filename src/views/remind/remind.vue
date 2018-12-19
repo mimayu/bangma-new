@@ -90,7 +90,8 @@
                 },{
                     date: '2016/11/12',
                     title: 'this is a title'
-                }]
+                }],
+                active:0,
             }
         },
         computed:{
