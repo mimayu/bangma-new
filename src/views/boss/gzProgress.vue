@@ -147,11 +147,18 @@
                 &:nth-child(n){flex:1;}                
                 &:nth-child(2n){flex:2;color: #161616;}                
             }
+            &:last-child{
+                span{
+                    &:nth-child(1){flex:1;}                
+                    &:nth-child(2){flex:5;color: #161616;}  
+                }
+              
+            }
         }
 
     }
     .date-list{
-        border-bottom:1px solid #D8D8D8;
+        border-bottom:3px solid #D8D8D8;
         padding:10px;
         display:flex;
         justify-content: space-between;
