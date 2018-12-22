@@ -7,6 +7,7 @@ import { request } from './http';
 const getProgress = (params) => {
     return request('/api/gongzhangGongQi/', params, 'GET');
 }
+
 export {
     getProgress
 }
