@@ -80,8 +80,8 @@
             Cell,
             Row,
             Col,
-             Row,
-    Col,
+            Row,
+            Col,
             Progress,
             footerNav: footerNav
         },
