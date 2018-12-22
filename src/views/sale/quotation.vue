@@ -6,7 +6,7 @@
     <section class="quote_contents list-box">
       <div class="left-box" ref="menuWrapper">
         <ul>
-          <li v-for="item in goods" ref="menuList">{{item}}</li>
+          <li v-for="(item, index) in goods" ref="menuList" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">{{item}}</li>
         </ul>
       </div>
       <div class="right-box" ref="foodsWrapper">
@@ -49,6 +49,19 @@ export default {
   },
   created() {
     this.getQuote();
+  },
+  computed: {
+    currentIndex() {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i];
+        let height2 = this.listHeight[i + 1];
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          this._followScroll(i);
+          return i;
+        }
+      }
+      return 0;
+    }
   },
   data(){
     return {
@@ -124,12 +137,18 @@ export default {
       item.count --;
     },
     getSinglePrice(price, count) {
-      console.log(price, count)
       return price * count
     },
     getTotalPrice(price, count) {
-      console.log(price, count)
       return price * count
+    },
+    selectMenu(index, event) {
+      if (!event._constructed) {
+        return;
+      }
+      let foodList = this.$refs.foodList;
+      let el = foodList[index];
+      this.foodsScroll.scrollToElement(el, 300);
     },
     _initScroll() {
       this.meunScroll = new BScroll(this.$refs.menuWrapper, {
@@ -151,8 +170,6 @@ export default {
     _calculateHeight() {
       let foodList = this.$refs.foodList;
       let height = 0;
-      console.log('11', this.listHeight)
-
       this.listHeight.push(height);
       for (let i = 0; i < foodList.length; i++) {
         let item = foodList[i];
@@ -280,6 +297,9 @@ export default {
         border-top-left-radius:5px;
         border-bottom-left-radius:5px;
       }
+    }
+    .current {
+      background: #fff !important;
     }
   }
 </style>
