@@ -25,6 +25,10 @@ import {
     doLogout
 } from './my'
 
+import {
+   getProgress
+} from './gzProgress'
+
 export {
     postShangmenAdd,
     postYuyueAdd,
@@ -39,6 +43,7 @@ export {
     getAllStaff,
     getAssignList,
     getProfile,
+    getProgress,
     getOrganization,
     doLogout
 }
