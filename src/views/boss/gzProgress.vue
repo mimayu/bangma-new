@@ -1,69 +1,31 @@
 <template>
     <div class="gzProgress">
-        
-        <dl class="progress-list">
-            <dt>宗国平</dt>
-            <dd>
-                <span>姓名</span>
-                <span>毛先生</span>
-                <span>订单号：</span>
-                <span>201808200236</span>
-            </dd>
-            <dd>
-                <span>地址</span>
-                <span>上海市普陀区远景路97弄48号2103室</span>
-            </dd>
-            
-        </dl>
-        <div class="bar">
-            <span class="bar-title">剩余工期28天</span>
-            <Progress color='#19BC9C' :percentage="50" />
-        </div>
-        <ul class="date-list">
-            <li>开工日期<span>2018/09/09</span></li>
-            <li>完工日期<span>2018/09/09</span></li>
-        </ul>
+        <section v-for="item in list">
+            <dl class="progress-list">
+                <dt>宗国平</dt>
+                <dd>
+                    <span>姓名</span>
+                    <span>毛先生</span>
+                    <span>订单号：</span>
+                    <span>201808200236</span>
+                </dd>
+                <dd>
+                    <span>地址</span>
+                    <span>{{item.sAddress}}</span>
+                </dd>
+                
+            </dl>
+            <div class="bar">
+                <span class="bar-title">剩余工期28天</span>
+                <Progress color='#19BC9C' :percentage="50" />
+            </div>
+            <ul class="date-list">
+                <li>开工日期<span>{{item.dateKaigong}}</span></li>
+                <li>完工日期<span>{{item.dateYujiWangong}}</span></li>
+            </ul>
+        </section>
 
-
-        <dl class="progress-list">
-            <dt>宗国平</dt>
-            <dd>
-                <span>姓名</span>
-                <span>毛先生</span>
-                <span>订单号：</span>
-                <span>201808200236</span>
-            </dd>
-            <dd>
-                <span>地址</span>
-                <span>上海市普陀区远景路97弄48号2103室</span>
-            </dd>
-        </dl>
-        <Progress color='#19BC9C' :percentage="50" />
-        <ul class="date-list">
-            <li>开工日期<span>2018/09/09</span></li>
-            <li>完工日期<span>2018/09/09</span></li>
-        </ul>
-
-
-
-        <dl class="progress-list">
-            <dt>宗国平</dt>
-            <dd>
-                <span>姓名</span>
-                <span>毛先生</span>
-                <span>订单号：</span>
-                <span>201808200236</span>
-            </dd>
-            <dd>
-                <span>地址</span>
-                <span>上海市普陀区远景路97弄48号2103室</span>
-            </dd>
-        </dl>
-        <Progress color='#19BC9C' :percentage="50" />
-        <ul class="date-list">
-            <li>开工日期<span>2018/09/09</span></li>
-            <li>完工日期<span>2018/09/09</span></li>
-        </ul>
+      
        
         <footerNav class="footer"></footerNav>
     </div>
@@ -72,6 +34,7 @@
 <script>
     import footerNav from "../../components/footerNav"; // 引入页脚
     import { CellGroup, Cell, Row, Col, Progress } from 'vant';
+    import { getProgress } from '@/server';
 
     export default {
         name: 'job',
@@ -87,22 +50,27 @@
         },
          data () {
             return {
-                demoEvents: [{
-                    date: '2016/12/15',
-                    title: 'eat',
-                    desc: 'longlonglong description'
-                },{
-                    date: '2016/11/12',
-                    title: 'this is a title'
-                }]
+                list:{}
             }
         },
         computed:{
-            user: function() {
-                return this.$store.getters.getUser;
-            }
+            // user: function() {
+            //     return this.$store.getters.getUser;
+            // }
+        },
+          created() {
+            this.getProgress()
         },
         methods: {
+
+             getProgress() {
+                getProgress().then(
+                 res => {
+                    this.list = res.resultArr[0];
+                    console.log(this.list)
+                    }
+                )
+            },
             monthChange (month) {
                 console.log(month)
             },
