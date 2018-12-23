@@ -4,7 +4,9 @@ import {
     postQuxiaoAdd,
     getCustomer,
     getQutoe,
-    getEstate
+    getEstate,
+    getAddQuote,
+    postSubmit
 } from './sale'
 
 import {
@@ -39,6 +41,8 @@ export {
     getCustomer,
     getQutoe,
     getEstate,
+    getAddQuote,
+    postSubmit,
     postLogin,
     postRegiste,
     postAssign,
@@ -48,5 +52,6 @@ export {
     getProfile,
     getProgress,
     getOrganization,
-    doLogout
+    doLogout,
+    salesSort
 }

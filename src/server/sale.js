@@ -48,11 +48,25 @@ const getEstate = (params) => {
     return request('/api/getXiaoquList/', params, 'get');
 }
 
+/**
+ * 增项订单生成
+ * @param {*} params 
+ */
+const getAddQuote = (params) => {
+    return request('/api/zengxiangBaojia/', params, 'get');
+}
+
+const postSubmit = (params) => {
+    return request('/api/dobaojia/', params);
+}
+
 export {
     postShangmenAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
     getQutoe,
-    getEstate
+    getEstate,
+    getAddQuote,
+    postSubmit
 }
