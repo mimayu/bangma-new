@@ -28,6 +28,9 @@ import {
 import {
    getProgress
 } from './gzProgress'
+import {
+   salesSort
+} from './salesSort'
 
 export {
     postShangmenAdd,

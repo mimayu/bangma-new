@@ -142,6 +142,11 @@ export default new Router({
       path: '/gzProgress',
       name: 'gzProgress',
       component: () => import(/* webpackChunkName: "remind" */ './views/boss/gzProgress')
+    },
+    {
+      path: '/salesSort',
+      name: 'salesSort',
+      component: () => import(/* webpackChunkName: "remind" */ './views/boss/salesSort')
     }
   ]
 })
