@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { Tab, Tabs, Cell, CellGroup, } from 'vant';
+import { Tab, Tabs, Cell, CellGroup } from 'vant';
 import { getCustomer } from '@/server';
 import footerNav from "@/components/footerNav"; // 引入页脚
 
@@ -130,22 +130,29 @@ export default {
       )
     },
     handleChange(value) {
-      let params = this.prepare(value);
       if(value == 1) {
+        let params = {
+          status: 2,
+          page: 1,
+          keywords: ''
+        }
         this.getInfo(params, 'data_order');
       }
       if(value == 2) {
+        let params = {
+          status: 103,
+          page: 1,
+          keywords: ''
+        }
         this.getInfo(params, 'data_confirm');
       }
       if(value == 3) {
+        let params = {
+          status: 3,
+          page: 1,
+          keywords: ''
+        }
         this.getInfo(params, 'data_cancel');
-      }
-    },
-    prepare(value) {
-      return {
-        status: +value + 1,
-        page: 1,
-        keywords: ''
       }
     }
   }
