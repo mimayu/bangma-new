@@ -23,7 +23,7 @@
                 <Cell title="订单号">
                     <template>
                         <div class="custom_wrap">
-                            <span class="order_id">003652</span>
+                            <span class="order_id">{{item.iCustomerId}}</span>
                             <span class="status">基检未约</span>
                         </div>
                     </template>
