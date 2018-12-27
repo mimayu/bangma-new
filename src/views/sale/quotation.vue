@@ -57,18 +57,15 @@ export default {
   },
   computed: {
     currentIndex() {
-      console.log('1')
       for (let i = 0; i < this.listHeight.length; i++) {
         let height1 = this.listHeight[i];
         let height2 = this.listHeight[i + 1];
         console.log(4, !height2, this.scrollY >= height1 ,this.scrollY < height2)
         if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           this._followScroll(i);
-          console.log('3', i)
           return i;
         }
       }
-      console.log('2')
       return 0;
     },
   },
@@ -145,6 +142,7 @@ export default {
       }
       postSubmit(params).then(
         res => {
+          console.log('res', res);
           if(res.success == 1) {
           }
         }
