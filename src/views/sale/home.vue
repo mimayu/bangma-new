@@ -47,10 +47,11 @@ export default {
   .homepage{
     padding: 15px;display: flex;
     flex-wrap: wrap ;
-
   }
   a{
-    width:33%;text-align: center; margin-bottom:10%;
+    width:33%;
+    text-align: center; 
+    margin-bottom:10%;
   }
   .alink{
     font-size: 14px;

@@ -42,6 +42,7 @@ export default {
   .alink{
     flex: 1;
     text-align: center;
+    margin: 0;
     height: 45px;
     line-height: 18px;
     font-weight: 500;font-size: 10px;

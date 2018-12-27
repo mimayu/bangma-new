@@ -63,7 +63,7 @@ export default {
         res => {
           if(res.success == 1) {
               Toast('登录成功');
-              this.$router.push('/detection');
+              this.$router.push('/home');
               return;
           }
           if(res.success == 2) {

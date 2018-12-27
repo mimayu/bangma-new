@@ -25,7 +25,7 @@ const postQuxiaoAdd = (params) => {
 }
 
 /**
- * 获取用户信息
+ * 获取客户信息
  * @param {*} params 
  */
 const getCustomer = (params) => {
