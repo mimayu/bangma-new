@@ -62,7 +62,7 @@ export default {
       postLogin(params).then(
         res => {
           if(res.success == 1) {
-              Toast.success('登录成功');
+              Toast('登录成功');
               this.$router.push('/detection');
               return;
           }
@@ -70,16 +70,13 @@ export default {
             if(res.msg == '验证码输入有误') {
                 this.picCode = this.createPicCode();
             }
-            Toast.fail(res.msg);
+            Toast(res.msg);
           }
         }
       )
     },
     handleRegister() {
-
-    },
-    handleReset(name) {
-      
+      this.$router.push('/register');
     }
   }
 }
