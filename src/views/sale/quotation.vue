@@ -138,7 +138,7 @@ export default {
     handleSubmit() {
       let params = {
         'iCustomerId': 1,
-        'idAndNumberValues': ['1|2']
+        'idAndNumberValues': ["1|2"]
       }
       postSubmit(params).then(
         res => {
@@ -162,6 +162,7 @@ export default {
             this.goods = Object.values(res.type_arr);
             this.details = Object.values(res.result);
             this.iCustomerId = id;
+            this.tabs = this.tabs.concat(res.zengxiang_arr)
             if(id == 1) {
               this.$nextTick(() => {
                 this._initScroll();
