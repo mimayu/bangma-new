@@ -2,7 +2,7 @@
     <div class="setting_container">
         <Cell-group class="group">
             <Cell title="用户名" :value="user.sName" />
-            <Cell title="密码" value="修改密码" is-link/>
+            <Cell title="密码" value="修改密码" is-link @click="handleReset"/>
         </Cell-group>
         <Button size="large" @click="handleQuit">退出登录</Button>
         <footerNav class="footer"></footerNav>
@@ -44,6 +44,9 @@
                         }
                     }
                 )
+            },
+            handleReset() {
+                this.$router.push('/reset');
             }
         }
     }

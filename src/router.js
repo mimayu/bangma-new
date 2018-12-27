@@ -23,6 +23,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "register" */ './views/login/register')
     },
     {
+      path: '/reset',
+      name: 'reset',
+      component: () => import(/* webpackChunkName: "reset" */ './views/login/reset')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */ './views/sale/home')

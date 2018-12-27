@@ -8,7 +8,7 @@
       <img class="home_icon" src="../assets/img/12x.png">
       {{msg}}
       </router-link>
-    <router-link to="" class="alink">
+    <router-link to="/profile" class="alink">
       <img class="home_icon" src="../assets/img/32x.png">
       {{me}}
     </router-link>  

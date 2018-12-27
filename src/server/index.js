@@ -11,7 +11,8 @@ import {
 
 import {
     postLogin,
-    postRegiste
+    postRegiste,
+    postReset
 } from './login'
 
 import {
@@ -50,6 +51,7 @@ export {
     postSubmit,
     postLogin,
     postRegiste,
+    postReset,
     postAssign,
     postAddCustomer,
     getAllStaff,
