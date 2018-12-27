@@ -57,11 +57,15 @@ const getAddQuote = (params) => {
 }
 
 /**
- * 报价
+ * 报价基础页面
  * @param {*} params 
  */
 const postSubmit = (params) => {
-    return request('/api/dobaojia/', params);
+    return request('/api/dobaojia/', params); 
+}
+
+const getSubmitInfo = (params) => {
+    return request('/api/baojiaTemple/', params, 'get'); 
 }
 
 export {
@@ -72,5 +76,6 @@ export {
     getQutoe,
     getEstate,
     getAddQuote,
-    postSubmit
+    postSubmit,
+    getSubmitInfo
 }

@@ -6,7 +6,8 @@ import {
     getQutoe,
     getEstate,
     getAddQuote,
-    postSubmit
+    postSubmit,
+    getSubmitInfo
 } from './sale'
 
 import {
@@ -49,6 +50,7 @@ export {
     getEstate,
     getAddQuote,
     postSubmit,
+    getSubmitInfo,
     postLogin,
     postRegiste,
     postReset,

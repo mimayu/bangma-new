@@ -45,7 +45,7 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { getQutoe, getAddQuote, postSubmit } from '@/server';
+import { getQutoe, getAddQuote, postSubmit, getSubmitInfo } from '@/server';
 
 export default {
   name: 'quotation',
