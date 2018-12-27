@@ -30,9 +30,14 @@ import {
 import {
    getProgress
 } from './gzProgress'
+
 import {
    salesSort
 } from './salesSort'
+
+import {
+    getCalendar
+} from './remind'
 
 export {
     postShangmenAdd,
@@ -53,5 +58,6 @@ export {
     getProgress,
     getOrganization,
     doLogout,
-    salesSort
+    salesSort,
+    getCalendar
 }

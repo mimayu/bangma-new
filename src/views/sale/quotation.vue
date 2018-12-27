@@ -1,7 +1,7 @@
 <template>
   <div id="quote" class="quote_container">
     <ul class="quote_tabs">
-      <li class="quote_item">
+      <li class="quote_item" v-for="item in tabs">
         厨卫报价
       </li>
       <li class="quote_item_add" @click="addQuote">
@@ -53,36 +53,109 @@ export default {
     
   },
   created() {
-    this.getQuote();
+    this.getQuote(1);
   },
   computed: {
     currentIndex() {
+      console.log('1')
       for (let i = 0; i < this.listHeight.length; i++) {
         let height1 = this.listHeight[i];
         let height2 = this.listHeight[i + 1];
+        console.log(4, !height2, this.scrollY >= height1 ,this.scrollY < height2)
         if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           this._followScroll(i);
+          console.log('3', i)
           return i;
         }
       }
+      console.log('2')
       return 0;
-    }
+    },
   },
   data(){
     return {
+      tabs: [1],
       goods: [],
       details: [],
+      iCustomerId: 1,
       listHeight: [],
       scrollY: 0,
+      current: 0
     }
   },
   methods: {
+    selectMenu(index, event) {
+      if (!event._constructed) {
+        return;
+      }
+      let foodList = this.$refs.foodList;
+      let el = foodList[index];
+      this.foodsScroll.scrollToElement(el, 300);
+    },
+    _initScroll() {
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      });
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        click: true,
+        probeType: 3
+      });
+      this.foodsScroll.on('scroll', (pos) => {
+        // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
+        if (pos.y <= 0) {
+          this.scrollY = Math.abs(Math.round(pos.y));
+        }
+      });
+    },
+    _calculateHeight() {
+      let foodList = this.$refs.foodList;
+      let height = 0;
+      this.listHeight.push(height);
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList[i];
+        height += item.clientHeight;
+        this.listHeight.push(height);
+      }
+      console.log('this.listHeight', this.listHeight);
+    },
+    _followScroll(index) {
+      let menuList = this.$refs.menuList;
+      let el = menuList[index];
+      this.meunScroll.scrollToElement(el, 300, 0, -100);
+    },
+    addQuote() {
+      let params = {
+        'iCustomerId': 1
+      }
+      getAddQuote(params).then(
+        res => {
+          if(res.success == 1) {
+            let id = res.zengxiang_customer_id;
+            this.tabs.push(id);
+            this.reset();
+            this.getQuote(id);
+          }
+        }
+      )
+    },
+    handleSubmit() {
+      let params = {
+        'iCustomerId': 1,
+        'idAndNumberValues': ['1|2']
+      }
+      postSubmit(params).then(
+        res => {
+          if(res.success == 1) {
+          }
+        }
+      )
+    },
     handleTabsAdd () {
         this.tabs ++;
     },
-    getQuote() {
+    getQuote(id) {
       let params = {
-        iCustomerId: 1,
+        iCustomerId: id,
         iMode: 1
       }
       getQutoe(params).then(
@@ -90,10 +163,13 @@ export default {
           if(res.success == 1) {
             this.goods = Object.values(res.type_arr);
             this.details = Object.values(res.result);
-            this.$nextTick(() => {
-              this._initScroll();
-              this._calculateHeight();
-            });
+            this.iCustomerId = id;
+            if(id == 1) {
+              this.$nextTick(() => {
+                this._initScroll();
+                this._calculateHeight();
+              });
+            }
           }
           
           console.log('res', res);
@@ -115,68 +191,8 @@ export default {
     getTotalPrice(price, count) {
       return price * count
     },
-    selectMenu(index, event) {
-      if (!event._constructed) {
-        return;
-      }
-      let foodList = this.$refs.foodList;
-      let el = foodList[index];
-      this.foodsScroll.scrollToElement(el, 300);
-    },
-    _initScroll() {
-      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
-        click: true
-      });
-
-      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-        click: true,
-        probeType: 3
-      });
-
-      this.foodsScroll.on('scroll', (pos) => {
-        // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
-        if (pos.y <= 0) {
-          this.scrollY = Math.abs(Math.round(pos.y));
-        }
-      });
-    },
-    _calculateHeight() {
-      let foodList = this.$refs.foodList;
-      let height = 0;
-      this.listHeight.push(height);
-      for (let i = 0; i < foodList.length; i++) {
-        let item = foodList[i];
-        height += item.clientHeight;
-        this.listHeight.push(height);
-      }
-    },
-    _followScroll(index) {
-      let menuList = this.$refs.menuList;
-      let el = menuList[index];
-      this.meunScroll.scrollToElement(el, 300, 0, -100);
-    },
-    addQuote() {
-      let params = {
-        'iCustomerId': 1
-      }
-      getAddQuote(params).then(
-        res => {
-          console.log('res', res);
-        }
-      )
-      console.log('1');
-    },
-    handleSubmit() {
-      let params = {
-        'iCustomerId': 1,
-        'idAndNumberValues': ['1|2']
-      }
-      postSubmit(params).then(
-        res => {
-          console.log('res', res);
-        }
-      )
-      console.log(1)
+    reset() {
+      this.scrollY = 0;
     }
   }
 }
@@ -246,7 +262,6 @@ export default {
     .price-edit{
       position:absolute;
       right:10px; 
-      width:105px;
       bottom:0;
       right:10px;
       a{
@@ -306,7 +321,7 @@ export default {
       }
     }
     .current {
-      background: #fff !important;
+      background: red !important;
     }
   }
 </style>

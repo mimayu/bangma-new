@@ -56,6 +56,10 @@ const getAddQuote = (params) => {
     return request('/api/zengxiangBaojia/', params, 'get');
 }
 
+/**
+ * 报价
+ * @param {*} params 
+ */
 const postSubmit = (params) => {
     return request('/api/dobaojia/', params);
 }

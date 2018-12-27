@@ -1,15 +1,18 @@
 <template>
-    <div class="remind">
-        <vue-event-calendar :events="demoEvents">
-            <template scope="props">
-                <div v-for="(event, index) in props.showEvents" class="event-item">
-                <!-- 这里拿到的是传入的单个event所有数据 -->
-                {{event}}
-                </div>
-            </template>
-        </vue-event-calendar>
+    <div class="remind_container">
+        <vue-event-calendar :events="salelist" @monthChanged="" @dayChanged=""></vue-event-calendar>
         <Tabs v-model="active">
             <Tab title="提醒" >
+                <ul>
+                    <li>
+                        <div>
+                            <i></i>
+                            <span>09：30</span>
+                        </div>
+                        <div></div>
+                        <div></div>
+                    </li>
+                </ul>
                 <dl class="remind-list">
                     <dt class="on">10:55</dt>
                     <dd class="orderNum">
@@ -71,33 +74,25 @@
 </template>
 
 <script>
+    import { getCalendar } from '@/server';
     import footerNav from "../../components/footerNav"; // 引入页脚
     import { Tab, Tabs } from 'vant';
 
     export default {
-        name: 'job',
+        name: 'remind',
         components: {
             Tab,
             Tabs,
             footerNav: footerNav
         },
-         data () {
+        data () {
             return {
-                demoEvents: [{
-                    date: '2016/12/15',
-                    title: 'eat',
-                    desc: 'longlonglong description'
-                },{
-                    date: '2016/11/12',
-                    title: 'this is a title'
-                }],
+                salelist: [],
                 active:0,
             }
         },
-        computed:{
-            user: function() {
-                return this.$store.getters.getUser;
-            }
+        created() {
+            this.getCalendar();
         },
         methods: {
             monthChange (month) {
@@ -105,18 +100,59 @@
             },
             dayChange (day) {
                 console.log(day)
+            },
+            getCalendar() {
+                let params = {
+
+                }
+                getCalendar(params).then(
+                    res => {
+                        this.salelist = [{
+                            date: '2018/12/16', // Required
+                            time: '13:51:35',
+                            title: '订单',
+                            department_name: "总经办",
+                            'group_name': null,
+                            'iId': "38",
+                            'role_name': "业务员",
+                            'sMobilePhone': "13524761932",
+                            'sName': "刘厚贤",
+                            'timeCreated': "2018-11-16 13:51:35",
+                        },
+                        {
+                            date: '2018/11/16', // Required
+                            time: '13:51:35',
+                            title: '订单',
+                            department_name: "总经办",
+                            'group_name': null,
+                            'iId': "38",
+                            'role_name': "业务员",
+                            'sMobilePhone': "13524761932",
+                            'sName': "刘厚贤",
+                            'timeCreated': "2018-11-16 13:51:35",
+                        }];
+                        console.log('res', this.salelist);
+                    }
+                )
+                console.log('1');
             }
         }
     }
 </script>
 
 <style lang="scss">
+    .remind_container {
+        .events-wrapper {
+            display: none !important; 
+        }
+    }
     .remind-list{
-       
         .orderNum{
             font-size:14px; border-bottom:1px solid #D8D8D8;margin-left:10px;line-height:40px;
             display:flex;padding-right:10px;margin-bottom:5px;
-            a{flex:2;}
+            a{
+                flex:2;
+            }
             .timeout{
                 font-size: 14px;flex:2;
                 color: #F5A623;
