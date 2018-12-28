@@ -2,12 +2,12 @@
     <div class="gzProgress">
         <section v-for="item in list">
             <dl class="progress-list">
-                <dt>宗国平</dt>
+                <dt>{{item.iForemanName}}</dt>
                 <dd>
                     <span>姓名</span>
-                    <span>毛先生</span>
+                    <span>{{item.sUsername}}</span>
                     <span>订单号：</span>
-                    <span>201808200236</span>
+                    <span>{{item.icustomerid}}</span>
                 </dd>
                 <dd>
                     <span>地址</span>
