@@ -1,31 +1,38 @@
 <template>
     <div class="allUser_container">
         <Row class="header">
-            <Col span="8">
+            <Col span="6">
                 <Cell title="筛选" is-link arrow-direction="down" @click="choseType"/>
             </Col>
-            <Col span="8">
+            <Col span="6">
                 <Cell title="时间" is-link arrow-direction="down" @click="choseTime" />
             </Col>
-            <Col span="8">
-                <Cell title="搜索" />
+            <Col span="12" class="search_bar">
+                <Search
+                    v-model="value"
+                    placeholder="请输入搜索关键词"
+                    show-action
+                    @search="handleSearch"
+                >
+                    <div slot="action" @click="handleSearch">搜索</div>
+                </Search>
             </Col>
         </Row>
         <div class="content">
-            <Cell-group class="group">
+            <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
                 <Cell title="订单号">
                     <template>
                         <div class="custom_wrap">
-                            <span class="order_id">003652</span>
+                            <span class="order_id">{{item.iCustomerId}}</span>
                             <span class="status">基检未约</span>
                         </div>
                     </template>
                 </Cell>
-                <Cell title="姓名" value="毛女士" />
-                <Cell title="手机号" value="13774387155" />
-                <Cell title="地址" value="交通西路108弄4号2308室" />
-                <Cell title="施工内容" value="需求信息，刷新+局装；需要做的有两套" />
-                <Cell title="预约时间" value="-" />
+                <Cell title="姓名" :value="item.sUsername" />
+                <Cell title="手机号" :value="item.sMobile" />
+                <Cell title="地址" :value="item.sAddress" />
+                <Cell title="施工内容" :value="item.sRemarks || '-'" />
+                <Cell title="预约时间" :value="item.tOrderDate || '-'" />
                 <div class="van-cell btn_wrap">
                     <button plain type="primary" class="assign_btn" >预约</button>
                 </div>
@@ -43,14 +50,15 @@
             />
         </Popup>
         <Popup v-model="typeShow" position="bottom">
-            <Picker show-toolbar :columns="typeLists" @cancel="handleTypeCancel" @confirm="handleTypeComfirm" @change="handleTypeSelect" />
+            <Picker show-toolbar :columns="typeLists" @cancel="handleTypeCancel" @confirm="handleTypeComfirm" />
         </Popup>
         <footerNav class="footer"></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Toast } from 'vant';
+    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast } from 'vant';
+    import { getCustomer } from '@/server';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
@@ -63,6 +71,7 @@
             DatetimePicker,
             Row,
             Col,
+            Search,
             Toast,
             footerNav: footerNav
         },
@@ -83,6 +92,7 @@
                     '签约等待',
                     '签约成功',
                     '派工完成',
+                    '开工进场',
                     '完工验收',
                     '完工付款',
                     '审核完成',
@@ -90,18 +100,17 @@
                     '签约失败',
                     '合同取消'
                 ],
-                imgArray: [],
-                imgNumber: 0,
-                settings: {
-                    uploadUrl: '/api/do_upload/',
-                    compress: true,
-                    compressionRatio: 20,
-                    data: [],
-                    max: 9,
-                    maxSize: 5 * 1024, // 5MB
-                    typeArray: ['jpeg', 'jpg', 'png', 'gif'],
-                }
+                typeCode: [
+                    '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102'
+                ],
+                customerLists: [],
+                value: '',
+                status: '',
+                page: 1
             };
+        },
+        created() {
+            this.getCustomer();
         },
         methods: {
             choseType() {
@@ -110,20 +119,40 @@
             choseTime() {
                 this.timeShow = true;
             },
-            handleComfirm() {
-
+            handleComfirm(value) {
+                this.timeShow = false;
             },
             handleCancel() {
-
+                this.timeShow = false;
             },
-            handleTypeComfirm() {
+            handleTypeComfirm(value) {
+                let index = this.typeLists.findIndex((item) => {
+                    return item == value
+                });
+                let status = this.typeCode[index];
+                this.status = status;
                 this.typeShow = false;
+                this.getCustomer();
             },
             handleTypeCancel() {
                 this.typeShow = false;
             },
-            handleTypeSelect() {
-
+            handleSearch() {
+                this.getCustomer();
+            },
+            getCustomer(cb) {
+                let params = {
+                    status: this.status,
+                    page: this.page,
+                    keywords: this.value
+                }
+                getCustomer(params).then(
+                    res => {
+                        if(res.success == 1) {
+                            this.customerLists = res.list;
+                        }
+                    }
+                )
             }
         }
     }
@@ -182,6 +211,19 @@
         .status {
             width: 60px;
             text-align: center;
+        }
+        .search_bar {
+            display: flex;
+            align-items: center;
+            height: 44px;
+            background: #fff;
+        }
+        .van-search {
+            background: #fff !important;
+            padding: 0;
+        }
+        .group {
+            margin-bottom: 8px;
         }
     }
 </style>

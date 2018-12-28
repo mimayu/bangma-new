@@ -4,12 +4,16 @@ import {
     postQuxiaoAdd,
     getCustomer,
     getQutoe,
-    getEstate
+    getEstate,
+    getAddQuote,
+    postSubmit,
+    getSubmitInfo
 } from './sale'
 
 import {
     postLogin,
-    postRegiste
+    postRegiste,
+    postReset
 } from './login'
 
 import {
@@ -28,9 +32,14 @@ import {
 import {
    getProgress
 } from './gzProgress'
+
 import {
    salesSort
 } from './salesSort'
+
+import {
+    getCalendar
+} from './remind'
 
 export {
     postShangmenAdd,
@@ -39,8 +48,12 @@ export {
     getCustomer,
     getQutoe,
     getEstate,
+    getAddQuote,
+    postSubmit,
+    getSubmitInfo,
     postLogin,
     postRegiste,
+    postReset,
     postAssign,
     postAddCustomer,
     getAllStaff,
@@ -48,5 +61,7 @@ export {
     getProfile,
     getProgress,
     getOrganization,
-    doLogout
+    doLogout,
+    salesSort,
+    getCalendar
 }

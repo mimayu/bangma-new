@@ -1,17 +1,85 @@
 <template>
-  <div class="detection">
-    <Tabs v-model="active">
+  <div class="detection_container">
+    <Tabs v-model="active" @change="handleChange">
       <Tab title="基检未约" >
-        <detectionList></detectionList>
+        <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">基检未约</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap">
+                <button plain type="primary" class="assign_btn" >预约</button>
+            </div>
+        </Cell-group>
       </Tab>
       <Tab title="基检预约">
-        <detectionList></detectionList>
+        <Cell-group class="group" v-for="item in data_order" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">基检预约</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap">
+                <button plain type="primary" class="assign_btn" >预约</button>
+            </div>
+        </Cell-group>
       </Tab>
       <Tab title="基检确认">
-        <detectionList></detectionList>
+        <Cell-group class="group" v-for="item in data_confirm" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">基检确认</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap">
+                <button plain type="primary" class="assign_btn" >预约</button>
+            </div>
+        </Cell-group>
       </Tab>
       <Tab title="基检取消">
-        <detectionList  :data="data_cancel" title="基检取消"></detectionList>
+        <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">基检未约</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap">
+                <button plain type="primary" class="assign_btn" >预约</button>
+            </div>
+        </Cell-group>
       </Tab>
     </Tabs>
     <footerNav></footerNav>
@@ -19,52 +87,110 @@
 </template>
 
 <script>
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs, Cell, CellGroup } from 'vant';
 import { getCustomer } from '@/server';
-import detectionList from '@/components/detectionList' // 引入login.vue组件
 import footerNav from "@/components/footerNav"; // 引入页脚
 
 export default {
   name: 'detection',
   data () {
     return {
-      active: 1,
+      active: 0,
       data_under: [],
       data_order: [],
       data_confirm: [],
-      data_cancel: []
+      data_cancel: [],
+      record: [0, 0, 0, 0],
+      page: 1,
     }
   },
   components: {
     Tab,
     Tabs,
-    'footerNav': footerNav,
-    'detectionList':  detectionList,
+    Cell,
+    CellGroup,
+    'footerNav': footerNav
   },
   created() {
     let params = {
-      status: 3,
+      status: 1,
       page: 1,
       keywords: ''
     }
-    this.getInfo(params);
+    this.getInfo(params, 'data_under');
   },
   methods: {
     getInfo(params, type) {
       getCustomer(params).then(
         res => {
-          this.data_cancel = res.list;
+          if(res.success == 1) {
+            this[type] = res.list;
+          }
         }
       )
     },
-    getOption() {
-      
+    handleChange(value) {
+      if(value == 1) {
+        let params = {
+          status: 2,
+          page: 1,
+          keywords: ''
+        }
+        this.getInfo(params, 'data_order');
+      }
+      if(value == 2) {
+        let params = {
+          status: 103,
+          page: 1,
+          keywords: ''
+        }
+        this.getInfo(params, 'data_confirm');
+      }
+      if(value == 3) {
+        let params = {
+          status: 3,
+          page: 1,
+          keywords: ''
+        }
+        this.getInfo(params, 'data_cancel');
+      }
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style lang="scss">
+  .detection_container {
+    .van-cell__title, .van-field .van-cell__title {
+        max-width: 100px;
+    }
+    .van-cell__title, .van-cell__value{
+        text-align: left;
+    }
+    .group {
+      margin-bottom: 8px;
+    }
+    .btn_wrap {
+        justify-content: flex-end;
+    }
+    .assign_btn {
+        border: none;
+        padding: 8px;
+        outline: none;
+        margin: 0;
+        background: red;
+        border-radius: 5px;
+    }
+    .custom_wrap {
+        display: flex;
+    }
+    .order_id {
+        flex: 1;
+    }
+    .status {
+        width: 60px;
+        text-align: center;
+    }
+  }
 </style>

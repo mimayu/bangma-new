@@ -22,6 +22,7 @@ const getOrganization = (params) => {
 const doLogout = () => {
     return request('/api/doLogout/');
 }
+
 export {
     getProfile,
     getOrganization,

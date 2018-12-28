@@ -16,7 +16,16 @@ const postRegiste = (params) => {
     return request('/api/registe/', params);
 }
 
+/**
+ * 重置密码
+ * @param {*} params 
+ */
+const postReset = (params) => {
+    return request('/api/doReset/', params);
+}
+
 export {
     postLogin,
-    postRegiste
+    postRegiste,
+    postReset
 }

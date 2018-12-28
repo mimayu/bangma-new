@@ -25,7 +25,7 @@ const postQuxiaoAdd = (params) => {
 }
 
 /**
- * 获取用户信息
+ * 获取客户信息
  * @param {*} params 
  */
 const getCustomer = (params) => {
@@ -48,11 +48,34 @@ const getEstate = (params) => {
     return request('/api/getXiaoquList/', params, 'get');
 }
 
+/**
+ * 增项订单生成
+ * @param {*} params 
+ */
+const getAddQuote = (params) => {
+    return request('/api/zengxiangBaojia/', params, 'get');
+}
+
+/**
+ * 报价基础页面
+ * @param {*} params 
+ */
+const postSubmit = (params) => {
+    return request('/api/dobaojia/', params); 
+}
+
+const getSubmitInfo = (params) => {
+    return request('/api/baojiaTemple/', params, 'get'); 
+}
+
 export {
     postShangmenAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
     getQutoe,
-    getEstate
+    getEstate,
+    getAddQuote,
+    postSubmit,
+    getSubmitInfo
 }

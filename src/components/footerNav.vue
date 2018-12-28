@@ -1,17 +1,17 @@
 <template>
   <div class="footerNav">
     <router-link to="/" class="alink">
-    <img class="home_icon" src="../assets/img/22x.png">
-    {{home}}
+      <img class="home_icon" src="../assets/img/22x.png">
+      {{home}}
     </router-link>
-    <router-link to="" class="alink">
+    <router-link to="/remind" class="alink">
       <img class="home_icon" src="../assets/img/12x.png">
       {{msg}}
       </router-link>
-    <router-link to="" class="alink">
+    <router-link to="/profile" class="alink">
       <img class="home_icon" src="../assets/img/32x.png">
       {{me}}
-      </router-link>  
+    </router-link>  
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   name: 'footerNav',
   data () {
     return {
+      active: 0,
       home: '首页',
       msg: '消息',
       me: '我的',
@@ -42,6 +43,7 @@ export default {
   .alink{
     flex: 1;
     text-align: center;
+    margin: 0;
     height: 45px;
     line-height: 18px;
     font-weight: 500;font-size: 10px;

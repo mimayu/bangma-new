@@ -19,7 +19,18 @@ export default {
     },
     data () {
         return {
-        
+            imgArray: [],
+            imgNumber: 0,
+            settings: {
+                uploadUrl: '/api/do_upload/',
+                compress: true,
+                compressionRatio: 20,
+                data: [],
+                max: 9,
+                maxSize: 5 * 1024, // 5MB
+                typeArray: ['jpeg', 'jpg', 'png', 'gif'],
+            },
+            value: ''
         }
     },
     methods: {

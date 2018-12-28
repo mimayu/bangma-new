@@ -1,8 +1,13 @@
 <template>
   <div id="quote" class="quote_container">
-    <div class="quote_tabs">
-      1
-    </div>
+    <ul class="quote_tabs">
+      <li class="quote_item" v-for="item in tabs">
+        厨卫报价
+      </li>
+      <li class="quote_item_add" @click="addQuote">
+        +
+      </li>
+    </ul>
     <section class="quote_contents list-box">
       <div class="left-box" ref="menuWrapper">
         <ul>
@@ -11,18 +16,18 @@
       </div>
       <div class="right-box" ref="foodsWrapper">
         <ul>
-          <li v-for="item in details" ref="foodList">
-            <h3>卫生间</h3>
-            <section class="info">
-              <h4>立邦底材体系之墙面涂刷基层界面剂及造毛处理</h4>
-              <p class="pricem">单价：￥25   单位：m</p>
+          <li v-for="(items, index) in details" ref="foodList">
+            <h3>{{goods[index]}}</h3>
+            <section class="info" v-for="item in items">
+              <h4>{{item.project}}</h4>
+              <p class="pricem">单价：￥{{item.price}}   单位：{{item.unit}}</p>
               <span class="price">小计
-                <b class="red" v-show="item.count > 0">{{getSinglePrice(item.price,item.count)}}</b>
-                <b class="red" v-show="item.count <= 0">0</b>
+                <b class="red" v-show="item.quantity > 0">{{getSinglePrice(item.price,item.quantity)}}</b>
+                <b class="red" v-show="item.quantity <= 0">0</b>
               </span>
               <section class="price-edit">
                 <a class="minus" @click="minusCart(item)">-</a>
-                <span>{{item.count}}</span>
+                <span>{{item.quantity}}</span>
                 <a class="add" @click="addCart(item)">+</a>
               </section>
             </section>
@@ -33,14 +38,14 @@
     <section class="quote_toolbar">
       工程总价
       <span class="quote_price">¥33</span>
-      <button>保存并打印</button>
+      <button @click="handleSubmit">保存并打印</button>
     </section>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
-import { getQutoe } from '@/server';
+import { getQutoe, getAddQuote, postSubmit, getSubmitInfo } from '@/server';
 
 export default {
   name: 'quotation',
@@ -48,100 +53,34 @@ export default {
     
   },
   created() {
-    this.getQuote();
+    this.getQuote(1);
   },
   computed: {
     currentIndex() {
       for (let i = 0; i < this.listHeight.length; i++) {
         let height1 = this.listHeight[i];
         let height2 = this.listHeight[i + 1];
+        console.log(4, !height2, this.scrollY >= height1 ,this.scrollY < height2)
         if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           this._followScroll(i);
           return i;
         }
       }
       return 0;
-    }
+    },
   },
   data(){
     return {
-      goods: ['厨房报价', '卫生间', '卫生洁具', '厨房报价', '卫生间', '卫生洁具', '厨房报价', '卫生间', '卫生洁具', '厨房报价', '卫生间', '卫生洁具'],
-      details: [
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-        {
-          'title': '卫生间',
-          'brief': '立邦底材体系之墙面涂刷基层界面剂及造毛处理',
-          'price': '25',
-          'count': 0
-        },
-      ],
+      tabs: [1],
+      goods: [],
+      details: [],
+      iCustomerId: 1,
       listHeight: [],
       scrollY: 0,
+      current: 0
     }
   },
   methods: {
-    handleTabsAdd () {
-        this.tabs ++;
-    },
-    getQuote() {
-      let params = {
-        iCustomerId: 1,
-        iMode: 1
-      }
-      getQutoe(params).then(
-        res => {
-          this.$nextTick(() => {
-            this._initScroll();
-            this._calculateHeight();
-          });
-          console.log('res', res);
-        }
-      )
-    },
-    addCart(item) {
-      item.count ++;
-    },
-    minusCart(item) {
-      if(item.count == 0) {
-        return;
-      }
-      item.count --;
-    },
-    getSinglePrice(price, count) {
-      return price * count
-    },
-    getTotalPrice(price, count) {
-      return price * count
-    },
     selectMenu(index, event) {
       if (!event._constructed) {
         return;
@@ -154,12 +93,10 @@ export default {
       this.meunScroll = new BScroll(this.$refs.menuWrapper, {
         click: true
       });
-
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
         click: true,
         probeType: 3
       });
-
       this.foodsScroll.on('scroll', (pos) => {
         // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
         if (pos.y <= 0) {
@@ -176,11 +113,85 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
+      console.log('this.listHeight', this.listHeight);
     },
     _followScroll(index) {
       let menuList = this.$refs.menuList;
       let el = menuList[index];
       this.meunScroll.scrollToElement(el, 300, 0, -100);
+    },
+    addQuote() {
+      let params = {
+        'iCustomerId': 1
+      }
+      getAddQuote(params).then(
+        res => {
+          if(res.success == 1) {
+            let id = res.zengxiang_customer_id;
+            this.tabs.push(id);
+            this.reset();
+            this.getQuote(id);
+          }
+        }
+      )
+    },
+    handleSubmit() {
+      let params = {
+        'iCustomerId': 1,
+        'idAndNumberValues': ["1|2"]
+      }
+      postSubmit(params).then(
+        res => {
+          console.log('res', res);
+          if(res.success == 1) {
+          }
+        }
+      )
+    },
+    handleTabsAdd () {
+        this.tabs ++;
+    },
+    getQuote(id) {
+      let params = {
+        iCustomerId: id,
+        iMode: 1
+      }
+      getQutoe(params).then(
+        res => {
+          if(res.success == 1) {
+            this.goods = Object.values(res.type_arr);
+            this.details = Object.values(res.result);
+            this.iCustomerId = id;
+            this.tabs = this.tabs.concat(res.zengxiang_arr)
+            if(id == 1) {
+              this.$nextTick(() => {
+                this._initScroll();
+                this._calculateHeight();
+              });
+            }
+          }
+          
+          console.log('res', res);
+        }
+      )
+    },
+    addCart(item) {
+      item.quantity ++;
+    },
+    minusCart(item) {
+      if(item.quantity == 0) {
+        return;
+      }
+      item.quantity --;
+    },
+    getSinglePrice(price, count) {
+      return price * count
+    },
+    getTotalPrice(price, count) {
+      return price * count
+    },
+    reset() {
+      this.scrollY = 0;
     }
   }
 }
@@ -196,7 +207,17 @@ export default {
     display: flex;
     flex-direction: column;
     .quote_tabs {
+      display: flex;
       line-height: 44px;
+      .quote_item {
+        padding: 0 13px;
+        color: #FF5C12;
+      }
+      .quote_item_add {
+        padding: 0 20px;
+        background: red;
+        color: #fff;
+      }
     }
     .quote_contents {
       flex: 1;
@@ -240,7 +261,6 @@ export default {
     .price-edit{
       position:absolute;
       right:10px; 
-      width:105px;
       bottom:0;
       right:10px;
       a{
@@ -280,14 +300,15 @@ export default {
     }
     .info{
       h4{
-        font-size:14px;
+        font-size: 14px;
       }
       p{
-        font-size:12px; 
-        color:#999;
+        font-size: 12px; 
+        color: #999;
       }
-      position:relative;
-      padding:10px ;
+      position: relative;
+      padding: 10px ;
+      margin-bottom: 15px;
       .price{
         font-size:16px;
       }
@@ -299,7 +320,7 @@ export default {
       }
     }
     .current {
-      background: #fff !important;
+      background: red !important;
     }
   }
 </style>

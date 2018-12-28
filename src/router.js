@@ -23,6 +23,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "register" */ './views/login/register')
     },
     {
+      path: '/reset',
+      name: 'reset',
+      component: () => import(/* webpackChunkName: "reset" */ './views/login/reset')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */ './views/sale/home')
@@ -141,12 +146,12 @@ export default new Router({
     {
       path: '/gzProgress',
       name: 'gzProgress',
-      component: () => import(/* webpackChunkName: "remind" */ './views/boss/gzProgress')
+      component: () => import(/* webpackChunkName: "gzProgress" */ './views/boss/gzProgress')
     },
     {
       path: '/salesSort',
       name: 'salesSort',
-      component: () => import(/* webpackChunkName: "remind" */ './views/boss/salesSort')
+      component: () => import(/* webpackChunkName: "salesSort" */ './views/boss/salesSort')
     }
   ]
 })
