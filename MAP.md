@@ -27,7 +27,8 @@
     -bossHome // boss 首页
     -gzProgress //工长进度看板
     -salesSort // 渠道排行  业绩排行   还有个啥排行
-
+    -reviewOver  //审核完成
+    -settlement  //结算
 
 
 

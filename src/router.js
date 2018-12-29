@@ -157,6 +157,24 @@ export default new Router({
       path: '/bossHome',
       name: 'bossHome',
       component: () => import(/* webpackChunkName: "bossHome" */ './views/boss/bossHome')
+    },
+    {
+      path: '/reviewOver',
+      name: 'reviewOver',
+      component: () => import(/* webpackChunkName: "reviewOver" */ './views/boss/reviewOver')
+      
+    },
+    {
+      path: '/settlement',
+      name: 'settlement',
+      component: () => import(/* webpackChunkName: "settlement" */ './views/boss/settlement')
+      
+    },
+    {
+      path: '/loss',
+      name: 'loss',
+      component: () => import(/* webpackChunkName: "settlement" */ './views/boss/loss')
+      
     }
   ]
 })

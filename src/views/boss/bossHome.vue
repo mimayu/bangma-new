@@ -51,10 +51,30 @@
     <h3>数据统计</h3>
 
     <Tabs v-model="active">
-        <Tab title="今天">今天</Tab>
+        <Tab title="今天">
+         <Row class=mini>
+            <Col span="6">%</Col>
+            <Col span="6">上门率66%</Col>
+            <Col span="6">签单率66%</Col>
+            <Col span="6">%</Col>
+
+        </Row>
+        <Row class="order">
+            <Col span="6">30<br/>总接单数</Col>
+            <Col span="6">30<br/>总上门数</Col>
+            <Col span="6">30<br/>总签单数</Col>
+            <Col span="6">30<br/>总签单金额</Col>
+        </Row>
+        
+           
+        </Tab>
         <Tab title="本周">www</Tab>
         <Tab title="本月">www</Tab>
     </Tabs>
+
+
+    <h3>签单占比</h3>
+
     <footerNav></footerNav>
   </div>
 </template>
@@ -75,25 +95,35 @@ export default {
         Row,
         Col,
         Toast,
-         Tab,
-            Tabs,
+        Tab,
+        Tabs,
         footerNav: footerNav
     },
     data () {
         return {
             list:{},
-            active: 2
+            active: 0
         }
     },
 
-  components: {
-    'footerNav': footerNav,
-    // 'homePage': homePage,
-  },
+ 
 }
 </script>
 
 <style lang="scss"> 
+.mini{
+    text-align:center;padding:10px 0;font-size: 10px;
+    color: #8797B6;
+    .van-col:first-child,
+    .van-col:last-child{color:#fff;}
+}
+.order{
+    text-align:center;line-height:1.5;
+    font-size: 12px;
+    color: #575757;
+    padding-bottom:10px;
+    border-bottom:1px solid #EBEBEB;
+    }
     a{
     font-size: 28px;
     color: #575757;
@@ -117,8 +147,8 @@ export default {
     font-size: 14px;
   }
   .all_user{
-    width:73px;
-    height:73px;
+    width:60%;
+    // height:73px;
     border-radius:50%;
     display:block;
     margin: 0 auto 10px auto;
