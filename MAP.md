@@ -24,6 +24,7 @@
 - remind
     -remind //提醒事件
 - boss
+    -bossHome // boss 首页
     -gzProgress //工长进度看板
     -salesSort // 渠道排行  业绩排行   还有个啥排行
 
