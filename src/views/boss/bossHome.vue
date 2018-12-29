@@ -104,9 +104,7 @@ export default {
             list:{},
             active: 0
         }
-    },
-
- 
+    }
 }
 </script>
 
