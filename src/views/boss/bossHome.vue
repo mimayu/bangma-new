@@ -84,12 +84,7 @@ export default {
             list:{},
             active: 2
         }
-    },
-
-  components: {
-    'footerNav': footerNav,
-    // 'homePage': homePage,
-  },
+    }
 }
 </script>
 
