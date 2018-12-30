@@ -29,6 +29,11 @@
     -salesSort // 渠道排行  业绩排行   还有个啥排行
     -reviewOver  //审核完成
     -settlement  //结算
+- manager
+    -managerHome // manager 首页
+    -mSignSc // manager 签约成功
+    -managerList // manager 工长列表
+
 
 
 

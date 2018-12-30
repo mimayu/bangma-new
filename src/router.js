@@ -175,6 +175,18 @@ export default new Router({
       name: 'loss',
       component: () => import(/* webpackChunkName: "settlement" */ './views/boss/loss')
       
+    },
+    {
+      path: '/managerHome',
+      name: 'managerHome',
+      component: () => import(/* webpackChunkName: "managerHome" */ './views/manager/managerHome')
+      
+    },
+    {
+      path: '/managerList',
+      name: 'managerList',
+      component: () => import(/* webpackChunkName: "managerList" */ './views/manager/managerList')
+      
     }
   ]
 })
