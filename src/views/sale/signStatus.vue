@@ -17,7 +17,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
-            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
           </div>
         </Cell-group>
       </Tab>
@@ -38,7 +38,7 @@
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
             <button plain type="primary" class="assign_btn" @click="handleCancel(item.iCustomerId)">解约</button>
-            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
           </div>
         </Cell-group>
       </Tab>
@@ -58,17 +58,22 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
-            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
           </div>
         </Cell-group>
       </Tab>
     </Tabs>
+    <Actionsheet
+      v-model="modeShow"
+      :actions="actions"
+      @select="handleSelect"
+    />
     <footerNav></footerNav>
   </div>
 </template>
 
 <script>
-  import { Tab, Tabs, Cell, CellGroup, Toast } from 'vant';
+  import { Tab, Tabs, Cell, CellGroup, Toast, Actionsheet } from 'vant';
   import { getCustomer, getCancel } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
 
@@ -82,6 +87,19 @@
         data_cancel: [],
         record: [0, 0, 0, 0],
         page: 1,
+        modeShow: false,
+        actions: [
+          {
+            name: '普装'
+          },
+          {
+            name: '精装'
+          },
+          {
+            name: '奢华'
+          }
+        ],
+        currentId: ''
       }
     },
     components: {
@@ -90,6 +108,7 @@
       Cell, 
       CellGroup,
       Toast,
+      Actionsheet,
       'footerNav': footerNav,
     },
     created() {
@@ -129,7 +148,6 @@
         }
       },
       handleCancel(id) {
-        console.log('handleQuote', id);
         let params = {
           'iCustomerId': id
         };
@@ -149,7 +167,25 @@
         )
       },
       handleQuote(id) {
-        console.log('handleQuote', id)
+        this.modeShow = true;
+        this.currentId = id;
+        console.log('this.currentId', this.currentId)
+      },
+      handleSelect(value) {
+        let mode = this.actions.findIndex(item => {
+          return item.name == value.name
+        })
+        this.modeShow = false;
+        this.$router.push(
+          {
+              name: 'quotation',
+              params: {
+                  id: this.currentId,
+                  mode: +mode + 1
+              }
+          }
+        )
+        console.log('value', value, mode)
       }
     }
   }

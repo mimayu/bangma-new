@@ -33,14 +33,6 @@ const getCustomer = (params) => {
 }
 
 /**
- * 获取报价信息
- * @param {*} params 
- */
-const getQutoe = (params) => {
-    return request('/api/baojia/', params, 'get');
-}
-
-/**
  * 获取匹配小区信息
  * @param {*} params 
  */
@@ -57,7 +49,15 @@ const getAddQuote = (params) => {
 }
 
 /**
- * 报价
+ * 获取报价信息
+ * @param {*} params 
+ */
+const getQuote = (params) => {
+    return request('/api/baojiaTemple/', params, 'get');
+}
+
+/**
+ * 提交报价操作
  * @param {*} params 
  */
 const postSubmit = (params) => {
@@ -65,11 +65,11 @@ const postSubmit = (params) => {
 }
 
 /**
- * 获取报价模板
+ * 获取报价后信息
  * @param {*} params 
  */
 const getSubmitInfo = (params) => {
-    return request('/api/baojiaTemple/', params, 'get'); 
+    return request('/api/baojia/', params, 'get'); 
 }
 
 /**
@@ -85,7 +85,7 @@ export {
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
-    getQutoe,
+    getQuote,
     getEstate,
     getAddQuote,
     postSubmit,

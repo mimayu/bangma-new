@@ -45,7 +45,7 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { getQutoe, getAddQuote, postSubmit, getSubmitInfo } from '@/server';
+import { getQuote, getAddQuote, postSubmit, getSubmitInfo } from '@/server';
 
 export default {
   name: 'quotation',
@@ -53,7 +53,9 @@ export default {
     
   },
   created() {
-    this.getQuote(1);
+    let iCustomerId = this.$route.params.id || 1;
+    let iMode = this.$route.params.mode || 1;
+    this.getQuote(iCustomerId, iMode);
   },
   computed: {
     currentIndex() {
@@ -151,26 +153,23 @@ export default {
     handleTabsAdd () {
         this.tabs ++;
     },
-    getQuote(id) {
+    getQuote(id, mode) {
       let params = {
         iCustomerId: id,
-        iMode: 1
+        iMode: mode
       }
-      getQutoe(params).then(
+      getQuote(params).then(
         res => {
           if(res.success == 1) {
             this.goods = Object.values(res.type_arr);
             this.details = Object.values(res.result);
             this.iCustomerId = id;
             this.tabs = this.tabs.concat(res.zengxiang_arr)
-            if(id == 1) {
-              this.$nextTick(() => {
-                this._initScroll();
-                this._calculateHeight();
-              });
-            }
+            this.$nextTick(() => {
+              this._initScroll();
+              this._calculateHeight();
+            });
           }
-          
           console.log('res', res);
         }
       )

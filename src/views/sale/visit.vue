@@ -89,7 +89,7 @@
                 this.show = true;
             },
             visitAdd() {
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id;
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateShangmen': this.time,
@@ -102,7 +102,6 @@
                             Toast(res.msg);
                             return;
                         }
-                        console.log('res', res);
                     }
                 )
             },
