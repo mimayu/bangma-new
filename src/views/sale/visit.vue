@@ -1,10 +1,10 @@
 <template>
     <div class="visit">
         <Cell-group>
-            <Cell title="订单状态" is-link value="上门" @click="choseOrder" />
-            <Cell title="上门时间" is-link value="" @click="choseTime" />
-            <Cell title="重点跟进" is-link value="上门" @click="choseLevel"/>
-            <Cell title="客户反馈" is-link value="非常满意，签约" @click="choseCustom"/>
+            <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
+            <Cell title="上门时间" is-link :value="time" @click="choseTime" />
+            <Cell title="重点跟进" is-link :value="level" @click="choseLevel"/>
+            <Cell title="客户反馈" is-link :value="action" @click="choseCustom"/>
         </Cell-group>
         <Cell-group>
             <Field
@@ -29,13 +29,13 @@
         </Popup>
 
         <Popup v-model="orderShow" position="bottom">
-            <Picker show-toolbar :columns="orderActions" @cancel="handleOrderCancel" @confirm="handleOrderConfirm" @change="handleOrderSelect" />
+            <Picker show-toolbar :columns="orderActions" @cancel="handleOrderCancel" @confirm="handleOrderConfirm" />
         </Popup>
         <Popup v-model="levelShow" position="bottom">
-            <Picker show-toolbar :columns="levelActions" @cancel="handleLevelCancel" @confirm="handleLevelConfirm" @change="handleLevelSelect" />
+            <Picker show-toolbar :columns="levelActions" @cancel="handleLevelCancel" @confirm="handleLevelConfirm"/>
         </Popup>
         <Popup v-model="customShow" position="bottom">
-            <Picker show-toolbar :columns="customActions" @cancel="handleCustomCancel" @confirm="handleCustomConfirm" @change="handleCustomSelect" />
+            <Picker show-toolbar :columns="customActions" @cancel="handleCustomCancel" @confirm="handleCustomConfirm"/>
         </Popup>
     </div>
 </template>
@@ -43,6 +43,7 @@
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker, Button, Field, Toast, Picker } from 'vant';
     import { postShangmenAdd } from '@/server';
+    import { timetrans } from '@/utils/time';
 
     export default {
         name: 'visit',
@@ -72,11 +73,15 @@
                     '签约等待', '签约成功', '签约失败'
                 ],
                 levelActions: [
-                    'A级', 'B级', 'C级', 'D级'
+                    'A', 'B', 'C', 'D'
                 ],
                 customActions: [
                     '客户需要商量考虑', '已加微信，继续跟进', '预留电话，已约定下次联系时间', '时间安排不过来，不做了', '价格太贵，不做了'
-                ]
+                ],
+                status: '签约等待', // 状态
+                time: '', // 时间
+                level: '', // 客户重要程度
+                action: '' // 操作
             };
         },
         methods: {
@@ -84,11 +89,12 @@
                 this.show = true;
             },
             visitAdd() {
-                let time = Date.parse(this.currentDate);
+                let iCustomerId = this.$route.params.id || 1;
                 let params = {
-                    'iCustomerId': 1,
-                    'dateShangmen': time,
-                    'shangmenContent': this.message
+                    'iCustomerId': iCustomerId,
+                    'dateShangmen': this.time,
+                    'shangmenContent': this.action,
+                    'iLevel': this.level
                 }
                 postShangmenAdd(params).then(
                     res => {
@@ -110,37 +116,33 @@
                 this.customShow = true;
             },
             handleComfirm(value) {
+                let data = timetrans(value);
+                this.time = data;
                 this.show = false;
             },
             handleCancel(e) {
                 this.show = false;
             },
-            handleOrderConfirm() {
+            handleOrderConfirm(value) {
+                this.status = value;
                 this.orderShow = false;
             },
             handleOrderCancel() {
                 this.orderShow = false;
             },
-            handleOrderSelect(item) {
-                
-            },
-            handleLevelConfirm() {
+            handleLevelConfirm(value) {
+                this.level = value;
                 this.levelShow = false;
             },
             handleLevelCancel() {
                 this.levelShow = false;
             },
-            handleLevelSelect(item) {
-                
-            },
-            handleCustomConfirm() {
+            handleCustomConfirm(value) {
+                this.action = value;
                 this.customShow = false;
             },
             handleCustomCancel() {
                 this.customShow = false;
-            },
-            handleCustomSelect(item) {
-                
             }
         }
     }

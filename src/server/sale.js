@@ -57,15 +57,27 @@ const getAddQuote = (params) => {
 }
 
 /**
- * 报价基础页面
+ * 报价
  * @param {*} params 
  */
 const postSubmit = (params) => {
     return request('/api/dobaojia/', params); 
 }
 
+/**
+ * 获取报价模板
+ * @param {*} params 
+ */
 const getSubmitInfo = (params) => {
     return request('/api/baojiaTemple/', params, 'get'); 
+}
+
+/**
+ * 解约
+ * @param {*} params 
+ */
+const getCancel = (params) => {
+    return request('/api/jieyue/', params, 'get'); 
 }
 
 export {
@@ -77,5 +89,6 @@ export {
     getEstate,
     getAddQuote,
     postSubmit,
-    getSubmitInfo
+    getSubmitInfo,
+    getCancel
 }

@@ -17,7 +17,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
-              <button plain type="primary" class="assign_btn" >预约</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
           </div>
         </Cell-group>
       </Tab>
@@ -37,7 +37,8 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
-              <button plain type="primary" class="assign_btn" >预约</button>
+            <button plain type="primary" class="assign_btn" @click="handleCancel(item.iCustomerId)">解约</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
           </div>
         </Cell-group>
       </Tab>
@@ -57,7 +58,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap">
-              <button plain type="primary" class="assign_btn" >预约</button>
+            <button plain type="primary" class="assign_btn" @click="handleQuote">报价</button>
           </div>
         </Cell-group>
       </Tab>
@@ -67,8 +68,8 @@
 </template>
 
 <script>
-  import { Tab, Tabs, Cell, CellGroup } from 'vant';
-  import { getCustomer } from '@/server';
+  import { Tab, Tabs, Cell, CellGroup, Toast } from 'vant';
+  import { getCustomer, getCancel } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
 
   export default {
@@ -88,6 +89,7 @@
       Tabs,
       Cell, 
       CellGroup,
+      Toast,
       'footerNav': footerNav,
     },
     created() {
@@ -119,12 +121,35 @@
         }
         if(value == 2) {
           let params = {
-            status: 3,
+            status: 101,
             page: 1,
             keywords: ''
           }
           this.getInfo(params, 'data_cancel');
         }
+      },
+      handleCancel(id) {
+        console.log('handleQuote', id);
+        let params = {
+          'iCustomerId': id
+        };
+        
+        getCancel(params).then(
+          res => {
+            if(res.success == 1) {
+              let index = this.data_success.findIndex(item => {
+                return item.iCustomerId == id;
+              });
+              this.data_success.splice(index, 1);
+              Toast('解约成功');
+            }else {
+              Toast(res.msg);
+            }
+          }
+        )
+      },
+      handleQuote(id) {
+        console.log('handleQuote', id)
       }
     }
   }
