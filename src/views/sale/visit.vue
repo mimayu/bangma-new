@@ -3,6 +3,7 @@
         <Cell-group>
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
             <Cell title="上门时间" is-link :value="time" @click="choseTime" />
+            <Cell title="跟进时间" is-link :value="netxTime" @click="choseNextTime" />
             <Cell title="重点跟进" is-link :value="level" @click="choseLevel"/>
             <Cell title="客户反馈" is-link :value="action" @click="choseCustom"/>
         </Cell-group>
@@ -16,12 +17,22 @@
                 autosize
             />
         </Cell-group>
-        <Button type="primary" size="large" @click="visitAdd">普通按钮</Button>
+        <Button type="primary" size="large" @click="visitAdd">提交</Button>
         <Popup v-model="show" position="bottom">
             <datetime-picker
                 @confirm="handleComfirm"
                 @cancel="handleCancel"
                 v-model="currentDate"
+                type="datetime"
+                :min-date="minDate"
+                :max-date="maxDate"
+            />
+        </Popup>
+        <Popup v-model="netxShow" position="bottom">
+            <datetime-picker
+                @confirm="handleNextComfirm"
+                @cancel="handleNextCancel"
+                v-model="currentNextDate"
                 type="datetime"
                 :min-date="minDate"
                 :max-date="maxDate"
@@ -65,6 +76,7 @@
                 maxDate: new Date(2019, 10, 1),
                 currentDate: new Date(),
                 show: false,
+                netxShow: false,
                 orderShow: false,
                 levelShow: false,
                 customShow: false,
@@ -81,12 +93,16 @@
                 status: '签约等待', // 状态
                 time: '', // 时间
                 level: '', // 客户重要程度
-                action: '' // 操作
+                action: '', // 操作
+                netxTime: '' //跟进日期
             };
         },
         methods: {
             choseTime() {
                 this.show = true;
+            },
+            choseNextTime() {
+                this.nextShow = true;
             },
             visitAdd() {
                 let iCustomerId = this.$route.params.id;
@@ -121,6 +137,14 @@
             },
             handleCancel(e) {
                 this.show = false;
+            },
+            handleNextCancel(e) {
+                this.nextShow = false;
+            },
+            handleNextComfirm(value) {
+                let data = timetrans(value);
+                this.netxTime = data;
+                this.nextShow = false;
             },
             handleOrderConfirm(value) {
                 this.status = value;
