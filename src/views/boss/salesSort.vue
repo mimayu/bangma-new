@@ -9,7 +9,14 @@
             <Col span="5">签单率</Col>
         </Row>
         <Row>
-            <Col span="4">排行</Col>
+            <Col span="4">1</Col>
+            <Col span="6">渠道名称</Col>
+            <Col span="4">单数</Col>
+            <Col span="5">签单数</Col>
+            <Col span="5">签单率</Col>
+        </Row>
+         <Row>
+            <Col span="4">1</Col>
             <Col span="6">渠道名称</Col>
             <Col span="4">单数</Col>
             <Col span="5">签单数</Col>
@@ -65,8 +72,9 @@
 
 <style lang="scss">
    .van-row{
-       text-align:center;font-size: 14px;background: #F0F5FF;
+       text-align:center;font-size: 14px;background: #fff;
         color: #808792;height:30px;line-height:30px;
+        &:nth-child(2n){background:#F0F5FF;}
     }
    .sales-title{
        text-align:center;font-size:18px;color: #262626;height:44px;line-height:44px;
