@@ -26,24 +26,24 @@
         <img class="all_user" src="../../assets/img/7.png">
         审核完成
       </router-link>
-       <router-link to="signStatus" class="alink">
+       <router-link to="settlement" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
         结算
       </router-link>
-       <router-link to="signStatus" class="alink">
+       <router-link to="loss" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
         流失名单
       </router-link>
     </div>
 
      <div class="rank">
-      <router-link to="allUser" class="alink">
+      <router-link to="gzProgress" class="alink">
         工长实施进程
       </router-link>
-      <router-link to="detection" class="alink">
+      <router-link to="salesSortYj" class="alink">
         业绩排行榜
       </router-link>
-      <router-link to="startWork" class="alink">
+      <router-link to="salesSort" class="alink">
         渠道排行榜
       </router-link>
     </div>

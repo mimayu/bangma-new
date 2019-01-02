@@ -26,10 +26,11 @@
 - boss
     -bossHome // boss 首页
     -gzProgress //工长进度看板
-    -salesSort // 渠道排行  业绩排行   还有个啥排行
+    -salesSort // 渠道排行    还有个啥排行
+    -salesSortYj // 业绩排行   
     -reviewOver  //审核完成
     -settlement  //结算
-    -settlement  //流失名单
+    -loss  //流失名单
 - manager
     -managerHome // manager 首页
     -mSignSc // manager 签约成功
