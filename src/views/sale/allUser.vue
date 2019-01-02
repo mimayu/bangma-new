@@ -33,20 +33,8 @@
                 <Cell title="地址" :value="item.sAddress" />
                 <Cell title="施工内容" :value="item.sRemarks || '-'" />
                 <Cell title="预约时间" :value="item.tOrderDate || '-'" />
-                <div class="btn_wrap">
-                    <button plain type="primary" class="assign_btn" >预约</button>
-                    <button plain type="primary" class="assign_btn" >再约</button>
-                    <button plain type="primary" class="assign_btn" >基检取消</button>
-                    <button plain type="primary" class="assign_btn" @click="handleGo(1, item.iCustomerId)">上门</button>
-                    <button plain type="primary" class="assign_btn" >再次上门</button>
-                    <button plain type="primary" class="assign_btn" >报价</button>
-                    <button plain type="primary" class="assign_btn" >报价调整</button>
-                    <button plain type="primary" class="assign_btn" >签约失败</button>
-                    <button plain type="primary" class="assign_btn" >上门</button>
-                    <button plain type="primary" class="assign_btn" >再次上门</button>
-                    <button plain type="primary" class="assign_btn" >合同取消</button>
-                    <button plain type="primary" class="assign_btn" >增减项</button>
-                    <button plain type="primary" class="assign_btn" >跟进</button>
+                <div class="van-cell btn_wrap" >
+                    <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
                 </div>
             </Cell-group>
         </div>

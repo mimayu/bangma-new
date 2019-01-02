@@ -52,11 +52,10 @@
             //     return this.$store.getters.getUser;
             // }
         },
-          created() {
+        created() {
             // this.salesSort()
         },
         methods: {
-
              salesSort() {
                 salesSort().then(
                  res => {

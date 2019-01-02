@@ -5,6 +5,11 @@
             <Cell title="上门时间" is-link :value="time" @click="choseTime" />
             <Cell title="重点跟进" is-link :value="level" @click="choseLevel"/>
             <Cell title="客户反馈" is-link :value="action" @click="choseCustom"/>
+            <Cell title="跟进时间" is-link :value="nextTime" @click="choseNextTime" v-if="status === '签约等待'" />
+            <Cell title="签约日期" is-link :value="dateOrder" @click="showOrderTime" v-if="status === '签约成功'" />
+            <Cell title="预计开工日期" is-link :value="dateYujiKaigong" @click="showWorkTime" v-if="status === '签约成功'" />
+            <Field label="签约金额" v-model="orderFee" placeholder="请输入签约金额" v-if="status === '签约成功'" />
+            <Field label="签约定金" v-model="orderDingjin" placeholder="请输入签约定金" v-if="status === '签约成功'" />
         </Cell-group>
         <Cell-group>
             <Field
@@ -16,13 +21,40 @@
                 autosize
             />
         </Cell-group>
-        <Button type="primary" size="large" @click="visitAdd">普通按钮</Button>
+        <Button type="primary" size="large" @click="visitAdd">提交</Button>
         <Popup v-model="show" position="bottom">
             <datetime-picker
                 @confirm="handleComfirm"
                 @cancel="handleCancel"
                 v-model="currentDate"
                 type="datetime"
+                :min-date="minDate"
+                :max-date="maxDate"
+            />
+        </Popup>
+        <Popup v-model="nextShow" position="bottom">
+            <datetime-picker
+                @confirm="handleNextComfirm"
+                @cancel="handleNextCancel"
+                type="datetime"
+                :min-date="minDate"
+                :max-date="maxDate"
+            />
+        </Popup>
+        <Popup v-model="showOrder" position="bottom">
+            <datetime-picker
+                @confirm="handleOrderDateComfirm"
+                @cancel="handleOrderDateCancel"
+                type="date"
+                :min-date="minDate"
+                :max-date="maxDate"
+            />
+        </Popup>
+        <Popup v-model="showWork" position="bottom">
+            <datetime-picker
+                @confirm="handleWorkComfirm"
+                @cancel="handleWorkCancel"
+                type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
             />
@@ -65,6 +97,7 @@
                 maxDate: new Date(2019, 10, 1),
                 currentDate: new Date(),
                 show: false,
+                nextShow: false, //跟进日期 签约等待
                 orderShow: false,
                 levelShow: false,
                 customShow: false,
@@ -81,7 +114,14 @@
                 status: '签约等待', // 状态
                 time: '', // 时间
                 level: '', // 客户重要程度
-                action: '' // 操作
+                action: '', // 操作
+                nextTime: '', //跟进日期 签约等待
+                dateOrder: '', // 签约成功 签约日期 2018-12-08
+                dateYujiKaigong: '', // 签约成功 预计开工日期 2018-12-08
+                orderFee: '', // 签约成功 金额
+                orderDingjin: '', // 签约成功 签约定金
+                showOrder: false,
+                showWork: false,
             };
         },
         methods: {
@@ -90,18 +130,34 @@
             },
             visitAdd() {
                 let iCustomerId = this.$route.params.id;
+                
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateShangmen': this.time,
-                    'shangmenContent': this.action,
+                    'shangmenContent': `${this.action}${this.message}`,
                     'iLevel': this.level
+                }
+                if(this.status == '签约等待') {
+                   params.iStatus = 4;
+                   params.timeNextFollow = this.nextTime;
+                }
+                if(this.status == '签约成功') {
+                   params.iStatus = 5;
+                   params.dateOrder = this.dateOrder;
+                   params.dateYujiKaigong = this.dateYujiKaigong;
+                   params.orderFee = this.orderFee
+                   params.orderDingjin = this.orderDingjin
+                }
+                if(this.status == '签约失败') {
+                   params.iStatus = 101;
                 }
                 postShangmenAdd(params).then(
                     res => {
-                        if(res.success == 2) {
+                        if(res.success == 1) {
                             Toast(res.msg);
                             return;
                         }
+                        Toast(res.msg);
                     }
                 )
             },
@@ -136,12 +192,56 @@
             handleLevelCancel() {
                 this.levelShow = false;
             },
+
             handleCustomConfirm(value) {
                 this.action = value;
                 this.customShow = false;
             },
             handleCustomCancel() {
                 this.customShow = false;
+            },
+
+            // 处理等待 下次跟进日期
+            choseNextTime() {
+                this.nextShow = true;
+            },
+            handleNextCancel(e) {
+                this.nextShow = false;
+            },
+            handleNextComfirm(value) {
+                let data = timetrans(value);
+                this.nextTime = data;
+                this.nextShow = false;
+            },
+
+            // 处理成功 签约日期
+            showOrderTime() {
+                this.showOrder = true;
+            },
+            handleOrderDateCancel(e) {
+                this.showOrder = false;
+            },
+            handleOrderDateComfirm(value) {
+                let data = timetrans(value, 1);
+                this.dateOrder = data;
+                this.showOrder = false;
+            },
+
+            // 处理成功 预计开工日期
+            showWorkTime() {
+                this.showWork = true;
+            },
+            handleWorkCancel(e) {
+                this.showWork = false;
+            },
+            handleWorkComfirm(value) {
+                let data = timetrans(value, 1);
+                this.dateYujiKaigong = data;
+                this.showWork = false;
+            },
+            // 重置
+            reset() {
+
             }
         }
     }
