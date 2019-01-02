@@ -12,5 +12,4 @@ const salesSort = (params) => {
 
 export {
     salesSort,
-   
 }
