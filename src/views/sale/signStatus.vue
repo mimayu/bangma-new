@@ -115,7 +115,8 @@
       let params = {
         status: 4,
         page: 1,
-        keywords: ''
+        keywords: '',
+        fromdate: ''
       }
       this.getInfo(params, 'data_under');
     },
@@ -134,7 +135,8 @@
           let params = {
             status: 5,
             page: 1,
-            keywords: ''
+            keywords: '',
+            fromdate: ''
           }
           this.getInfo(params, 'data_success');
         }
@@ -142,7 +144,8 @@
           let params = {
             status: 101,
             page: 1,
-            keywords: ''
+            keywords: '',
+            fromdate: ''
           }
           this.getInfo(params, 'data_cancel');
         }
