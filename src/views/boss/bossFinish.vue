@@ -5,7 +5,7 @@
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">基检未约</span>
+                        <span class="status">完工</span>
                     </div>
                 </template>
             </Cell>
