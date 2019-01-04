@@ -190,7 +190,46 @@ export default new Router({
       path: '/managerList',
       name: 'managerList',
       component: () => import(/* webpackChunkName: "managerList" */ './views/manager/managerList')
-      
+    },
+    /** 
+    * boss - > 新进客户 
+    */
+    {
+      path: '/bossAddCustom',
+      name: 'bossAddCustom',
+      component: () => import(/* webpackChunkName: "bossAddCustom" */ './views/boss/addCustom.vue')
+    },
+    /** 
+    * boss - > 签约客户 
+    */
+    {
+      path: '/bossSignCustom',
+      name: 'bossSignCustom',
+      component: () => import(/* webpackChunkName: "bossSignCustom" */ './views/boss/signCustom.vue')
+    },
+    /** 
+    * boss - > 开工实施 
+    */
+    {
+      path: '/bossWorking',
+      name: 'bossWorking',
+      component: () => import(/* webpackChunkName: "bossWorking" */ './views/boss/bossWorking.vue')
+    },
+    /** 
+    * boss - > 完工
+    */
+    {
+      path: '/bossFinish',
+      name: 'bossFinish',
+      component: () => import(/* webpackChunkName: "bossFinish" */ './views/boss/bossFinish.vue')
+    },
+    /** 
+    * boss - > 审核完成
+    */
+    {
+      path: '/bossAudit',
+      name: 'bossAudit',
+      component: () => import(/* webpackChunkName: "bossAudit" */ './views/boss/bossAudit.vue')
     }
   ]
 })

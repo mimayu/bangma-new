@@ -6,23 +6,23 @@
         <img class="all_user" src="../../assets/img/home.png">
         全部客户
       </router-link>
-      <router-link to="detection" class="alink">
+      <router-link to="bossAddCustom" class="alink">
         <img class="all_user" src="../../assets/img/3.png">
         新进客户
       </router-link>
-      <router-link to="startWork" class="alink">
+      <router-link to="bossSignCustom" class="alink">
         <img class="all_user" src="../../assets/img/4.png">
         签约客户
       </router-link>
-      <router-link to="signStatus" class="alink">
+      <router-link to="bossWorking" class="alink">
         <img class="all_user" src="../../assets/img/5.png">
         开工实施
       </router-link>
-      <router-link to="signStatus" class="alink">
+      <router-link to="bossFinish" class="alink">
         <img class="all_user" src="../../assets/img/6.png">
         完工
       </router-link>
-      <router-link to="signStatus" class="alink">
+      <router-link to="bossAudit" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
         审核完成
       </router-link>

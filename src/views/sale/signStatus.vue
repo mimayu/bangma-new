@@ -16,8 +16,8 @@
           <Cell title="地址" :value="item.sAddress" />
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-          <div class="van-cell btn_wrap">
-            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
+          <div class="van-cell btn_wrap" v-if="item.actions">
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
@@ -36,9 +36,8 @@
           <Cell title="地址" :value="item.sAddress" />
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-          <div class="van-cell btn_wrap">
-            <button plain type="primary" class="assign_btn" @click="handleCancel(item.iCustomerId)">解约</button>
-            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
+          <div class="van-cell btn_wrap" v-if="item.actions">
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
@@ -57,8 +56,8 @@
           <Cell title="地址" :value="item.sAddress" />
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-          <div class="van-cell btn_wrap">
-            <button plain type="primary" class="assign_btn" @click="handleQuote(item.iCustomerId)">报价</button>
+          <div class="van-cell btn_wrap" v-if="item.actions">
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
