@@ -1,5 +1,5 @@
 <template>
-    <div class="bossWorking_container">
+    <div class="saleWorking_container">
         <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
@@ -15,7 +15,6 @@
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="预约时间" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" >
-                <button plain type="primary" class="assign_btn" @click="handleGo(7, item.iCustomerId)">开工</button>
                 <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
             </div>
         </Cell-group>
@@ -27,7 +26,7 @@
     import { getCustomer } from '@/server';
 
     export default {
-        name: 'bossWorking',
+        name: 'saleWorking',
         components: {
             Cell,
             CellGroup,
@@ -83,7 +82,7 @@
 </script>
 
 <style lang="scss">
-    .bossWorking_container {
+    .saleWorking_container {
         background-color: #f6f6f6;
         .van-cell__title, .van-field .van-cell__title {
             max-width: 100px;

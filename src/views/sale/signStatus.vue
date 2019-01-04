@@ -85,7 +85,9 @@
         data_success: [],
         data_cancel: [],
         record: [0, 0, 0, 0],
-        page: 1,
+        underPage: 1,
+        successPage: 1,
+        cancelPage: 1,
         modeShow: false,
         actions: [
           {
@@ -111,15 +113,42 @@
       'footerNav': footerNav,
     },
     created() {
-      let params = {
-        status: 4,
-        page: 1,
-        keywords: '',
-        fromdate: ''
+      this.active = this.$route.query.active || 0;
+      if(this.active == 0) {
+        this.getUnder(1);
+        return;
       }
-      this.getInfo(params, 'data_under');
+      if(this.active == 1) {
+        this.getSuccess(1);
+        return;
+      }
+      if(this.active == 2) {
+        this.getCancel(1);
+        return;
+      }
     },
     methods: {
+      getUnder(page) {
+        let params = {
+          status: 4,
+          page: page,
+        }
+        this.getInfo(params, 'data_under');
+      },
+      getSuccess(page) {
+        let params = {
+            status: 5,
+            page: page,
+          }
+          this.getInfo(params, 'data_success');
+      },
+      getCancel(page) {
+        let params = {
+          status: 101,
+          page: page,
+        }
+        this.getInfo(params, 'data_cancel');
+      },
       getInfo(params, type) {
         getCustomer(params).then(
           res => {
@@ -130,30 +159,23 @@
         )
       },
       handleChange(value) {
+        if(value == 0) {
+          this.getUnder(1);
+          return;
+        }
         if(value == 1) {
-          let params = {
-            status: 5,
-            page: 1,
-            keywords: '',
-            fromdate: ''
-          }
-          this.getInfo(params, 'data_success');
+          this.getSuccess(1);
+          return;
         }
         if(value == 2) {
-          let params = {
-            status: 101,
-            page: 1,
-            keywords: '',
-            fromdate: ''
-          }
-          this.getInfo(params, 'data_cancel');
+          this.getCancel(1);
+          return;
         }
       },
       handleCancel(id) {
         let params = {
           'iCustomerId': id
         };
-        
         getCancel(params).then(
           res => {
             if(res.success == 1) {

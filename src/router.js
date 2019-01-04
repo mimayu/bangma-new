@@ -57,6 +57,14 @@ export default new Router({
       name: 'detection',
       component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection')
     },
+    /** 
+    * sale - > 开工实施 
+    */
+    {
+      path: '/saleWorking',
+      name: 'saleWorking',
+      component: () => import(/* webpackChunkName: "saleWorking" */ './views/sale/saleWorking')
+    },
     {
       path: '/signStatus',
       name: 'signStatus',
