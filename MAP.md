@@ -28,7 +28,6 @@
     -gzProgress //工长进度看板
     -salesSort // 渠道排行    还有个啥排行
     -salesSortYj // 业绩排行   
-    -reviewOver  //审核完成
     -settlement  //结算
     -loss  //流失名单
 - manager

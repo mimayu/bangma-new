@@ -31,16 +31,17 @@ import {
 } from './my'
 
 import {
-   getProgress
-} from './gzProgress'
-
-import {
    salesSort
 } from './salesSort'
 
 import {
     getCalendar
 } from './remind'
+
+import {
+    postAddWork,
+    getProgress
+} from './boss'
 
 export {
     postShangmenAdd,
@@ -65,5 +66,6 @@ export {
     getOrganization,
     doLogout,
     salesSort,
-    getCalendar
+    getCalendar,
+    postAddWork
 }

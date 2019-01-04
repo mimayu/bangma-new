@@ -163,24 +163,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "bossHome" */ './views/boss/bossHome')
     },
     {
-      path: '/reviewOver',
-      name: 'reviewOver',
-      component: () => import(/* webpackChunkName: "reviewOver" */ './views/boss/reviewOver')
-      
-    },
-    {
-      path: '/settlement',
-      name: 'settlement',
-      component: () => import(/* webpackChunkName: "settlement" */ './views/boss/settlement')
-      
-    },
-    {
-      path: '/loss',
-      name: 'loss',
-      component: () => import(/* webpackChunkName: "settlement" */ './views/boss/loss')
-      
-    },
-    {
       path: '/managerHome',
       name: 'managerHome',
       component: () => import(/* webpackChunkName: "managerHome" */ './views/manager/managerHome')
@@ -230,6 +212,38 @@ export default new Router({
       path: '/bossAudit',
       name: 'bossAudit',
       component: () => import(/* webpackChunkName: "bossAudit" */ './views/boss/bossAudit.vue')
+    },
+    /** 
+    * boss - > 结算
+    */
+    {
+      path: '/bossSettle',
+      name: 'bossSettle',
+      component: () => import(/* webpackChunkName: "bossSettle" */ './views/boss/bossSettle')
+    },
+    /** 
+    * boss - > 流失率
+    */
+    {
+      path: '/bossLoss',
+      name: 'bossLoss',
+      component: () => import(/* webpackChunkName: "bossLoss" */ './views/boss/bossLoss')
+    },
+    /** 
+    * boss - > 增加开工
+    */
+    {
+      path: '/bossWorkingAdd',
+      name: 'bossWorkingAdd',
+      component: () => import(/* webpackChunkName: "bossWorkingAdd" */ './views/boss/bossWorkingAdd.vue')
+    },
+    /** 
+    * boss - > 增加完工
+    */
+    {
+      path: '/bossFinishAdd',
+      name: 'bossFinishAdd',
+      component: () => import(/* webpackChunkName: "bossFinishAdd" */ './views/boss/bossFinishAdd.vue')
     }
   ]
 })

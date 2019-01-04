@@ -1,5 +1,5 @@
 <template>
-  <div id="bossHome">
+  <div id="bossHome" class="bossHome_container">
     <!--<homePage></homePage>-->
     <div class="homepage">
       <router-link to="allUser" class="alink">
@@ -26,11 +26,11 @@
         <img class="all_user" src="../../assets/img/7.png">
         审核完成
       </router-link>
-       <router-link to="settlement" class="alink">
+       <router-link to="bossSettle" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
         结算
       </router-link>
-       <router-link to="loss" class="alink">
+       <router-link to="bossLoss" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
         流失名单
       </router-link>
@@ -80,11 +80,9 @@
 </template>
 
 <script>
+import { Cell, CellGroup, Popup, Row, Col, Picker, Toast , Tab,Tabs,} from 'vant';
 import footerNav from '../../components/footerNav'
 
-import { Cell, CellGroup, Popup, Row, Col, Picker, Toast , Tab,Tabs,} from 'vant';
-
-// import homePage from '../components/modPage/homePage' // 引入login.vue组件
 export default {
   name: 'bossHome',
     components: {
@@ -109,53 +107,66 @@ export default {
 </script>
 
 <style lang="scss"> 
-.mini{
-    text-align:center;padding:10px 0;font-size: 10px;
-    color: #8797B6;
-    .van-col:first-child,
-    .van-col:last-child{color:#fff;}
-}
-.order{
-    text-align:center;line-height:1.5;
-    font-size: 12px;
-    color: #575757;
-    padding-bottom:10px;
-    border-bottom:1px solid #EBEBEB;
+  .bossHome_container {
+    .mini{
+      text-align: center;
+      padding: 10px 0;
+      font-size: 10px;
+      color: #8797B6;
+      .van-col:first-child,
+      .van-col:last-child{
+        color:#fff;
+      }
+    }
+    .order{
+      text-align: center;
+      line-height: 1.5;
+      font-size: 12px;
+      color: #575757;
+      padding-bottom:10px;
+      border-bottom:1px solid #EBEBEB;
     }
     a{
-    font-size: 28px;
-    color: #575757;
+      font-size: 28px;
+      color: #575757;
     }
     h3{
-        font-size: 14px;
-        color: #262626;
-        font-family: PingFangSC-Medium;
-        padding:10px;text-align:center;
+      font-size: 14px;
+      color: #262626;
+      font-family: PingFangSC-Medium;
+      padding:10px;text-align:center;
     }
-  .homepage{
-    padding: 15px;display: flex;
-    flex-wrap: wrap ;
-  }
-  a{
-    width:25%;
-    text-align: center; 
-    margin-bottom:10%;
-  }
-  .alink{
-    font-size: 14px;
-  }
-  .all_user{
-    width:60%;
-    // height:73px;
-    border-radius:50%;
-    display:block;
-    margin: 0 auto 10px auto;
-  }
-  .rank{
+    .homepage{
+      padding: 15px;display: flex;
+      flex-wrap: wrap ;
+    }
+    a{
+      width:25%;
+      text-align: center; 
+      margin-bottom:10%;
+    }
+    .alink{
+      font-size: 14px;
+    }
+    .all_user{
+      width:60%;
+      // height:73px;
+      border-radius:50%;
+      display:block;
+      margin: 0 auto 10px auto;
+    }
+    .rank{
       padding:10px 0;
-      display:flex; justify-content: space-between;
+      display:flex; 
+      justify-content: space-between;
       border-top: 1px solid #EBEBEB;
       border-bottom: 1px solid #EBEBEB;
-      a{line-height:100%;margin:0;border-right: 1px solid #EBEBEB;width:33%}
+      a{
+        line-height:100%;
+        margin:0;
+        border-right: 1px solid #EBEBEB;
+        width:33%
       }
+    }
+  }
 </style>

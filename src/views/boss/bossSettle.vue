@@ -1,13 +1,12 @@
 <template>
-    <div class="allUser_container">
-       
+    <div class="bossSettle_container">
         <div class="content">
             <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
                 <Cell title="订单号">
                     <template>
                         <div class="custom_wrap">
                             <span class="order_id">{{item.iCustomerId}}</span>
-                            <span class="status">审核完成</span>
+                            <span class="status">结算</span>
                         </div>
                     </template>
                 </Cell>
@@ -18,14 +17,10 @@
                 <Cell title="预约时间" :value="item.tOrderDate || '-'" />
                 <div class="van-cell btn_wrap">
                     <button plain type="primary" class="assign_btn" >结算</button> 
-                    <button plain type="primary" class="assign_btn" >报价</button>
+                    <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
                 </div>
             </Cell-group>
         </div>
-
-       
-        
-        <footerNav class="footer"></footerNav>
     </div>
 </template>
 
@@ -35,7 +30,7 @@
     import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
-        name: 'visit',
+        name: 'bossSettle',
         components: {
             Cell,
             CellGroup,
@@ -51,8 +46,6 @@
         data() {
             return {
                 customerLists: [],
-                value: '',
-                status: '',
                 page: 1
             };
         },
@@ -60,12 +53,10 @@
             this.getCustomer();
         },
         methods: {
-           
             getCustomer(cb) {
                 let params = {
-                    status: this.status,
-                    page: this.page,
-                    keywords: this.value
+                    status: 11,
+                    page: this.page
                 }
                 getCustomer(params).then(
                     res => {
@@ -74,38 +65,31 @@
                         }
                     }
                 )
+            },
+            handleGo(type, id) {
+                // 11 -> 结算
+                switch(type) {
+                    case 7:
+                        this.$router.push(
+                            {
+                                name: 'bossWorkingAdd',
+                                params: {
+                                    id: id
+                                }
+                            }
+                        )
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 </script>
 
 <style lang="scss">
-    .allUser_container {
-        display: flex;
-        flex-direction: column;
+    .bossSettle_container {
         background-color: #f6f6f6;
-        .header_btn {
-            height: 44px;
-            line-height: 44px;
-            background-color: #f6f6f6;
-            padding: 0 10px;
-        }
-        .header_btn img {
-            width: 14px;
-            height: 7px;
-        }
-        .header_btn .search {
-            float: right;
-        }
-        .header_btn .search img {
-            width: 15px;
-            height: 16px;
-        }
-        .order {
-            background: #fff;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
         .van-cell__title, .van-field .van-cell__title {
             max-width: 100px;
         }
@@ -133,16 +117,6 @@
             text-align: center;
             font-size: 14px;
             color: #FF5601;
-        }
-        .search_bar {
-            display: flex;
-            align-items: center;
-            height: 44px;
-            background: #fff;
-        }
-        .van-search {
-            background: #fff !important;
-            padding: 0;
         }
         .group {
             margin-bottom: 8px;
