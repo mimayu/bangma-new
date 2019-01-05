@@ -1,6 +1,6 @@
 <template>
     <div class="assign_container">
-        <Radio-group v-model="radio" @change="handleChange">
+        <Radio-group v-model="iSalesId" @change="handleChange">
             <Cell-group>
                 <Cell value="查看" is-link v-for="(item, index) in lists" :key="item.iId">
                     <template slot="title">
@@ -16,7 +16,7 @@
 
 <script>
     import { postAssign } from '@/server';
-    import { CellGroup, Cell, RadioGroup, Radio, Button } from 'vant';
+    import { CellGroup, Cell, RadioGroup, Radio, Button, Toast } from 'vant';
 
     export default {
         name: 'postAssign',
@@ -25,7 +25,8 @@
             Cell,
             RadioGroup,
             Radio,
-            Button
+            Button,
+            Toast
         },
         created() {
             this.getAssign()
@@ -33,21 +34,20 @@
         data() {
             return {
                lists: [],
-               radio: 0,
                iSalesId: 0
             };
         },
         methods: {
             getAssign() {
-                let { id } = this.$route.params;
+                let { id } = this.$route.params || 1;
                 let params = {
-                    'iCustomerId': id || 1,
+                    'iCustomerId': id,
                     'doAction': ''
                 }
                 postAssign(params).then(
                     res => {
                         if(res.success == 1) {
-                            this.lists = res.accountlist
+                            this.lists = res.accountlist;
                         }
                     }
                 )
@@ -56,7 +56,7 @@
                 this.iSalesId = res;
             },
             handleSubmit() {
-                let { id } = this.$route.params;
+                let { id } = this.$route.params || 1;
                 let params = {
                     'iCustomerId': id,
                     'iSalesId': this.iSalesId,
@@ -66,7 +66,7 @@
                     res => {
                         console.log('res', res);
                         if(res.success == 1) {
-                            
+                            Toast(res.msg);
                         }
                     }
                 )

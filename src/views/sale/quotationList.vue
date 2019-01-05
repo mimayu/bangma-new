@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    let iCustomerId = this.$route.params.id || 1;
+    let iCustomerId = this.$route.params.id || 4679;
     this.iCustomerId = iCustomerId;
     this.getQuote(iCustomerId);
   },
