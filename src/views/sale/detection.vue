@@ -293,7 +293,6 @@ export default {
           }else {
             Toast(res.msg);
           }
-          console.log('this[pageType]', this[pageType]);
         }
       )
     },
@@ -301,7 +300,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   .detection_container {
     .van-cell__title, .van-field .van-cell__title {

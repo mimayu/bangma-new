@@ -1,6 +1,5 @@
 <template>
   <div id="home" class="saleHome_container">
-    <!--<homePage></homePage>-->
     <div class="homepage">
       <router-link to="allUser" class="alink">
         <img class="all_user" src="../../assets/img/home.png">

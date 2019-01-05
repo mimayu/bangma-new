@@ -38,9 +38,6 @@
                 </div>
             </Cell-group>
         </div>
-        <div class="empty" v-else>
-            暂无数据
-        </div>
 
         <Popup v-model="timeShow" position="bottom">
             <datetime-picker
@@ -60,13 +57,13 @@
 </template>
 
 <script>
-    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast } from 'vant';
+    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List } from 'vant';
     import { getCustomer } from '@/server';
     import { timetrans } from '@/utils/time';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
-        name: 'visit',
+        name: 'allUser',
         components: {
             Cell,
             CellGroup,
@@ -77,6 +74,7 @@
             Col,
             Search,
             Toast,
+            List,
             footerNav: footerNav
         },
         data() {
