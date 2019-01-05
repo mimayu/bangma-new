@@ -290,6 +290,8 @@ export default {
               this[finishedType] = true;
             }
             this[pageType] += 1;
+          }else {
+            Toast(res.msg);
           }
           console.log('this[pageType]', this[pageType]);
         }

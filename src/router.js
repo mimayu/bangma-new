@@ -91,6 +91,14 @@ export default new Router({
       name: 'quotationDetail',
       component: () => import(/* webpackChunkName: "quotationDetail" */ './views/sale/quotationDetail')
     },
+    /*
+    * sale -> 取消报价
+    */
+    {
+      path: '/quotationCancel',
+      name: 'quotationCancel',
+      component: () => import(/* webpackChunkName: "sale" */ './views/sale/quotationCancel')
+    },
     {
       path: '/testCamer',
       name: 'testCamer',

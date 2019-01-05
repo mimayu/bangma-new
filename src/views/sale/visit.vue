@@ -21,7 +21,8 @@
                 autosize
             />
         </Cell-group>
-        <Button type="primary" size="large" @click="visitAdd">提交</Button>
+        <Button type="primary" size="large" @click="handleSubmit">提交</Button>
+
         <Popup v-model="show" position="bottom">
             <datetime-picker
                 @confirm="handleComfirm"
@@ -101,6 +102,8 @@
                 orderShow: false,
                 levelShow: false,
                 customShow: false,
+                showOrder: false, // 处理成功 -> 签约日期
+                showWork: false,  //处理成功 -> 预计开工日期
                 message: '',
                 orderActions: [
                     '签约等待', '签约成功', '签约失败'
@@ -120,17 +123,14 @@
                 dateYujiKaigong: '', // 签约成功 预计开工日期 2018-12-08
                 orderFee: '', // 签约成功 金额
                 orderDingjin: '', // 签约成功 签约定金
-                showOrder: false,
-                showWork: false,
             };
         },
         methods: {
-            choseTime() {
-                this.show = true;
-            },
-            visitAdd() {
-                let iCustomerId = this.$route.params.id;
-                
+            /*
+            * 处理提交
+            */
+            handleSubmit() {
+                let iCustomerId = this.$route.params.id || 1;
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateShangmen': this.time,
@@ -161,14 +161,24 @@
                     }
                 )
             },
+            /*
+            * 选择订单状态
+            */
             choseOrder() {
                 this.orderShow = true;
             },
-            choseLevel() {
-                this.levelShow = true;
+            handleOrderConfirm(value) {
+                this.status = value;
+                this.orderShow = false;
             },
-            choseCustom() {
-                this.customShow = true;
+            handleOrderCancel() {
+                this.orderShow = false;
+            },
+            /*
+            * 选择上门时间
+            */
+            choseTime() {
+                this.show = true;
             },
             handleComfirm(value) {
                 let data = timetrans(value);
@@ -178,12 +188,11 @@
             handleCancel(e) {
                 this.show = false;
             },
-            handleOrderConfirm(value) {
-                this.status = value;
-                this.orderShow = false;
-            },
-            handleOrderCancel() {
-                this.orderShow = false;
+            /*
+            * 选择客户等级
+            */
+            choseLevel() {
+                this.levelShow = true;
             },
             handleLevelConfirm(value) {
                 this.level = value;
@@ -192,7 +201,12 @@
             handleLevelCancel() {
                 this.levelShow = false;
             },
-
+            /*
+            * 选择客户反馈
+            */
+            choseCustom() {
+                this.customShow = true;
+            },
             handleCustomConfirm(value) {
                 this.action = value;
                 this.customShow = false;
@@ -200,8 +214,9 @@
             handleCustomCancel() {
                 this.customShow = false;
             },
-
-            // 处理等待 下次跟进日期
+            /*
+            * 处理等待 -> 下次跟进日期
+            */
             choseNextTime() {
                 this.nextShow = true;
             },
@@ -213,8 +228,9 @@
                 this.nextTime = data;
                 this.nextShow = false;
             },
-
-            // 处理成功 签约日期
+            /*
+            * 处理成功 -> 签约日期
+            */
             showOrderTime() {
                 this.showOrder = true;
             },
@@ -226,8 +242,9 @@
                 this.dateOrder = data;
                 this.showOrder = false;
             },
-
-            // 处理成功 预计开工日期
+            /*
+            * 处理成功 -> 预计开工日期
+            */
             showWorkTime() {
                 this.showWork = true;
             },
@@ -238,10 +255,6 @@
                 let data = timetrans(value, 1);
                 this.dateYujiKaigong = data;
                 this.showWork = false;
-            },
-            // 重置
-            reset() {
-
             }
         }
     }

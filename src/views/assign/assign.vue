@@ -89,5 +89,4 @@
             text-align: left;
         }
     }
-    
 </style>
