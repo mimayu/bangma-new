@@ -4,7 +4,7 @@
       <li class="quote_item" :class="{'quote_item_active': tabActive === index}" v-for="(item, index) in tabs" @click="handleClickTab(item, index)">
         厨卫报价
       </li>
-      <li class="quote_item_add" @click="addQuote">
+      <li class="quote_item_add" @click="handleAddQuote">
         <span>+</span>
       </li>
     </ul>
@@ -46,213 +46,232 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll';
-import { Toast } from 'vant';
-import { getQuote, getAddQuote, postSubmit } from '@/server';
+  import BScroll from 'better-scroll';
+  import { Toast } from 'vant';
+  import { getQuote, getAddQuote, postSubmit } from '@/server';
 
-export default {
-  name: 'quotation',
-  components: {
-    Toast
-  },
-  data(){
-    return {
-      tabs: [1],
-      goods: [],
-      details: [],
-      iCustomerId: 1,
-      listHeight: [],
-      scrollY: 0,
-      current: 0,
-      tabActive: 0,
-    }
-  },
-  created() {
-    let iCustomerId = this.$route.params.id || 1;
-    let iMode = this.$route.params.mode || 1;
-    this.iCustomerId = iCustomerId;
-    this.getQuote(iCustomerId, iMode);
-  },
-  computed: {
-    currentIndex() {
-      for (let i = 0; i < this.listHeight.length; i++) {
-        let height1 = this.listHeight[i];
-        let height2 = this.listHeight[i + 1];
-        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-          this._followScroll(i);
-          return i;
-        }
+  export default {
+    name: 'quotation',
+    components: {
+      Toast
+    },
+    data(){
+      return {
+        tabs: [], // 顶部
+        goods: [], // 左侧
+        details: [], // 右侧
+        iCustomerId: 1, // id
+        iMode: 0, // 选择的模式
+        listHeight: [],
+        scrollY: 0, // 滑动距离
+        tabActive: 0, // 顶部tab激活
       }
-      return 0;
     },
-    selectGoods() {
-      let lists = [];
-      // this.goods.forEach((good) => {
-      //   good.foods.forEach((food) => {
-      //     if (food.count) {
-      //       foods.push(food);
-      //     }
-      //   });
-      // });
-      return lists;
+    created() {
+      this.iCustomerId = this.$route.params.id || 1;
+      this.iMode = this.$route.params.mode || 1;
+      this.getQuote(true);
     },
-    totalPrice() {
-      let total = 0;
-      this.details.forEach((items) => {
-        items.forEach((item) => {
-          total += item.price * item.quantity;
-        })
-      });
-      return total;
-    },
-  },
-  methods: {
-    selectMenu(index, event) {
-      if (!event._constructed) {
-        return;
-      }
-      let foodList = this.$refs.foodList;
-      let el = foodList[index];
-      this.foodsScroll.scrollToElement(el, 300);
-    },
-    _initScroll() {
-      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
-        click: true
-      });
-      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-        click: true,
-        probeType: 3
-      });
-      this.foodsScroll.on('scroll', (pos) => {
-        // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
-        if (pos.y <= 0) {
-          this.scrollY = Math.abs(Math.round(pos.y));
+    computed: {
+      currentIndex() {
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i];
+          let height2 = this.listHeight[i + 1];
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            this._followScroll(i);
+            return i;
+          }
         }
-      });
+        return 0;
+      },
+      selectGoods() {
+        let lists = [];
+        // this.goods.forEach((good) => {
+        //   good.foods.forEach((food) => {
+        //     if (food.count) {
+        //       foods.push(food);
+        //     }
+        //   });
+        // });
+        return lists;
+      },
+      totalPrice() {
+        let total = 0;
+        this.details.forEach((items) => {
+          items.forEach((item) => {
+            total += item.price * item.quantity;
+          })
+        });
+        return total;
+      },
     },
-    _calculateHeight() {
-      let foodList = this.$refs.foodList;
-      let height = 0;
-      this.listHeight.push(height);
-      for (let i = 0; i < foodList.length; i++) {
-        let item = foodList[i];
-        height += item.clientHeight;
+    methods: {
+      /*
+      * 初始化操作
+      */
+      _initScroll() {
+        this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+          click: true
+        });
+        this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+          click: true,
+          probeType: 3
+        });
+        this.foodsScroll.on('scroll', (pos) => {
+          if (pos.y <= 0) {
+            this.scrollY = Math.abs(Math.round(pos.y));
+          }
+        });
+      },
+      _calculateHeight() {
+        let foodList = this.$refs.foodList;
+        let height = 0;
         this.listHeight.push(height);
-      }
-      console.log('this.listHeight', this.listHeight);
-    },
-    _followScroll(index) {
-      let menuList = this.$refs.menuList;
-      let el = menuList[index];
-      this.meunScroll.scrollToElement(el, 300, 0, -100);
-    },
-    addQuote() {
-      let iCustomerId = this.$route.params.id || 1;
-      let params = {
-        'iCustomerId': iCustomerId
-      }
-      getAddQuote(params).then(
-        res => {
-          if(res.success == 1) {
-            let id = res.zengxiang_customer_id;
-            this.tabs.push(id);
-            this.reset();
-            this.getQuote(id);
-          }
+        for (let i = 0; i < foodList.length; i++) {
+          let item = foodList[i];
+          height += item.clientHeight;
+          this.listHeight.push(height);
         }
-      )
-    },
-    /*
-    * 点击提交
-    */
-    handleSubmit() {
-      let lists = [];
-      this.details.forEach((items) => {
-        items.forEach((item) => {
-          if(item.quantity > 0) {
-            lists.push(item)
-          }
+      },
+      _followScroll(index) {
+        let menuList = this.$refs.menuList;
+        let el = menuList[index];
+        this.meunScroll.scrollToElement(el, 300, 0, -100);
+      },
+      /*
+      * 点击提交
+      */
+      handleSubmit() {
+        let lists = [];
+        this.details.forEach((items) => {
+          items.forEach((item) => {
+            if(item.quantity > 0) {
+              lists.push(item)
+            }
+          })
+        });
+        if(lists.length == 0) {
+          return;
+        }
+        let idAndNumberValues = [];
+        let iCustomerId = this.$route.params.id || 1;
+        lists.map(item => {
+          idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
-      });
-      if(lists.length == 0) {
-        return;
-      }
-      let idAndNumberValues = [];
-      let iCustomerId = this.$route.params.id || 1;
-      lists.map(item => {
-        idAndNumberValues.push(`${item.id}|${item.quantity}`)
-      })
-      
-      let params = {
-        'iCustomerId': this.iCustomerId,
-        'idAndNumberValues': idAndNumberValues
-      }
-      postSubmit(params).then(
-        res => {
-          if(res.success == 1) {
-            this.$router.push(
-              {
-                  name: 'quotationDetail',
-                  params: {
-                      id: this.iCustomerId
-                  }
-              }
-            )
-          }
-          Toast(res.msg)
+        
+        let params = {
+          'iCustomerId': this.iCustomerId,
+          'idAndNumberValues': idAndNumberValues
         }
-      )
-    },
-    getQuote(id, mode) {
-      let params = {
-        iCustomerId: id,
-        iMode: mode
-      }
-      getQuote(params).then(
-        res => {
-          if(res.success == 1) {
-            this.goods = Object.values(res.type_arr);
-            this.details = Object.values(res.result);
-            this.iCustomerId = id;
-            this.tabs = this.tabs.concat(res.zengxiang_arr)
-            this.$nextTick(() => {
-              this._initScroll();
-              this._calculateHeight();
-            });
+        postSubmit(params).then(
+          res => {
+            if(res.success == 1) {
+              this.$router.push(
+                {
+                    name: 'quotationDetail',
+                    params: {
+                        id: this.iCustomerId
+                    }
+                }
+              )
+            }
+            Toast(res.msg)
           }
+        )
+      },
+      /*
+      * 重置参数
+      */
+      reset() {
+        this.scrollY = 0;
+        this.listHeight = [];
+      },
+      /*
+      * 点击头部tab
+      */
+      handleClickTab(item, index) {
+        this.tabActive = index;
+        this.iCustomerId = item.iCustomerId;
+        this.reset();
+        this.getQuote(false);
+      },
+      /*
+      * 左侧点击
+      */
+      selectMenu(index, event) {
+        if (!event._constructed) {
+          return;
         }
-      )
-    },
-    addCart(item) {
-      item.quantity ++;
-    },
-    minusCart(item) {
-      if(item.quantity == 0) {
-        return;
-      }
-      item.quantity --;
-    },
-    /*
-    * 重置
-    */
-    reset() {
-      this.scrollY = 0;
-    },
-    /*
-    * 获取单个订单钱数
-    */
-    getSinglePrice(price, count) {
-      return price * count
-    },
-    /*
-    * 点击头部tab
-    */
-    handleClickTab(item, index) {
-      this.tabActive = index;
-      console.log(item, index);
-    },
+        let foodList = this.$refs.foodList;
+        let el = foodList[index];
+        this.foodsScroll.scrollToElement(el, 300);
+      },
+      /*
+      * 头部+点击
+      */
+      handleAddQuote() {
+        let iCustomerId = this.$route.params.id || 1;
+        let params = {
+          'iCustomerId': iCustomerId
+        }
+        getAddQuote(params).then(
+          res => {
+            if(res.success == 1) {
+              let id = res.zengxiang_customer_id;
+              this.iCustomerId = id;
+              this.tabs.push(id);
+              this.tabActive = this.tabs.length - 1;
+              this.reset();
+              this.getQuote(false);
+            }
+          }
+        )
+      },
+      /*
+      * 请求数据 只需要一次初始化
+      */
+      getQuote(isInit) {
+        let params = {
+          iCustomerId: this.iCustomerId,
+          iMode: this.iMode
+        }
+        getQuote(params).then(
+          res => {
+            if(res.success == 1) {
+              this.goods = Object.values(res.type_arr);
+              this.details = Object.values(res.result);
+              this.tabs = this.tabs.concat(res.zengxiang_arr);
+              this.$nextTick(() => {
+                isInit && this._initScroll();
+                this._calculateHeight();
+              });
+            }
+          }
+        )
+      },
+      /*
+      * 获取单个订单钱数
+      */
+      getSinglePrice(price, count) {
+        return price * count
+      },
+      /*
+      * 减少
+      */
+      minusCart(item) {
+        if(item.quantity == 0) {
+          return;
+        }
+        item.quantity --;
+      },
+      /*
+      * 增加
+      */
+      addCart(item) {
+        item.quantity ++;
+      },
+    }
   }
-}
 </script>
 
 <style lang="scss">
@@ -266,7 +285,6 @@ export default {
     flex-direction: column;
     .quote_tabs {
       line-height: 44px;
-      height: 44px;
       font-size: 0;
       overflow-x: auto;
       overflow-y: hidden;
