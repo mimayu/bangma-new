@@ -16,8 +16,8 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap">
-                <button plain type="primary" class="assign_btn" >预约</button>
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
         </Cell-group>
       </Tab>
@@ -36,8 +36,8 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap">
-                <button plain type="primary" class="assign_btn" >预约</button>
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
         </Cell-group>
       </Tab>
@@ -56,8 +56,8 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap">
-                <button plain type="primary" class="assign_btn" >预约</button>
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
         </Cell-group>
       </Tab>
@@ -154,6 +154,25 @@ export default {
         }
         this.getInfo(params, 'data_cancel');
       }
+    },
+    handleGo(type, id) {
+      /*
+      *  3 -> 跳转报价
+      */
+      switch(type) {
+          case 3:
+              this.$router.push(
+                  {
+                      name: 'quotation',
+                      params: {
+                          id: id
+                      }
+                  }
+              )
+              break;
+          default:
+              break;
+      }
     }
   }
 }
@@ -172,15 +191,16 @@ export default {
       margin-bottom: 8px;
     }
     .btn_wrap {
-        justify-content: flex-end;
+      justify-content: flex-end;
     }
     .assign_btn {
-        border: none;
-        padding: 8px;
-        outline: none;
-        margin: 0;
-        background: red;
-        border-radius: 5px;
+      padding: 6px 8px;
+      margin-left: 9px;
+      border: 1px solid #ebedf0;
+      border-radius: 10px;
+      outline: none;
+      color: #333;
+      background: #fff;
     }
     .custom_wrap {
         display: flex;

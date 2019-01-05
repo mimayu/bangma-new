@@ -1,11 +1,11 @@
 <template>
   <div id="quote" class="quote_container">
     <ul class="quote_tabs">
-      <li class="quote_item" v-for="item in tabs">
+      <li class="quote_item" :class="{'quote_item_active': tabActive === index}" v-for="(item, index) in tabs" @click="handleClickTab(item, index)">
         厨卫报价
       </li>
       <li class="quote_item_add" @click="addQuote">
-        +
+        <span>+</span>
       </li>
     </ul>
     <section class="quote_contents list-box">
@@ -36,40 +36,24 @@
       </div>
     </section>
     <section class="quote_toolbar">
-      工程总价
-      <span class="quote_price">¥33</span>
-      <button @click="handleSubmit">保存并打印</button>
+      <div class="quote_toolbar_content">
+        工程总价
+        <span class="quote_price">¥{{totalPrice}}</span>
+      </div>
+      <button @click="handleSubmit">保存</button>
     </section>
   </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll'
-import { getQuote, getAddQuote, postSubmit, getSubmitInfo } from '@/server';
+import BScroll from 'better-scroll';
+import { Toast } from 'vant';
+import { getQuote, getAddQuote, postSubmit } from '@/server';
 
 export default {
   name: 'quotation',
   components: {
-    
-  },
-  created() {
-    let iCustomerId = this.$route.params.id || 1;
-    let iMode = this.$route.params.mode || 1;
-    this.getQuote(iCustomerId, iMode);
-  },
-  computed: {
-    currentIndex() {
-      for (let i = 0; i < this.listHeight.length; i++) {
-        let height1 = this.listHeight[i];
-        let height2 = this.listHeight[i + 1];
-        console.log(4, !height2, this.scrollY >= height1 ,this.scrollY < height2)
-        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-          this._followScroll(i);
-          return i;
-        }
-      }
-      return 0;
-    },
+    Toast
   },
   data(){
     return {
@@ -79,8 +63,48 @@ export default {
       iCustomerId: 1,
       listHeight: [],
       scrollY: 0,
-      current: 0
+      current: 0,
+      tabActive: 0,
     }
+  },
+  created() {
+    let iCustomerId = this.$route.params.id || 1;
+    let iMode = this.$route.params.mode || 1;
+    this.iCustomerId = iCustomerId;
+    this.getQuote(iCustomerId, iMode);
+  },
+  computed: {
+    currentIndex() {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i];
+        let height2 = this.listHeight[i + 1];
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          this._followScroll(i);
+          return i;
+        }
+      }
+      return 0;
+    },
+    selectGoods() {
+      let lists = [];
+      // this.goods.forEach((good) => {
+      //   good.foods.forEach((food) => {
+      //     if (food.count) {
+      //       foods.push(food);
+      //     }
+      //   });
+      // });
+      return lists;
+    },
+    totalPrice() {
+      let total = 0;
+      this.details.forEach((items) => {
+        items.forEach((item) => {
+          total += item.price * item.quantity;
+        })
+      });
+      return total;
+    },
   },
   methods: {
     selectMenu(index, event) {
@@ -123,8 +147,9 @@ export default {
       this.meunScroll.scrollToElement(el, 300, 0, -100);
     },
     addQuote() {
+      let iCustomerId = this.$route.params.id || 1;
       let params = {
-        'iCustomerId': 1
+        'iCustomerId': iCustomerId
       }
       getAddQuote(params).then(
         res => {
@@ -137,21 +162,46 @@ export default {
         }
       )
     },
+    /*
+    * 点击提交
+    */
     handleSubmit() {
+      let lists = [];
+      this.details.forEach((items) => {
+        items.forEach((item) => {
+          if(item.quantity > 0) {
+            lists.push(item)
+          }
+        })
+      });
+      if(lists.length == 0) {
+        return;
+      }
+      let idAndNumberValues = [];
+      let iCustomerId = this.$route.params.id || 1;
+      lists.map(item => {
+        idAndNumberValues.push(`${item.id}|${item.quantity}`)
+      })
+      
       let params = {
-        'iCustomerId': 1,
-        'idAndNumberValues': ["1|2"]
+        'iCustomerId': this.iCustomerId,
+        'idAndNumberValues': idAndNumberValues
       }
       postSubmit(params).then(
         res => {
-          console.log('res', res);
           if(res.success == 1) {
+            this.$router.push(
+              {
+                  name: 'quotationDetail',
+                  params: {
+                      id: this.iCustomerId
+                  }
+              }
+            )
           }
+          Toast(res.msg)
         }
       )
-    },
-    handleTabsAdd () {
-        this.tabs ++;
     },
     getQuote(id, mode) {
       let params = {
@@ -170,7 +220,6 @@ export default {
               this._calculateHeight();
             });
           }
-          console.log('res', res);
         }
       )
     },
@@ -183,15 +232,25 @@ export default {
       }
       item.quantity --;
     },
+    /*
+    * 重置
+    */
+    reset() {
+      this.scrollY = 0;
+    },
+    /*
+    * 获取单个订单钱数
+    */
     getSinglePrice(price, count) {
       return price * count
     },
-    getTotalPrice(price, count) {
-      return price * count
+    /*
+    * 点击头部tab
+    */
+    handleClickTab(item, index) {
+      this.tabActive = index;
+      console.log(item, index);
     },
-    reset() {
-      this.scrollY = 0;
-    }
   }
 }
 </script>
@@ -206,16 +265,42 @@ export default {
     display: flex;
     flex-direction: column;
     .quote_tabs {
-      display: flex;
       line-height: 44px;
+      height: 44px;
+      font-size: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
       .quote_item {
-        padding: 0 13px;
-        color: #FF5C12;
+        display: inline-block;
+        position: relative;
+        margin: 0 13px;
+        color: #333333;
+        font-size: 14px;
+      }
+      .quote_item_active:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        bottom: 0;
+        background: #FF5C12;
       }
       .quote_item_add {
-        padding: 0 20px;
-        background: red;
-        color: #fff;
+        display: inline-block;
+        padding: 0 5px;
+        span {
+          color: #aaa;
+          width: 39px;
+          height: 23px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px;
+          font-size: 20px;
+          border: 1px solid #aaa;
+        }
       }
     }
     .quote_contents {
@@ -224,7 +309,27 @@ export default {
       overflow: hidden;
     }
     .quote_toolbar {
+      display: flex;
       line-height: 50px;
+      .quote_toolbar_content {
+        flex: 1;
+        padding-left: 15px;
+        background: #333333;
+        font-size: 14px;
+        color: #fff;
+        .quote_price {
+          margin-left: 4px;
+          font-size: 18px;
+        }
+      }
+      button {
+        padding: 0 20px;
+        font-size: 18px;
+        color: #FFFFFF;
+        text-align: center;
+        background: #FF5C12;
+        border: 0;
+      }
     }
 
     .left-box{
@@ -249,10 +354,11 @@ export default {
       }
     }
     h3{
-      background: #F6F6F6;
       height:30px;
       line-height:30px;
       margin-bottom:10px;
+      font-size: 12px;
+      background: #F6F6F6;
     }
     .pricem{
       padding:10px 0;
@@ -319,7 +425,8 @@ export default {
       }
     }
     .current {
-      background: red !important;
+      color: #1E97FF !important;
+      background: #fff !important;
     }
   }
 </style>

@@ -65,6 +65,14 @@ const postSubmit = (params) => {
 }
 
 /**
+ * 获取报价调整信息
+ * @param {*} params 
+ */
+const getQuoteChange = (params) => {
+    return request('/api/baojiachange/', params, 'get'); 
+}
+
+/**
  * 获取报价后信息
  * @param {*} params 
  */
@@ -90,5 +98,6 @@ export {
     getAddQuote,
     postSubmit,
     getSubmitInfo,
-    getCancel
+    getCancel,
+    getQuoteChange
 }

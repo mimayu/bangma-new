@@ -17,7 +17,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap" v-if="item.actions">
-            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
@@ -37,7 +37,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap" v-if="item.actions">
-            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
@@ -57,7 +57,7 @@
           <Cell title="施工内容" :value="item.sRemarks || '-'" />
           <Cell title="开工时间" :value="item.tOrderDate || '-'" />
           <div class="van-cell btn_wrap" v-if="item.actions">
-            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
           </div>
         </Cell-group>
       </Tab>
@@ -172,6 +172,55 @@
           return;
         }
       },
+      /*
+      * 点击按钮
+      * 3 -> 报价处理
+      * 4 -> 报价调整
+      * 5 -> 合同解除
+      */
+      handleClick(type, id) {
+        switch(type) {
+          case 3:
+            this.handleQuote(id);
+            break;
+          case 4:
+            this.handleAdjust(id);
+            break;
+          case 5:
+            this.handleCancel(id)
+            break;
+          default:
+            break;
+        }
+      },
+      /*
+      * 处理报价
+      */
+      handleQuote(id) {
+        this.modeShow = true;
+        this.currentId = id;
+      },
+      /*
+      * 处理报价选择
+      */
+      handleSelect(value) {
+        let mode = this.actions.findIndex(item => {
+          return item.name == value.name
+        })
+        this.modeShow = false;
+        this.$router.push(
+          {
+              name: 'quotation',
+              params: {
+                  id: this.currentId,
+                  mode: +mode + 1
+              }
+          }
+        )
+      },
+      /*
+      * 合同解除
+      */
       handleCancel(id) {
         let params = {
           'iCustomerId': id
@@ -190,26 +239,18 @@
           }
         )
       },
-      handleQuote(id) {
-        this.modeShow = true;
-        this.currentId = id;
-        console.log('this.currentId', this.currentId)
-      },
-      handleSelect(value) {
-        let mode = this.actions.findIndex(item => {
-          return item.name == value.name
-        })
-        this.modeShow = false;
+      /*
+      * 调整报价
+      */
+      handleAdjust(id) {
         this.$router.push(
           {
-              name: 'quotation',
+              name: 'quotationList',
               params: {
-                  id: this.currentId,
-                  mode: +mode + 1
+                  id: id
               }
           }
         )
-        console.log('value', value, mode)
       }
     }
   }
@@ -232,12 +273,13 @@
         justify-content: flex-end;
     }
     .assign_btn {
-        border: none;
-        padding: 8px;
-        outline: none;
-        margin: 0;
-        background: red;
-        border-radius: 5px;
+      padding: 6px 8px;
+      margin-left: 9px;
+      border: 1px solid #ebedf0;
+      border-radius: 10px;
+      outline: none;
+      color: #333;
+      background: #fff;
     }
     .custom_wrap {
         display: flex;

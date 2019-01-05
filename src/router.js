@@ -85,20 +85,26 @@ export default new Router({
       name: 'customInfo',
       component: () => import(/* webpackChunkName: "customInfo" */ './views/sale/customInfo')
     },
-     {
+    /*
+    * sale -> 报价详情
+    */
+    {
       path: '/quotationDetail',
       name: 'quotationDetail',
-      component: () => import(/* webpackChunkName: "priceDetail" */ './views/sale/quotationDetail')
+      component: () => import(/* webpackChunkName: "quotationDetail" */ './views/sale/quotationDetail')
     },
     {
       path: '/testCamer',
       name: 'testCamer',
       component: () => import(/* webpackChunkName: "testCamer" */ './views/sale/testCamer')
     },
+    /*
+    * sale -> 调整报价 
+    */
     {
       path: '/quotationList',
       name: 'quotationList',
-      component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotationList')
+      component: () => import(/* webpackChunkName: "quotationList" */ './views/sale/quotationList')
     },
     {
       path: '/assign',

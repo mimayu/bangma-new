@@ -1,190 +1,118 @@
 <template>
-  <div class="priceDetail">
-    <dl>
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥5.432</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥1.322</span>
-      </dd>
-
-       <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-
-      <dt>
-        卫生间
-        <span class="price">
-          ¥3849038
-          <a></a>
-        </span>
-      </dt>
-      <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥2.562</span>
-      </dd>
-       <dd>
-        <p>描述描述描述</p>
-        <span class="area">33米</span>
-        <span class="price">￥9.322</span>
-      </dd>
-    </dl>
-    <section class="printBox">
-      工程总价
-      <span class="price">¥88888888</span>
-      <button>保存并打印</button>
-    </section>
+  <div class="quoteDetail_container">
+    <Collapse v-model="activeNames">
+      <Collapse-item title="卫生间" name="1">
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+      </Collapse-item>
+      <Collapse-item title="卫生间" name="2">
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+      </Collapse-item>
+      <Collapse-item title="卫生间" name="3">
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+        <div class="quote_item">
+          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
+          <span class="area">33米</span>
+          <span class="price">￥5.432</span>
+        </div>
+      </Collapse-item>
+    </Collapse>
   </div>
 </template>
 
 <script>
-// import detectionList from './modPage/detectionList' // 引入login.vue组件
+import { Collapse, CollapseItem, Toast } from 'vant';
+import { getSubmitInfo } from '@/server';
 
 export default {
-  name: 'priceDetail',
+  name: 'quoteDetail',
+  components: {
+    Collapse, 
+    CollapseItem, 
+    Toast
+  },
   data () {
     return {
-    //   msg: '我是hello word'
+      iCustomerId: '',
+      activeNames: ['1']
     }
   },
-    components: {
-    // 'footerNav': footerNav,
+  created() {
+    let iCustomerId = this.$route.params.id || 4666;
+    this.iCustomerId = iCustomerId;
+    this.getSubmitInfo();
   },
+  methods: {
+    getSubmitInfo() {
+      let params = {
+        'iCustomerId': this.iCustomerId
+      }
+      getSubmitInfo(params).then(
+        res => {
+          console.log('res', res);
+        }
+      )
+    }
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.priceDetail{
-  dt{background: #F6F6F6;height: 30px;line-height: 30px;position: relative;padding-left: 10px;
-  font-size: 12px;
-color: #333333;
-    .price{
-      position: absolute;right: 10px;font-size: 14px;
+<style lang="scss">
+  .quoteDetail_container {
+    .quote_item {
+      border-bottom: 1px solid #eee;
     }
-    .price a{
-      border-left: solid 1px #d8d8d8;
-      padding-left: 5px;
-      margin-left: 5px;
+    .van-cell {
+      padding: 8px 15px;
+      font-size: 12px;
+      background: #f6f6f6;
+    }
+    .van-cell:not(:last-child)::after {
+      content: ' ';
+      position: absolute;
+      pointer-events: none;
+      box-sizing: border-box;
+      right: 0;
+      bottom: 0;
+      transform: scaleY(.5);
+      border-bottom: 1px solid #ebedf0;
+    }
+    .van-collapse-item__content {
+      padding: 0px 15px;
+    }
+    .quote_item {
+      padding: 10px 10px;
+      display: flex;
+      align-items: center; 
+      border-bottom: solid 1px #f6f6f6;
+      p{
+        flex: 2;
+        font-size: 14px;}
+      .area{
+        color: #9A9A9A;
+        margin:0  23px 0 3px;
+      }
     }
   }
-  dd{
-    padding: 5px 10px;display:flex;align-items:center; border-bottom: solid 1px #f6f6f6;
-    p{flex: 2;font-size: 14px;}
-    .area{
-      color: #9A9A9A;margin:0  23px 0 3px;
-    }
-  }
-}
-.printBox{
-  position: fixed;width:100%;color: #fff;font-size: 18px;padding-left: 5%;
-  left: 0;bottom: 0;background: #333; height: 50px; line-height: 50px;
-  button{
-    position: absolute;right: 16px; height: 50px;line-height: 50px; background: #FF5C12;border:none;
-    font-size:14px;width:100px;
-  }
-  .price {font-size: 18px;}
-}
-.stretch{
-  width: 14px;
-  height: 8px;
-}
 </style>

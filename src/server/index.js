@@ -8,7 +8,8 @@ import {
     getAddQuote,
     postSubmit,
     getSubmitInfo,
-    getCancel
+    getCancel,
+    getQuoteChange
 } from './sale'
 
 import {
@@ -54,6 +55,7 @@ export {
     postSubmit,
     getSubmitInfo,
     getCancel,
+    getQuoteChange,
     postLogin,
     postRegiste,
     postReset,

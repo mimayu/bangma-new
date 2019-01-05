@@ -100,11 +100,13 @@
             justify-content: flex-end;
         }
         .assign_btn {
-            border: 1px solid #EBEBEB;
+            padding: 6px 8px;
+            margin-left: 9px;
+            border: 1px solid #ebedf0;
+            border-radius: 10px;
             outline: none;
-            margin: 0;
+            color: #333;
             background: #fff;
-            border-radius: 5px;margin-left:10px;width:50px;height:30px;
         }
         .custom_wrap {
             display: flex;

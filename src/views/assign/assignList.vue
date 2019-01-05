@@ -70,12 +70,13 @@
             justify-content: flex-end;
         }
         .assign_btn {
-            border: none;
-            padding: 8px;
+            padding: 6px 8px;
+            margin-left: 9px;
+            border: 1px solid #ebedf0;
+            border-radius: 10px;
             outline: none;
-            margin: 0;
-            background: red;
-            border-radius: 5px;
+            color: #333;
+            background: #fff;
         }
     }
 </style>
