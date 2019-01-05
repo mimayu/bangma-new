@@ -73,7 +73,7 @@
 
 <script>
   import { Tab, Tabs, Cell, CellGroup, Toast, Actionsheet } from 'vant';
-  import { getCustomer, getCancel } from '@/server';
+  import { getCustomer } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
 
   export default {
@@ -215,27 +215,6 @@
                   id: this.currentId,
                   mode: +mode + 1
               }
-          }
-        )
-      },
-      /*
-      * 合同解除
-      */
-      handleCancel(id) {
-        let params = {
-          'iCustomerId': id
-        };
-        getCancel(params).then(
-          res => {
-            if(res.success == 1) {
-              let index = this.data_success.findIndex(item => {
-                return item.iCustomerId == id;
-              });
-              this.data_success.splice(index, 1);
-              Toast('解约成功');
-            }else {
-              Toast(res.msg);
-            }
           }
         )
       },

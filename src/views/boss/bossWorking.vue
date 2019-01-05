@@ -14,9 +14,8 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="预约时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap" >
-                <button plain type="primary" class="assign_btn" @click="handleGo(7, item.iCustomerId)">开工</button>
-                <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+            <div class="van-cell btn_wrap" v-if="item.actions">
+                <button plain type="primary" class="assign_btn" @click="handlecClick(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
             </div>
         </Cell-group>
     </div>
@@ -61,10 +60,37 @@
                     }
                 )
             },
-            handleGo(type, id) {
-                // 7 -> 增加开工
+            /*
+            * 处理点击
+            * 3 -> 合同取消
+            * 5 -> 报价
+            * 8 -> 完工
+            */
+            handlecClick(type, id) {
+                // 3 -> 报价
+                // 5 -> 
                 switch(type) {
-                    case 7:
+                    case 3:
+                        this.$router.push(
+                            {
+                                name: 'bossWorkingAdd',
+                                params: {
+                                    id: id
+                                }
+                            }
+                        )
+                        break;
+                    case 5:
+                        this.$router.push(
+                            {
+                                name: 'bossWorkingAdd',
+                                params: {
+                                    id: id
+                                }
+                            }
+                        )
+                        break;
+                    case 8:
                         this.$router.push(
                             {
                                 name: 'bossWorkingAdd',

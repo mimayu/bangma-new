@@ -84,8 +84,8 @@ const getSubmitInfo = (params) => {
  * 解约
  * @param {*} params 
  */
-const getCancel = (params) => {
-    return request('/api/jieyue/', params, 'get'); 
+const postCancel = (params) => {
+    return request('/api/jieyueadd/', params); 
 }
 
 export {
@@ -98,6 +98,6 @@ export {
     getAddQuote,
     postSubmit,
     getSubmitInfo,
-    getCancel,
+    postCancel,
     getQuoteChange
 }

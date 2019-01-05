@@ -1,8 +1,7 @@
 <template>
-    <div class="visit">
+    <div class="bossCancel_container">
         <Cell-group>
-            <Cell title="订单状态" value="基建取消" />
-            <Cell title="上门时间" is-link value="" @click="choseTime" />
+            <Cell title="取消日期" is-link value="" @click="choseTime" />
         </Cell-group>
         <Cell-group>
             <Field
@@ -19,8 +18,7 @@
             <datetime-picker
                 @confirm="handleComfirm"
                 @cancel="handleCancel"
-                v-model="currentDate"
-                type="datetime"
+                type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
             />
@@ -30,10 +28,10 @@
 
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker, Button, Field, Toast } from 'vant';
-    import { postQuxiaoAdd } from '@/server';
+    import { postQuxiaoAdd, postCancel } from '@/server';
 
     export default {
-        name: 'cancel',
+        name: 'bossCancel',
         components: {
             Cell,
             CellGroup,
@@ -49,9 +47,9 @@
                 maxHour: 20,
                 minDate: new Date(),
                 maxDate: new Date(2019, 10, 1),
-                currentDate: new Date(),
-                show: false,
-                message: '',
+                show: false, // 取消时间显示
+                time: '', // 取消日期
+                message: '', // 取消信息
             };
         },
         methods: {
@@ -59,10 +57,9 @@
                 this.show = true;
             },
             cancelConfirm() {
-                let time = Date.parse(this.currentDate);
                 let params = {
                     'iCustomerId': 1,
-                    'dateQuxiao': time,
+                    'dateQuxiao': this.time,
                     'quxiaoContent': this.message
                 }
                 postQuxiaoAdd(params).then(
@@ -80,16 +77,37 @@
             },
             handleCancel(e) {
                 this.show = false;
-            }
+            },
+            /*
+            * 合同解除
+            */
+            handleCancel(id) {
+                let params = {
+                    'iCustomerId': id,
+                    'dateQuxiao': this.time,
+                    'quxiaoContent': this.message
+                };
+                postCancel(params).then(
+                    res => {
+                        if(res.success == 1) {
+                            Toast('解约成功');
+                            return;
+                        }
+                        Toast(res.msg);
+                    }
+                )
+            },
         }
     }
 </script>
 
 <style lang="scss">
-    .van-cell__title, .van-field .van-cell__title {
-        max-width: 100px;
-    }
-    .van-cell__title {
-        text-align: left;
+    .bossCancel_container {
+        .van-cell__title, .van-field .van-cell__title {
+            max-width: 100px;
+        }
+        .van-cell__title {
+            text-align: left;
+        }
     }
 </style>

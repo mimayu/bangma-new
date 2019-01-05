@@ -1,5 +1,5 @@
 <template>
-    <div class="visit">
+    <div class="visit_container">
         <Cell-group>
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
             <Cell title="上门时间" is-link :value="time" @click="choseTime" />
@@ -248,10 +248,12 @@
 </script>
 
 <style lang="scss">
-    .van-cell__title, .van-field .van-cell__title {
-        max-width: 100px;
-    }
-    .van-cell__title, .van-cell__value{
-        text-align: left;
+    .visit_container {
+        .van-cell__title, .van-field .van-cell__title {
+            max-width: 100px;
+        }
+        .van-cell__title, .van-cell__value{
+            text-align: left;
+        }
     }
 </style>

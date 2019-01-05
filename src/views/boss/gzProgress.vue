@@ -1,28 +1,32 @@
 <template>
     <div class="bossCzProgress_container">
-        <section v-for="item in list" :key="item.iCustomerId">
-            <dl class="progress-list">
-                <dt>{{item.iForemanName || '某人'}}</dt>
-                <dd>
-                    <span>姓名</span>
-                    <span>{{item.sUsername}}</span>
-                    <span>订单号：</span>
-                    <span>{{item.iCustomerId}}</span>
-                </dd>
-                <dd>
-                    <span>地址</span>
-                    <span>{{item.sAddress}}</span>
-                </dd>
-            </dl>
-            <div class="bar">
-                <span class="bar-title">剩余工期{{item.days}}天</span>
-                <Progress color='#19BC9C' :percentage="item.rate" />
+        <div v-for="(items, index) in list" :key="index" class="base_wrap">
+            <div class="response">
+                {{items.name || '某人'}}
             </div>
-            <ul class="date-list">
-                <li>开工日期<span>{{item.dateKaigong}}</span></li>
-                <li>完工日期<span>{{item.dateYujiWangong}}</span></li>
-            </ul>
-        </section>
+            <section v-for="item in items.list" :key="item.iCustomerId">
+                <dl class="progress-list">
+                    <dd>
+                        <span>姓名</span>
+                        <span>{{item.sUsername}}</span>
+                        <span>订单号：</span>
+                        <span>{{item.iCustomerId}}</span>
+                    </dd>
+                    <dd>
+                        <span>地址</span>
+                        <span>{{item.allsAddress}}</span>
+                    </dd>
+                </dl>
+                <div class="bar">
+                    <span class="bar-title">剩余工期{{item.days}}天</span>
+                    <Progress color='#19BC9C' :percentage="item.rate" />
+                </div>
+                <ul class="date-list">
+                    <li>开工日期<span>{{item.dateKaigong}}</span></li>
+                    <li>完工日期<span>{{item.dateYujiWangong}}</span></li>
+                </ul>
+            </section>
+        </div>
         <footerNav class="footer"></footerNav>
     </div>
 </template>
@@ -56,7 +60,9 @@
              getProgress() {
                 getProgress().then(
                     res => {
-                        this.list = res.resultArr[0];
+                        if(res.success == 1) {
+                            this.list = Object.values(res.resultArr);
+                        }
                     }
                 )
             }
@@ -66,6 +72,13 @@
 
 <style lang="scss">
     .bossCzProgress_container {
+        .response {
+            padding: 0 10px;
+            line-height: 44px;
+            font-size: 18px;
+            color: #262626;
+            border-bottom: 1px solid #D8D8D8;
+        }
         .bar {
             padding: 10px;
             text-align: center;
@@ -82,13 +95,11 @@
                 padding:10px;
             }
             dt {
-                font-family: PingFangSC-Medium;
                 font-size: 18px;
                 color: #262626;
                 border-bottom:1px solid #D8D8D8;
             }
             dd {
-                font-family: PingFangSC-Regular;
                 font-size: 12px;
                 color: #999999;
                 text-align: right;

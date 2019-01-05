@@ -37,15 +37,13 @@ export default new Router({
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
     },
+    /*
+    * sale 基检状态 - > 预约
+    */
     {
       path: '/order',
       name: 'order',
-      component: () => import(/* webpackChunkName: "order" */ './views/sale/order')
-    },
-    {
-      path: '/cancel',
-      name: 'cancel',
-      component: () => import(/* webpackChunkName: "cancel" */ './views/sale/cancel')
+      component: () => import(/* webpackChunkName: "sale" */ './views/sale/order')
     },
     {
       path: '/allUser',
@@ -258,6 +256,14 @@ export default new Router({
       path: '/bossFinishAdd',
       name: 'bossFinishAdd',
       component: () => import(/* webpackChunkName: "bossFinishAdd" */ './views/boss/bossFinishAdd.vue')
+    },
+    /** 
+    * common - > 合同取消
+    */
+    {
+      path: '/commonCancel',
+      name: 'commonCancel',
+      component: () => import(/* webpackChunkName: "common" */ './views/common/cancel.vue')
     }
   ]
 })

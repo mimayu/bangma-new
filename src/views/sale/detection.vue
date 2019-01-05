@@ -1,93 +1,128 @@
 <template>
   <div class="detection_container">
-    <Tabs v-model="active" @change="handleChange">
+    <Tabs v-model="active">
       <Tab title="基检未约" >
-        <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">基检未约</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap" v-if="item.actions">
-              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
-            </div>
-        </Cell-group>
+        <List
+          v-model="loading_under"
+          :finished="finished_under"
+          finished-text="没有更多了"
+          @load="handleUnderLoad"
+        >
+          <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
+              <Cell title="订单号">
+                  <template>
+                      <div class="custom_wrap">
+                          <span class="order_id">{{item.iCustomerId}}</span>
+                          <span class="status">基检未约</span>
+                      </div>
+                  </template>
+              </Cell>
+              <Cell title="姓名" :value="item.sUsername" />
+              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="地址" :value="item.sAddress" />
+              <Cell title="施工内容" :value="item.sRemarks || '-'" />
+              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <div class="van-cell btn_wrap" v-if="item.actions">
+                <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+              </div>
+          </Cell-group>
+        </List>
       </Tab>
-      <Tab title="基检预约">
-        <Cell-group class="group" v-for="item in data_order" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">基检预约</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap" v-if="item.actions">
-              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
-            </div>
-        </Cell-group>
+      <Tab title="基检再约">
+        <List
+          v-model="loading_order"
+          :finished="finished_order"
+          finished-text="没有更多了"
+          @load="handleOrderLoad"
+        >
+          <Cell-group class="group" v-for="item in data_order" :key="item.iCustomerId">
+              <Cell title="订单号">
+                  <template>
+                      <div class="custom_wrap">
+                          <span class="order_id">{{item.iCustomerId}}</span>
+                          <span class="status">基检再约</span>
+                      </div>
+                  </template>
+              </Cell>
+              <Cell title="姓名" :value="item.sUsername" />
+              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="地址" :value="item.sAddress" />
+              <Cell title="施工内容" :value="item.sRemarks || '-'" />
+              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <div class="van-cell btn_wrap" v-if="item.actions">
+                <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+              </div>
+          </Cell-group>
+        </List>
       </Tab>
       <Tab title="基检确认">
-        <Cell-group class="group" v-for="item in data_confirm" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">基检确认</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap" v-if="item.actions">
-              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleGo(action.type, item.iCustomerId)">{{action.name}}</button>
-            </div>
-        </Cell-group>
+        <List
+          v-model="loading_confirm"
+          :finished="finished_confirm"
+          finished-text="没有更多了"
+          @load="handleConfirmLoad"
+        >
+          <Cell-group class="group" v-for="item in data_confirm" :key="item.iCustomerId">
+              <Cell title="订单号">
+                  <template>
+                      <div class="custom_wrap">
+                          <span class="order_id">{{item.iCustomerId}}</span>
+                          <span class="status">基检确认</span>
+                      </div>
+                  </template>
+              </Cell>
+              <Cell title="姓名" :value="item.sUsername" />
+              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="地址" :value="item.sAddress" />
+              <Cell title="施工内容" :value="item.sRemarks || '-'" />
+              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <div class="van-cell btn_wrap" v-if="item.actions">
+                <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+              </div>
+          </Cell-group>
+        </List>
       </Tab>
       <Tab title="基检取消">
-        <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">基检未约</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap">
-                <button plain type="primary" class="assign_btn" >预约</button>
-            </div>
-        </Cell-group>
+        <List
+          v-model="loading_cancel"
+          :finished="finished_cancel"
+          finished-text="没有更多了"
+          @load="handleCancelLoad"
+        >
+          <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
+              <Cell title="订单号">
+                  <template>
+                      <div class="custom_wrap">
+                          <span class="order_id">{{item.iCustomerId}}</span>
+                          <span class="status">基检未约</span>
+                      </div>
+                  </template>
+              </Cell>
+              <Cell title="姓名" :value="item.sUsername" />
+              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="地址" :value="item.sAddress" />
+              <Cell title="施工内容" :value="item.sRemarks || '-'" />
+              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <div class="van-cell btn_wrap" v-if="item.actions">
+                <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+              </div>
+          </Cell-group>
+        </List>
       </Tab>
     </Tabs>
+
+    <Actionsheet
+      v-model="modeShow"
+      :actions="actions"
+      @select="handleSelect"
+    />
+
     <footerNav></footerNav>
   </div>
 </template>
 
 <script>
-import { Tab, Tabs, Cell, CellGroup } from 'vant';
+import { Tab, Tabs, Cell, CellGroup, List, Actionsheet } from 'vant';
 import { getCustomer } from '@/server';
 import footerNav from "@/components/footerNav"; // 引入页脚
 
@@ -100,8 +135,31 @@ export default {
       data_order: [],
       data_confirm: [],
       data_cancel: [],
-      record: [0, 0, 0, 0],
-      page: 1,
+      loading_under: false, // 基检未约 
+      finished_under: false, // 基检未约 
+      page_under: 1, // 基检未约 
+      loading_order: false, // 基检未约 
+      finished_order: false, // 基检未约 
+      page_order: 1, // 基检未约 
+      loading_confirm: false, // 基检未约 
+      finished_confirm: false, // 基检未约 
+      page_confirm: 1, // 基检未约 
+      loading_cancel: false, // 基检未约 
+      finished_cancel: false, // 基检未约 
+      page_cancel: 1, // 基检未约 
+      modeShow: false, // 选择报价模式
+      actions: [
+        {
+          name: '普装'
+        },
+        {
+          name: '精装'
+        },
+        {
+          name: '奢华'
+        }
+      ],
+      currentId: '' // 选择的id
     }
   },
   components: {
@@ -109,71 +167,134 @@ export default {
     Tabs,
     Cell,
     CellGroup,
+    List,
+    Actionsheet,
     'footerNav': footerNav
   },
-  created() {
-    let params = {
-      status: 1,
-      page: 1,
-      keywords: ''
-    }
-    this.getInfo(params, 'data_under');
-  },
   methods: {
-    getInfo(params, type) {
-      getCustomer(params).then(
-        res => {
-          if(res.success == 1) {
-            this[type] = res.list;
-          }
+    /*
+    * 点击操作
+    * 1 -> 预约
+    * 2 -> 上门
+    * 3 -> 报价
+    */
+    handleClick(type, id) {
+      switch(type) {
+        case 1:
+          this.handleGo(id, type);
+          break;
+        case 2:
+          this.handleGo(id, type);
+          break;
+        case 3:
+          this.handleQuote(id);
+          break;
+        default:
+          break;
+      }
+    },
+    /*
+    * 处理预约/上门
+    */
+    handleGo(id, type) {
+      let name = type == 1 ? 'order' : 'visit';
+      this.$router.push(
+        {
+            name: name,
+            params: {
+                id: id
+            }
         }
       )
     },
-    handleChange(value) {
-      if(value == 1) {
-        let params = {
-          status: 2,
-          page: 1,
-          keywords: ''
-        }
-        this.getInfo(params, 'data_order');
-      }
-      if(value == 2) {
-        let params = {
-          status: 103,
-          page: 1,
-          keywords: ''
-        }
-        this.getInfo(params, 'data_confirm');
-      }
-      if(value == 3) {
-        let params = {
-          status: 3,
-          page: 1,
-          keywords: ''
-        }
-        this.getInfo(params, 'data_cancel');
-      }
+    /*
+    * 处理报价
+    */
+    handleQuote(id) {
+      this.modeShow = true;
+      this.currentId = id;
     },
-    handleGo(type, id) {
-      /*
-      *  3 -> 跳转报价
-      */
-      switch(type) {
-          case 3:
-              this.$router.push(
-                  {
-                      name: 'quotation',
-                      params: {
-                          id: id
-                      }
-                  }
-              )
-              break;
-          default:
-              break;
+    /*
+    * 处理报价选择
+    */
+    handleSelect(value) {
+      let mode = this.actions.findIndex(item => {
+        return item.name == value.name;
+      })
+      this.modeShow = false;
+      this.$router.push(
+        {
+            name: 'quotation',
+            params: {
+                id: this.currentId,
+                mode: +mode + 1
+            }
+        }
+      )
+    },
+    /*
+    * 基检未约
+    */
+    handleUnderLoad() {
+      let params = {
+        status: 1,
+        page: this.page_under,
       }
-    }
+      this.getInfo(params, 'under');
+    },
+    /*
+    * 基检预约
+    */
+    handleOrderLoad() {
+      let params = {
+        status: 103,
+        page: this.page_order,
+      }
+      this.getInfo(params, 'order');
+    },
+    /*
+    * 基检确认
+    */
+    handleConfirmLoad() {
+      let params = {
+        status: 2,
+        page: this.page_confirm,
+      }
+      this.getInfo(params, 'confirm');
+    },
+    /*
+    * 基检取消
+    */
+    handleCancelLoad() {
+      let params = {
+        status: 3,
+        page: this.page_cancel,
+      }
+      this.getInfo(params, 'cancel');
+    },
+    /*
+    * 开始加载
+    */
+    getInfo(params, type) {
+      let dataType = `data_${type}`;
+      let finishedType = `finished_${type}`;
+      let loadingType = `loading_${type}`;
+      let pageType = `page_${type}`;
+
+      getCustomer(params).then(
+        res => {
+          if(res.success == 1) {
+            this[dataType] = this[dataType].concat(res.list);
+            this[loadingType] = false;
+            if(res.list.length == 0) {
+              this[finishedType] = true;
+            }
+            this[pageType] += 1;
+          }
+          console.log('this[pageType]', this[pageType]);
+        }
+      )
+    },
   }
 }
 </script>
