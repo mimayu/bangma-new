@@ -199,7 +199,7 @@ export default new Router({
     {
       path: '/bossAddCustom',
       name: 'bossAddCustom',
-      component: () => import(/* webpackChunkName: "bossAddCustom" */ './views/boss/addCustom.vue')
+      component: () => import(/* webpackChunkName: "bossAddCustom" */ './views/boss/bossaddCustom.vue')
     },
     /** 
     * boss - > 签约客户 

@@ -59,7 +59,7 @@ export default {
     }
   },
   created() {
-    let iCustomerId = this.$route.params.id || 4666;
+    let iCustomerId = this.$route.params.id || 4665;
     this.iCustomerId = iCustomerId;
     this.getSubmitInfo();
   },
