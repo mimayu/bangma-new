@@ -1,48 +1,20 @@
 <template>
   <div class="quoteDetail_container">
     <Collapse v-model="activeNames">
-      <Collapse-item title="卫生间" name="1">
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
-        </div>
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
-        </div>
-      </Collapse-item>
-      <Collapse-item title="卫生间" name="2">
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
-        </div>
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
-        </div>
-      </Collapse-item>
-      <Collapse-item title="卫生间" name="3">
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
-        </div>
-        <div class="quote_item">
-          <p>描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</p>
-          <span class="area">33米</span>
-          <span class="price">￥5.432</span>
+      <Collapse-item :title="items.name" name="1" v-for="(items, index) in lists" :key="index" :name="index">
+        <div class="quote_item" v-for="item in items.list" :key="item.id" >
+          <p>{{item.project}}</p>
+          <span class="area">{{item.quantity}}{{item.unit}}</span>
+          <span class="price">￥{{item.total}}</span>
         </div>
       </Collapse-item>
     </Collapse>
+    <Button type="primary" size="large" @click="handleSubmit">打印</Button>
   </div>
 </template>
 
 <script>
-import { Collapse, CollapseItem, Toast } from 'vant';
+import { Collapse, CollapseItem, Toast, Button } from 'vant';
 import { getSubmitInfo } from '@/server';
 
 export default {
@@ -50,17 +22,18 @@ export default {
   components: {
     Collapse, 
     CollapseItem, 
-    Toast
+    Toast,
+    Button
   },
   data () {
     return {
       iCustomerId: '',
-      activeNames: ['1']
+      activeNames: [0],
+      lists: []
     }
   },
   created() {
-    let iCustomerId = this.$route.params.id || 4665;
-    this.iCustomerId = iCustomerId;
+    this.iCustomerId = this.$route.params.id || 4154;
     this.getSubmitInfo();
   },
   methods: {
@@ -70,9 +43,15 @@ export default {
       }
       getSubmitInfo(params).then(
         res => {
-          console.log('res', res);
+          if(res.success == 1) {
+            this.lists = Object.values(res.result);
+            console.log('this.lists', this.lists);
+          }
         }
       )
+    },
+    handleSubmit() {
+      console.log(11);
     }
   }
 }

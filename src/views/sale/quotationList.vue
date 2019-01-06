@@ -61,7 +61,6 @@
         goods: [], // 左侧
         details: [], // 右侧
         iCustomerId: 1, // id
-        iMode: 0, // 选择的模式
         listHeight: [],
         scrollY: 0, // 滑动距离
         tabActive: 0, // 顶部tab激活
@@ -69,7 +68,6 @@
     },
     created() {
       this.iCustomerId = this.$route.params.id || 1;
-      this.iMode = this.$route.params.mode || 1;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);
     },
@@ -233,8 +231,7 @@
       */
       getQuote(isInit) {
         let params = {
-          iCustomerId: this.iCustomerId,
-          iMode: this.iMode
+          iCustomerId: this.iCustomerId
         }
         getQuoteChange(params).then(
           res => {
