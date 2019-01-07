@@ -41,7 +41,9 @@ import {
 
 import {
     postAddWork,
-    getProgress
+    getProgress,
+    getCustomerNew,
+    getCustomerOrder
 } from './boss'
 
 export {
@@ -69,5 +71,7 @@ export {
     doLogout,
     salesSort,
     getCalendar,
-    postAddWork
+    postAddWork,
+    getCustomerNew,
+    getCustomerOrder
 }
