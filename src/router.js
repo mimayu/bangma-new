@@ -113,26 +113,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "quotationList" */ './views/sale/quotationList')
     },
     {
-      path: '/assign',
-      name: 'assign',
-      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
-    },
-    {
-      path: '/allStaff',
-      name: 'allStaff',
-      component: () => import(/* webpackChunkName: "allStaff" */ './views/assign/allStaff')
-    },
-    {
-      path: '/assignList',
-      name: 'assignList',
-      component: () => import(/* webpackChunkName: "assignList" */ './views/assign/assignList')
-    },
-    {
-      path: '/addCustom',
-      name: 'addCustom',
-      component: () => import(/* webpackChunkName: "addCustom" */ './views/assign/addCustom')
-    },
-    {
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "profile" */ './views/my/profile')
@@ -272,6 +252,78 @@ export default new Router({
       path: '/commonCancel',
       name: 'commonCancel',
       component: () => import(/* webpackChunkName: "common" */ './views/common/cancel.vue')
+    },
+    /** 
+    * assign - > 输单员主页
+    */
+    {
+      path: '/assignHome',
+      name: 'assignHome',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assignHome.vue')
+    },
+    /** 
+    * assign - > 新建客户
+    */
+    {
+      path: '/addCustom',
+      name: 'addCustom',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/addCustom')
+    },
+    /** 
+    * assign - > 员工列表
+    */
+    {
+      path: '/addStaff',
+      name: 'addStaff',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/addStaff')
+    },
+    /** 
+    * assign - > 员工列表
+    */
+    {
+      path: '/addLabourer',
+      name: 'addLabourer',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/addLabourer')
+    },
+    /** 
+    * assign - > 员工列表
+    */
+    {
+      path: '/allStaff',
+      name: 'allStaff',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/allStaff')
+    },
+    /** 
+    * assign - > 长工列表
+    */
+   {
+      path: '/allLabourer',
+      name: 'allLabourer',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/allLabourer')
+    },
+    /** 
+    * assign - > 已分配列表
+    */
+    {
+      path: '/assignList',
+      name: 'assignList',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assignList')
+    },
+    /** 
+    * assign - > 待分配列表
+    */
+    {
+      path: '/underAssignList',
+      name: 'underAssignList',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/underAssignList')
+    },
+    /** 
+    * assign - > 分配操作
+    */
+    {
+      path: '/assign',
+      name: 'assign',
+      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
     }
   ]
 })
