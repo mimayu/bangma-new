@@ -32,8 +32,6 @@
     -loss  //流失名单
 - manager
     -managerHome // manager 首页
-    -mSignSc // manager 签约成功
-    -managerList // manager 工长列表
 
 
 

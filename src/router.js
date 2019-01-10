@@ -162,17 +162,6 @@ export default new Router({
       name: 'bossHome',
       component: () => import(/* webpackChunkName: "bossHome" */ './views/boss/bossHome')
     },
-    {
-      path: '/managerHome',
-      name: 'managerHome',
-      component: () => import(/* webpackChunkName: "managerHome" */ './views/manager/managerHome')
-      
-    },
-    {
-      path: '/managerList',
-      name: 'managerList',
-      component: () => import(/* webpackChunkName: "managerList" */ './views/manager/managerList')
-    },
     /** 
     * boss - > 新进客户 
     */
@@ -324,6 +313,54 @@ export default new Router({
       path: '/assign',
       name: 'assign',
       component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
-    }
+    },
+    /*
+    * manager - 工程部首页
+    */
+    {
+      path: '/managerHome',
+      name: 'managerHome',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerHome')
+    },
+    /*
+    * manager -> 签约成功
+    */
+    {
+      path: '/managerSign',
+      name: 'managerSign',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerSign')
+    },
+    /*
+    * manager -> 派工完成
+    */
+    {
+      path: '/managerAssign',
+      name: 'managerAssign',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerAssign')
+    },
+    /*
+    * manager -> 开工实施
+    */
+    {
+      path: '/managerWork',
+      name: 'managerWork',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerWork')
+    },
+    /*
+    * manager -> 完工·收款中
+    */
+   {
+      path: '/managerDone',
+      name: 'managerDone',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerDone')
+    },
+    /*
+      * manager -> 完工·已结清
+      */
+    {
+      path: '/managerFinish',
+      name: 'managerFinish',
+      component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerFinish')
+    },
   ]
 })
