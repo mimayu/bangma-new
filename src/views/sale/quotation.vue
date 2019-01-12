@@ -54,7 +54,7 @@
               <h1 class="title">
                 购物车
               </h1>
-              <span class="empty">
+              <span class="empty" @click="handleEmpty">
                 清空
               </span>
             </div>
@@ -62,101 +62,17 @@
               <ul class="cube-popup-content">
                 <li
                   class="content-item"
+                  v-for="(item, index) in selectGoods"
+                  :key="index"
                 >
-                  <span class="name">12</span>
+                  <span class="name">{{item.project}}</span>
                   <div class="price">
-                    <span>21</span>
+                    <span>{{getSinglePrice(item.price,item.quantity)}}</span>
                   </div>
                   <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
-                  </div>
-                </li>
-                <li
-                  class="content-item"
-                >
-                  <span class="name">12</span>
-                  <div class="price">
-                    <span>21</span>
-                  </div>
-                  <div class="cart-control-wrapper">
-                    12
+                    <a class="minus" @click="minusCart(item)">-</a>
+                    <span>{{item.quantity}}</span>
+                    <a class="add" @click="addCart(item)">+</a>
                   </div>
                 </li>
               </ul>
@@ -170,13 +86,14 @@
 
 <script>
   import BScroll from 'better-scroll';
-  import { Toast } from 'vant';
+  import { Toast, Dialog } from 'vant';
   import { getQuote, getAddQuote, postSubmit } from '@/server';
 
   export default {
     name: 'quotation',
     components: {
-      Toast
+      Toast,
+      Dialog
     },
     data(){
       return {
@@ -211,13 +128,14 @@
       },
       selectGoods() {
         let lists = [];
-        // this.goods.forEach((good) => {
-        //   good.foods.forEach((food) => {
-        //     if (food.count) {
-        //       foods.push(food);
-        //     }
-        //   });
-        // });
+        this.details.forEach((items) => {
+          items.forEach((item) => {
+            if(item.quantity > 0) {
+              lists.push(item)
+            }
+          })
+        });
+        console.log('lists', lists);
         return lists;
       },
       totalPrice() {
@@ -267,27 +185,21 @@
       * 
       */
       handleQuotePop() {
-        console.log('12');
+        if(this.selectGoods.length == 0) {
+          return;
+        }
         this.detailActive = !this.detailActive;
       },
       /*
       * 点击提交
       */
       handleSubmit() {
-        let lists = [];
-        this.details.forEach((items) => {
-          items.forEach((item) => {
-            if(item.quantity > 0) {
-              lists.push(item)
-            }
-          })
-        });
-        if(lists.length == 0) {
+        if(this.selectGoods.length == 0) {
           return;
         }
         let idAndNumberValues = [];
         let iCustomerId = this.$route.params.id || 1;
-        lists.map(item => {
+        this.this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
         
@@ -390,11 +302,14 @@
       /*
       * 减少
       */
-      minusCart(item) {
+      minusCart(item, type) {
         if(item.quantity == 0) {
           return;
         }
         item.quantity --;
+        if(!this.selectGoods.length) {
+          this.detailActive = false;
+        }
       },
       /*
       * 增加
@@ -407,12 +322,31 @@
       */
       handleMaskHide() {
         this.detailActive = false;
+      },
+      /*
+      * 处理清空
+      */
+      handleEmpty() {
+        Dialog.confirm({
+          title: '',
+          message: '<p>清空购物车？</p>'
+        }).then(() => {
+          this.selectGoods.forEach((item) => {
+            item.quantity = 0;
+          })
+        this.detailActive = false;
+        }).catch(() => {
+          console.log(1)
+        });
       }
     }
   }
 </script>
 
 <style lang="scss">
+  .van-dialog__message {
+      text-align: center !important;
+    }
   .quote_container {
     position: absolute;
     top: 0;
@@ -655,6 +589,8 @@
       padding: 12px 0;
       box-sizing: border-box;
       .name {
+        display: inline-block;
+        max-width: 60%;
         line-height: 24px;
         font-size: 14px;
         color: #333;
@@ -662,7 +598,8 @@
       .price {
         position: absolute;
         right: 90px;
-        bottom: 12px;
+        top: 50%;
+        transform: translateY(-50%);
         line-height: 24px;
         font-weight: 700;
         font-size: 14px;
@@ -671,7 +608,38 @@
       .cart-control-wrapper {
         position: absolute;
         right: 0;
-        bottom: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        a{
+          flex: 1;
+          width: 18px;
+          height: 18px; 
+          border-radius: 50%; 
+          text-align:center;
+          line-height: 18px;
+          border: 1px solid #F7F8F9;
+          padding:0;
+          display:inline-block;    
+          vertical-align: middle;
+        }
+        span{
+          flex: 2;
+          font-size: 12px; 
+          color: #000; 
+          vertical-align: middle;
+          text-align:center;
+          line-height: 18px;
+          display: inline-block;
+          padding: 0 10px;
+          margin: 0 4px;
+        }
+        .add{
+          background:#1E97FF;
+          color:#fff;
+        }
+        .minus{
+          color:gray;
+        }
       }
     }
   }
