@@ -32,11 +32,6 @@ import {
 } from './my'
 
 import {
-   salesSortqd,
-   salesSortYj
-} from './salesSort'
-
-import {
     getCalendar
 } from './remind'
 
@@ -44,7 +39,9 @@ import {
     postAddWork,
     getProgress,
     getCustomerNew,
-    getCustomerOrder
+    getCustomerOrder,
+    salesSortqd,
+    salesSortYj
 } from './boss'
 
 export {
@@ -74,5 +71,7 @@ export {
     getCalendar,
     postAddWork,
     getCustomerNew,
-    getCustomerOrder
+    getCustomerOrder,
+    salesSortqd,
+    salesSortYj
 }

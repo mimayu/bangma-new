@@ -32,9 +32,27 @@ const getCustomerOrder = (params) => {
     return request('/api/orderCustomerForBoss/', params, 'GET')
 }
 
+/**
+ * 获取我的
+ * @param {*} params 
+ */
+const salesSortqd = (params) => {
+    return request('/api/channelRank/', params, 'GET');
+}
+
+/**
+ * 获取组织信息
+ * @param {*} params 
+ */
+const salesSortYj = (params) => {
+    return request('/api/performanceRank/', params, 'GET');
+}
+
 export {
     postAddWork,
     getProgress,
     getCustomerNew,
-    getCustomerOrder
+    getCustomerOrder,
+    salesSortqd,
+    salesSortYj
 }

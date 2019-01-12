@@ -152,7 +152,8 @@ export default new Router({
       path: '/salesSort',
       name: 'salesSort',
       component: () => import(/* webpackChunkName: "salesSort" */ './views/boss/salesSort')
-    },{
+    },
+    {
       path: '/salesSortYj',
       name: 'salesSortYj',
       component: () => import(/* webpackChunkName: "salesSortYj" */ './views/boss/salesSortYj')
