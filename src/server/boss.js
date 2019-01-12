@@ -48,11 +48,16 @@ const salesSortYj = (params) => {
     return request('/api/performanceRank/', params, 'GET');
 }
 
+const salesSortc = (params) => {
+    return request('/api/channelGroupbyRank/', params, 'GET');
+}
+
 export {
     postAddWork,
     getProgress,
     getCustomerNew,
     getCustomerOrder,
     salesSortqd,
-    salesSortYj
+    salesSortYj,
+    salesSortc
 }
