@@ -36,12 +36,135 @@
       </div>
     </section>
     <section class="quote_toolbar">
-      <div class="quote_toolbar_content">
+      <div class="quote_toolbar_content" @click="handleQuotePop">
         工程总价
         <span class="quote_price">¥{{totalPrice}}</span>
       </div>
       <button @click="handleSubmit">保存</button>
     </section>
+    <transition name="fade">
+      <div class="cube-popup" v-show="detailActive">
+        <div class="cube-popup-mask" @click="handleMaskHide">
+        </div>
+        <transition
+          name="move"
+        >
+          <div class="cube-popup-container" v-show="detailActive">
+            <div class="list-header">
+              <h1 class="title">
+                购物车
+              </h1>
+              <span class="empty">
+                清空
+              </span>
+            </div>
+            <div class="cube-popup-wrap">
+              <ul class="cube-popup-content">
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+                <li
+                  class="content-item"
+                >
+                  <span class="name">12</span>
+                  <div class="price">
+                    <span>21</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    12
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -65,6 +188,7 @@
         listHeight: [],
         scrollY: 0, // 滑动距离
         tabActive: 0, // 顶部tab激活
+        detailActive: false,
       }
     },
     created() {
@@ -138,6 +262,13 @@
         let menuList = this.$refs.menuList;
         let el = menuList[index];
         this.meunScroll.scrollToElement(el, 300, 0, -100);
+      },
+      /*
+      * 
+      */
+      handleQuotePop() {
+        console.log('12');
+        this.detailActive = !this.detailActive;
       },
       /*
       * 点击提交
@@ -271,6 +402,12 @@
       addCart(item) {
         item.quantity ++;
       },
+      /*
+      * 处理点击mask
+      */
+      handleMaskHide() {
+        this.detailActive = false;
+      }
     }
   }
 </script>
@@ -446,6 +583,96 @@
     .current {
       color: #1E97FF !important;
       background: #fff !important;
+    }
+    .cube-popup {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 51px;
+      z-index: 100;
+      pointer-events: none;
+      overflow: hidden;
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 18px;
+        background: #f3f5f7;
+        .title {
+          font-size: 14px;
+          color: #333;
+        }
+        .empty {
+          font-size: 12px;
+          color: #00a0dc;
+        }
+      }
+      .cube-popup-wrap {
+        position: relative;
+        padding: 0 18px;
+        max-height: 217px;
+        overflow: auto;
+        background: #fff;
+        height: 100%;
+      }
+    }
+    .cube-popup-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+      pointer-events: auto;
+      z-index: 100;
+    }
+    .cube-popup-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      background-color: #07111b;
+      opacity: 0.6;
+      pointer-events: auto;
+    }
+    .fade-enter, .fade-leave-active {
+      opacity: 0
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: all .3s ease-in-out
+    }
+    .move-enter, .move-leave-active {
+      transform: translate3d(0, 100%, 0);
+    }
+    .move-enter-active, .move-leave-active {
+      transition: all .3s ease-in-out
+    } 
+    .content-item {
+      position: relative;
+      padding: 12px 0;
+      box-sizing: border-box;
+      .name {
+        line-height: 24px;
+        font-size: 14px;
+        color: #333;
+      }
+      .price {
+        position: absolute;
+        right: 90px;
+        bottom: 12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #f01414;
+      }
+      .cart-control-wrapper {
+        position: absolute;
+        right: 0;
+        bottom: 6px;
+      }
     }
   }
 </style>
