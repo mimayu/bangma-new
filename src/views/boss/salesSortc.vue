@@ -1,7 +1,7 @@
 <template>
     <div class="salesSort">
-        <h1 class="sales-title">业绩排行榜
-            <!--<a @click="choseType">筛选</a>-->
+        <h1 class="sales-title">某一渠道 业务排行排行
+           <!-- <a @click="choseType">筛选</a>-->
             <Popup v-model="show" position="bottom">
              <datetime-picker
                 @confirm="handleComfirm"
@@ -16,65 +16,72 @@
             <Tab  title="本日" >
                 <div>
                     <Row>
-                        <Col span="6">排行</Col>
-                        <Col span="6">姓名</Col>
-                        <Col span="6">签单数</Col>
-                        <Col span="6">签约金额</Col>
+                        <Col span="4">排行</Col>
+                        <Col span="7">渠道名称</Col>
+                        <Col span="4">单数</Col>
+                        <Col span="4">签单数</Col>
+                        <Col span="5">签单率</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="6">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                        <Col span="4">{{index+1}}</Col>
+                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="4">{{item.allnum}}</Col>
+                        <Col span="4">{{item.qianyue_num}}</Col>
+                        <Col span="5">{{item.allFee}}</Col>
                     </Row>
                 </div>
             </Tab>
             <Tab  title="本周" >
                 <div>
                     <Row>
-                        <Col span="6">排行</Col>
-                        <Col span="6">姓名</Col>
-                        <Col span="6">签单数</Col>
-                        <Col span="6">签约金额</Col>
+                        <Col span="4">排行</Col>
+                        <Col span="7">渠道名称</Col>
+                        <Col span="4">单数</Col>
+                        <Col span="4">签单数</Col>
+                        <Col span="5">签单率</Col>
                     </Row>
-                    <Row v-for="(item, index) in list">
-                        <Col span="6">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                     <Row v-for="(item, index) in list">
+                        <Col span="4">{{index+1}}</Col>
+                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="4">{{item.allnum}}</Col>
+                        <Col span="4">{{item.qianyue_num}}</Col>
+                        <Col span="5">{{item.allFee}}</Col>
                     </Row>
                 </div>
             </Tab>
             <Tab  title="本月" >
                 <div>
                     <Row>
-                        <Col span="6">排行</Col>
-                        <Col span="6">姓名</Col>
-                        <Col span="6">签单数</Col>
-                        <Col span="6">签约金额</Col>
+                        <Col span="4">排行</Col>
+                        <Col span="7">渠道名称</Col>
+                        <Col span="4">单数</Col>
+                        <Col span="4">签单数</Col>
+                        <Col span="5">签单率</Col>
                     </Row>
-                    <Row v-for="(item, index) in list">
-                        <Col span="6">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                     <Row v-for="(item, index) in list">
+                        <Col span="4">{{index+1}}</Col>
+                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="4">{{item.allnum}}</Col>
+                        <Col span="4">{{item.qianyue_num}}</Col>
+                        <Col span="5">{{item.allFee}}</Col>
                     </Row>
-                     
                 </div>
             </Tab>
             <Tab title="本年" >
-                <div>
+                 <div>
                     <Row>
-                        <Col span="6">排行</Col>
-                        <Col span="6">姓名</Col>
-                        <Col span="6">签单数</Col>
-                        <Col span="6">签约金额</Col>
+                        <Col span="4">排行</Col>
+                        <Col span="7">渠道名称</Col>
+                        <Col span="4">单数</Col>
+                        <Col span="4">签单数</Col>
+                        <Col span="5">签单率</Col>
                     </Row>
-                    <Row v-for="(item, index) in list">
-                        <Col span="6">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                     <Row v-for="(item, index) in list">
+                        <Col span="4">{{index+1}}</Col>
+                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="4">{{item.allnum}}</Col>
+                        <Col span="4">{{item.qianyue_num}}</Col>
+                        <Col span="5">{{item.allFee}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -87,7 +94,7 @@
 <script>
     import footerNav from "../../components/footerNav"; // 引入页脚
     import { Cell, CellGroup, Popup, Row, Col, Picker, Toast,Tab, Tabs ,DatetimePicker } from 'vant';
-    import { salesSortYj } from '@/server';
+    import { salesSortqd } from '@/server';
     import { timetrans } from '@/utils/time';
 
     export default {
@@ -122,14 +129,14 @@
             // }
         },
         created() {
-            this.salesSortYj()
+            this.salesSortqd()
         },
         methods: {
-             salesSortYj(type) {
+             salesSortqd(type) {
                 let params = {
                     'type': this.type,
                 }
-                salesSortYj(params).then(
+                salesSortqd(params).then(
                  res => {
                     this.list = res.statistics;
                     }
@@ -187,7 +194,7 @@
                       this.type="year"
 
                   }
-                  this.salesSortYj(this.type)
+                  this.salesSortqd(this.type)
                        
                 },
         }
@@ -200,6 +207,7 @@
         color: #808792;height:30px;line-height:30px;
         &:nth-child(2n-1){background:#F0F5FF;}
     }
+    .van-col{white-space:nowrap; }
    .sales-title{
        text-align:center;font-size:18px;color: #262626;height:44px;line-height:44px;
        position:relative;

@@ -41,7 +41,8 @@ import {
     getCustomerNew,
     getCustomerOrder,
     salesSortqd,
-    salesSortYj
+    salesSortYj,
+    salesSortc
 } from './boss'
 
 export {
@@ -73,5 +74,6 @@ export {
     getCustomerNew,
     getCustomerOrder,
     salesSortqd,
-    salesSortYj
+    salesSortYj,
+    salesSortc
 }

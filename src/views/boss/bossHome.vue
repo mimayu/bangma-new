@@ -132,10 +132,11 @@ export default {
       padding-bottom:10px;
       border-bottom:1px solid #EBEBEB;
     }
-    a{
-      font-size: 28px;
+  
+    a:link,a:visited,a:hover,a:active { 
+       font-size: 14px;
       color: #575757;
-    }
+      }
     h3{
       font-size: 14px;
       color: #262626;
@@ -145,6 +146,7 @@ export default {
     .homepage{
       padding: 15px;display: flex;
       flex-wrap: wrap ;
+      a{color:#575757;}
     }
     a{
       width:25%;

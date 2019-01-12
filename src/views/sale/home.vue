@@ -42,6 +42,10 @@
 </script>
 
 <style lang="scss">
+    a:link,a:visited,a:hover,a:active { 
+       font-size: 14px;
+      color: #575757;
+      }
   .saleHome_container {
     .homepage {
       padding: 15px;
@@ -57,8 +61,8 @@
       font-size: 14px;
     }
     .all_user{
-      width:73px;
-      height:73px;
+      width:70%;
+      // height:73px;
       border-radius:50%;
       display:block;
       margin: 0 auto 10px auto;
