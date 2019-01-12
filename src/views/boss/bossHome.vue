@@ -7,15 +7,15 @@
         全部客户
       </router-link>
       <router-link to="bossAddCustom" class="alink">
-        <img class="all_user" src="../../assets/img/3.png">
+        <img class="all_user" src="../../assets/img/kh.png">
         新进客户
       </router-link>
       <router-link to="bossSignCustom" class="alink">
-        <img class="all_user" src="../../assets/img/4.png">
+        <img class="all_user" src="../../assets/img/44.png">
         签约客户
       </router-link>
       <router-link to="bossWorking" class="alink">
-        <img class="all_user" src="../../assets/img/5.png">
+        <img class="all_user" src="../../assets/img/33.png">
         开工实施
       </router-link>
       <router-link to="bossFinish" class="alink">
@@ -23,27 +23,33 @@
         完工
       </router-link>
       <router-link to="bossAudit" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/55.png">
         审核完成
       </router-link>
        <router-link to="bossSettle" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/88.png">
         结算
       </router-link>
        <router-link to="bossLoss" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/order.png">
         流失名单
       </router-link>
     </div>
 
      <div class="rank">
       <router-link to="gzProgress" class="alink">
+        <img class="" src="../../assets/img/77.png">
+        
         工长实施进程
       </router-link>
       <router-link to="salesSortYj" class="alink">
+        <img class="" src="../../assets/img/rank2.png">
+
         业绩排行榜
       </router-link>
       <router-link to="salesSort" class="alink">
+        <img class="" src="../../assets/img/rank.png">
+
         渠道排行榜
       </router-link>
     </div>
@@ -162,11 +168,15 @@ export default {
       border-top: 1px solid #EBEBEB;
       border-bottom: 1px solid #EBEBEB;
       a{
-        line-height:100%;
+        line-height:100%;height:90px;
         margin:0;
         border-right: 1px solid #EBEBEB;
-        width:33%
+        width:33%;
+        // text-align:center;
+        img{width:auto;display:block; height:50%;margin:10px auto;max-width:70%;}
+
       }
+
     }
   }
 </style>
