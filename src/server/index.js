@@ -42,7 +42,8 @@ import {
     getCustomerOrder,
     salesSortqd,
     salesSortYj,
-    salesSortc
+    salesSortc,
+    datastatistical
 } from './boss'
 
 export {
@@ -75,5 +76,6 @@ export {
     getCustomerOrder,
     salesSortqd,
     salesSortYj,
-    salesSortc
+    salesSortc,
+    datastatistical
 }

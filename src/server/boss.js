@@ -47,11 +47,14 @@ const salesSortqd = (params) => {
 const salesSortYj = (params) => {
     return request('/api/performanceRank/', params, 'GET');
 }
-
+// 某一渠道 排行榜
 const salesSortc = (params) => {
     return request('/api/channelGroupbyRank/', params, 'GET');
 }
-
+// boss首页  接口
+const datastatistical = (params) => {
+    return request('/api/statistics/', params, 'GET');
+}
 export {
     postAddWork,
     getProgress,
@@ -59,5 +62,6 @@ export {
     getCustomerOrder,
     salesSortqd,
     salesSortYj,
-    salesSortc
+    salesSortc,
+    datastatistical
 }

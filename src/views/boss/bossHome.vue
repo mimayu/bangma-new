@@ -54,32 +54,67 @@
       </router-link>
     </div>
 
-    <h3>数据统计</h3>
 
     <Tabs v-model="active">
         <Tab title="今天">
-         <Row class=mini>
+          <h3>数据统计</h3>
+
+          <Row class=mini>
             <Col span="6">%</Col>
             <Col span="6">上门率66%</Col>
             <Col span="6">签单率66%</Col>
             <Col span="6">%</Col>
 
-        </Row>
-        <Row class="order">
+          </Row>
+          <Row class="order">
             <Col span="6">30<br/>总接单数</Col>
             <Col span="6">30<br/>总上门数</Col>
             <Col span="6">30<br/>总签单数</Col>
             <Col span="6">30<br/>总签单金额</Col>
-        </Row>
-        
+          </Row>
+          <h3>签单占比</h3>
+
            
-        </Tab>
-        <Tab title="本周">www</Tab>
-        <Tab title="本月">www</Tab>
+       </Tab>
+      <Tab title="本周">
+         <h3>数据统计</h3>
+
+          <Row class=mini>
+            <Col span="6">%</Col>
+            <Col span="6">上门率66%</Col>
+            <Col span="6">签单率66%</Col>
+            <Col span="6">%</Col>
+
+          </Row>
+          <Row class="order">
+            <Col span="6">30<br/>总接单数</Col>
+            <Col span="6">30<br/>总上门数</Col>
+            <Col span="6">30<br/>总签单数</Col>
+            <Col span="6">30<br/>总签单金额</Col>
+          </Row>
+          <h3>签单占比</h3>
+      </Tab>
+      <Tab title="本月">
+         <h3>数据统计</h3>
+
+          <Row class=mini>
+            <Col span="6">%</Col>
+            <Col span="6">上门率66%</Col>
+            <Col span="6">签单率66%</Col>
+            <Col span="6">%</Col>
+
+          </Row>
+          <Row class="order">
+            <Col span="6">30<br/>总接单数</Col>
+            <Col span="6">30<br/>总上门数</Col>
+            <Col span="6">30<br/>总签单数</Col>
+            <Col span="6">30<br/>总签单金额</Col>
+          </Row>
+          <h3>签单占比</h3>
+      </Tab>
     </Tabs>
 
 
-    <h3>签单占比</h3>
 
     <footerNav></footerNav>
   </div>
@@ -88,6 +123,7 @@
 <script>
 import { Cell, CellGroup, Popup, Row, Col, Picker, Toast , Tab,Tabs,} from 'vant';
 import footerNav from '../../components/footerNav'
+import { datastatistical } from '@/server';
 
 export default {
   name: 'bossHome',
@@ -108,7 +144,23 @@ export default {
             list:{},
             active: 0
         }
-    }
+    },
+    created() {
+      this.datastatistical()
+    },
+    methods: {
+       datastatistical(type) {
+          let params = {
+              'type': this.type,
+          }
+          datastatistical(params).then(
+            res => {
+              console.log(res)
+              // this.list = res.statistics;
+              }
+          )
+      },
+    },
 }
 </script>
 

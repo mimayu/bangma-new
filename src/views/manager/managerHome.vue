@@ -43,7 +43,7 @@
 
 <style lang="scss">
    a:link,a:visited,a:hover,a:active { 
-       font-size: 14px;
+      font-size: 14px;
       color: #575757;
       }
   .manageHome_container {
