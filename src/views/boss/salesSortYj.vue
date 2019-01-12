@@ -1,6 +1,6 @@
 <template>
     <div class="salesSort">
-        <h1 class="sales-title">百度渠道签单排行榜
+        <h1 class="sales-title">业绩排行榜
             <a @click="choseType">筛选</a>
             <Popup v-model="show" position="bottom">
              <datetime-picker
@@ -16,36 +16,32 @@
             <Tab  title="本日" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col span="4">单数</Col>
-                        <Col span="5">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="6">排行</Col>
+                        <Col span="6">姓名</Col>
+                        <Col span="6">签单数</Col>
+                        <Col span="6">签约金额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="4">{{item.all_num}}</Col>
-                        <Col span="5">{{item.shangmen_num}}</Col>
-                        <Col span="5">{{item.rate}}</Col>
+                        <Col span="6">{{index+1}}</Col>
+                        <Col span="6">{{item.all_num}}</Col>
+                        <Col span="6">{{item.shangmen_num}}</Col>
+                        <Col span="6">{{item.rate}}</Col>
                     </Row>
                 </div>
             </Tab>
             <Tab  title="本周" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col span="4">单数</Col>
-                        <Col span="5">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="6">排行</Col>
+                        <Col span="6">姓名</Col>
+                        <Col span="6">签单数</Col>
+                        <Col span="6">签约金额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="4">{{item.all_num}}</Col>
-                        <Col span="5">{{item.shangmen_num}}</Col>
-                        <Col span="5">{{item.rate}}</Col>
+                        <Col span="6">{{index+1}}</Col>
+                        <Col span="6">{{item.all_num}}</Col>
+                        <Col span="6">{{item.shangmen_num}}</Col>
+                        <Col span="6">{{item.rate}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -53,35 +49,32 @@
                 <div>
                     <Row>
                         <Col span="4">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col span="4">单数</Col>
+                        <Col span="4">姓名</Col>
                         <Col span="5">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签约金额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="4">{{item.all_num}}</Col>
-                        <Col span="5">{{item.shangmen_num}}</Col>
-                        <Col span="5">{{item.rate}}</Col>
+                        <Col span="6">{{index+1}}</Col>
+                        <Col span="6">{{item.all_num}}</Col>
+                        <Col span="6">{{item.shangmen_num}}</Col>
+                        <Col span="6">{{item.rate}}</Col>
                     </Row>
+                     
                 </div>
             </Tab>
             <Tab title="本年" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col span="4">单数</Col>
-                        <Col span="5">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="6">排行</Col>
+                        <Col span="6">姓名</Col>
+                        <Col span="6">签单数</Col>
+                        <Col span="6">签约金额</Col>
                     </Row>
-                     <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="4">{{item.all_num}}</Col>
-                        <Col span="5">{{item.shangmen_num}}</Col>
-                        <Col span="5">{{item.rate}}</Col>
+                    <Row v-for="(item, index) in list">
+                        <Col span="6">{{index+1}}</Col>
+                        <Col span="6">{{item.all_num}}</Col>
+                        <Col span="6">{{item.shangmen_num}}</Col>
+                        <Col span="6">{{item.rate}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -94,7 +87,7 @@
 <script>
     import footerNav from "../../components/footerNav"; // 引入页脚
     import { Cell, CellGroup, Popup, Row, Col, Picker, Toast,Tab, Tabs ,DatetimePicker } from 'vant';
-    import { salesSort } from '@/server';
+    import { salesSortYj } from '@/server';
     import { timetrans } from '@/utils/time';
 
     export default {
@@ -129,22 +122,19 @@
             // }
         },
         created() {
-            this.salesSort()
+            this.salesSortYj()
         },
         methods: {
-             
-             salesSort(type) {
-                 console.log("222")
-                 console.log( this.type)
+             salesSortYj(type) {
                 let params = {
                     'type': this.type,
                 }
-                salesSort(params).then(
-                 res => {
-                     console.log(res)
-                    this.list = res.statistics;
-                    }
+                salesSortYj(params).then(
+                //  res => {
+                //     this.list = res.statistics;
+                //     }
                 )
+                console.log(this.list)
             },
             choseType() {
                 this.show = true;
@@ -197,7 +187,8 @@
                       this.type="year"
 
                   }
-                  this.salesSort(this.type)
+                  this.salesSortYj(this.type)
+                       
                 },
         }
     }

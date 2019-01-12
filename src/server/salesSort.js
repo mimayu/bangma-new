@@ -1,15 +1,26 @@
 import { request } from './http';
 
 /**
- * 百度渠道排名
+ * 获取我的
  * @param {*} params 
  */
-const salesSort = (params) => {
-    return request('/api/shangmenRate/', params);
+const salesSortqd = (params) => {
+    return request('/api/channelRank/', params, 'GET');
+}
+
+/**
+ * 获取组织信息
+ * @param {*} params 
+ */
+const salesSortYj = (params) => {
+    return request('/api/performanceRank/', params, 'GET');
 }
 
 
 
+
 export {
-    salesSort,
+    salesSortqd,
+    salesSortYj,
+    
 }

@@ -32,7 +32,8 @@ import {
 } from './my'
 
 import {
-   salesSort
+   salesSortqd,
+   salesSortYj
 } from './salesSort'
 
 import {
