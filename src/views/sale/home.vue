@@ -61,7 +61,7 @@
       font-size: 14px;
     }
     .all_user{
-      width:80%;
+      width:70%;
       // height:73px;
       border-radius:50%;
       display:block;
