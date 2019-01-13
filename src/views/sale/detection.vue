@@ -110,13 +110,11 @@
         </List>
       </Tab>
     </Tabs>
-
     <Actionsheet
       v-model="modeShow"
       :actions="actions"
       @select="handleSelect"
     />
-
     <footerNav></footerNav>
   </div>
 </template>
@@ -302,6 +300,30 @@ export default {
 
 <style lang="scss">
   .detection_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 53px;
+    right: 0;
+    // 重新tabs
+    .van-tabs {
+      height: 100%;
+      overflow: hidden;
+    }
+    .van-tabs--line {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: #f6f6f6;
+    }
+    .van-tabs__wrap {
+      position: static;
+    }
+    .van-tabs__content {
+      flex: 1;
+      overflow: auto;
+    }
+
     .van-cell__title, .van-field .van-cell__title {
         max-width: 100px;
     }

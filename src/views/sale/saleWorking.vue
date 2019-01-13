@@ -30,11 +30,13 @@
             :actions="actions"
             @select="handleSelect"
         />
+        <footerNav></footerNav>
     </div>
 </template>
 
 <script>
     import { Cell, CellGroup, Button, Field, Toast, Popup, Picker, List, Actionsheet } from 'vant';
+    import footerNav from "@/components/footerNav"; // 引入页脚    
     import { getCustomer } from '@/server';
 
     export default {
@@ -48,7 +50,8 @@
             Popup, 
             Picker,
             List,
-            Actionsheet
+            Actionsheet,
+            footerNav
         },
         data() {
             return {
