@@ -18,33 +18,39 @@
                 </Search>
             </Col>
         </Row>
-        <div class="content" v-if="customerLists.length > 0">
-            <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
-                <Cell title="订单号">
-                    <template>
-                        <div class="custom_wrap">
-                            <span class="order_id">{{item.iCustomerId}}</span>
-                            <span class="status">基检未约</span>
-                        </div>
-                    </template>
-                </Cell>
-                <Cell title="姓名" :value="item.sUsername" />
-                <Cell title="手机号" :value="item.sMobile" />
-                <Cell title="地址" :value="item.sAddress" />
-                <Cell title="施工内容" :value="item.sRemarks || '-'" />
-                <Cell title="预约时间" :value="item.tOrderDate || '-'" />
-                <div class="van-cell btn_wrap" >
-                    <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
-                </div>
-            </Cell-group>
+        <div class="content">
+            <List
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="handleLoad"
+                >
+                <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
+                    <Cell title="订单号">
+                        <template>
+                            <div class="custom_wrap">
+                                <span class="order_id">{{item.iCustomerId}}</span>
+                                <span class="status">基检未约</span>
+                            </div>
+                        </template>
+                    </Cell>
+                    <Cell title="姓名" :value="item.sUsername" />
+                    <Cell title="手机号" :value="item.sMobile" />
+                    <Cell title="地址" :value="item.sAddress" />
+                    <Cell title="施工内容" :value="item.sRemarks || '-'" />
+                    <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+                    <div class="van-cell btn_wrap" v-if="item.actions">
+                        <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+                    </div>
+                </Cell-group>
+            </List>
         </div>
 
         <Popup v-model="timeShow" position="bottom">
             <datetime-picker
                 @confirm="handleComfirm"
                 @cancel="handleCancel"
-                v-model="currentDate"
-                type="datetime"
+                type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
             />
@@ -52,12 +58,17 @@
         <Popup v-model="typeShow" position="bottom">
             <Picker show-toolbar :columns="typeLists" @cancel="handleTypeCancel" @confirm="handleTypeComfirm" />
         </Popup>
+         <Actionsheet
+            v-model="modeShow"
+            :actions="actions"
+            @select="handleSelect"
+        />
         <footerNav class="footer"></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List } from 'vant';
+    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List, Actionsheet } from 'vant';
     import { getCustomer } from '@/server';
     import { timetrans } from '@/utils/time';
     import footerNav from "../../components/footerNav"; // 引入页脚
@@ -75,6 +86,7 @@
             Search,
             Toast,
             List,
+            Actionsheet,
             footerNav: footerNav
         },
         data() {
@@ -110,44 +122,28 @@
                 status: '', // 状态
                 time: '', // 时间
                 page: 1,
-
+                loading: false,
+                finished: false,
+                modeShow: false, // 选择报价模式
+                actions: [
+                    {
+                    name: '普装'
+                    },
+                    {
+                    name: '精装'
+                    },
+                    {
+                    name: '奢华'
+                    }
+                ],
+                currentId: '' // 选择的id 
             };
         },
-        created() {
-            this.getCustomer();
-        },
         methods: {
-            choseType() {
-                this.typeShow = true;
-            },
-            choseTime() {
-                this.timeShow = true;
-            },
-            handleComfirm(value) {
-                let data = timetrans(value);
-                this.time = data;
-                this.timeShow = false;
-                this.getCustomer();
-            },
-            handleCancel() {
-                this.timeShow = false;
-            },
-            handleTypeComfirm(value) {
-                let index = this.typeLists.findIndex((item) => {
-                    return item == value
-                });
-                let status = this.typeCode[index];
-                this.status = status;
-                this.typeShow = false;
-                this.getCustomer();
-            },
-            handleTypeCancel() {
-                this.typeShow = false;
-            },
-            handleSearch() {
-                this.getCustomer();
-            },
-            getCustomer(cb) {
+            /*
+            * 初始化数据加载
+            */
+            getCustomer() {
                 let params = {
                     status: this.status,
                     page: this.page,
@@ -158,26 +154,152 @@
                     res => {
                         if(res.success == 1) {
                             this.customerLists = res.list;
+                            this.page += 1;
+                            this.loading = false;
+                            if(res.list.length == 0) {
+                                this.finished = true;
+                            }
+                        }else {
+                            Toast(res.msg);
                         }
                     }
                 )
             },
-            handleGo(type, id) {
-                // 1 -> 上们
+            /*
+            * 加载数据
+            */
+            handleLoad() {
+                let params = {
+                    status: this.status,
+                    page: this.page,
+                    keywords: this.value,
+                    fromdate: this.time
+                }
+                getCustomer(params).then(
+                    res => {
+                        if(res.success == 1) {
+                            this.customerLists = this.customerLists.concat(res.list);
+                            this.page += 1;
+                            this.loading = false;
+                            if(res.list.length == 0) {
+                                this.finished = true;
+                            }
+                        }
+                    }
+                )
+            },
+            /*
+            * 重置
+            */
+            reset() {
+                this.customerLists = [];
+                this.loading = true;
+                this.finished = false;
+                this.page = 1;
+            },
+                        /*
+            * 选择类型
+            */
+            choseType() {
+                this.typeShow = true;
+            },
+            handleTypeComfirm(value) {
+                let index = this.typeLists.findIndex((item) => {
+                    return item == value
+                });
+                let status = this.typeCode[index];
+                this.status = status;
+                this.typeShow = false;
+                this.reset();
+                this.getCustomer();
+            },
+            handleTypeCancel() {
+                this.typeShow = false;
+            },
+            /*
+            * 选择时间
+            */
+            choseTime() {
+                this.timeShow = true;
+            },
+            handleComfirm(value) {
+                let data = timetrans(value, 1);
+                this.time = data;
+                this.timeShow = false;
+                this.reset();
+                this.getCustomer();
+            },
+            handleCancel() {
+                this.timeShow = false;
+            },
+            /*
+            * 搜索
+            */
+            handleSearch() {
+                this.reset();
+                this.getCustomer();
+            },
+            /*
+            * 点击操作
+            * 1 -> 预约
+            * 2 -> 上门
+            * 3 -> 报价
+            * 5 -> 合同解除
+            * 8 -> 完工
+            */
+            handleClick(type, id) {
                 switch(type) {
                     case 1:
-                        this.$router.push(
-                            {
-                                name: 'visit',
-                                params: {
-                                    id: id
-                                }
-                            }
-                        )
+                        this.handleGo(id, type);
+                        break;
+                    case 2:
+                        this.handleGo(id, type);
+                        break;
+                    case 3:
+                        this.handleQuote(id);
                         break;
                     default:
                         break;
                 }
+            },
+            /*
+            * 处理预约/上门
+            */
+            handleGo(id, type) {
+                let name = type == 1 ? 'order' : 'visit';
+                this.$router.push(
+                    {
+                        name: name,
+                        params: {
+                            id: id
+                        }
+                    }
+                )
+            },
+            /*
+            * 处理报价
+            */
+            handleQuote(id) {
+                this.modeShow = true;
+                this.currentId = id;
+            },
+            /*
+            * 处理报价选择
+            */
+            handleSelect(value) {
+                let mode = this.actions.findIndex(item => {
+                    return item.name == value.name;
+                })
+                this.modeShow = false;
+                this.$router.push(
+                    {
+                        name: 'quotation',
+                        params: {
+                            id: this.currentId,
+                            mode: +mode + 1
+                        }
+                    }
+                )
             }
         }
     }
@@ -185,6 +307,11 @@
 
 <style lang="scss">
     .allUser_container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 53px;
+        right: 0;
         display: flex;
         flex-direction: column;
         background-color: #f6f6f6;
@@ -254,12 +381,9 @@
         .group {
             margin-bottom: 8px;
         }
-        .empty {
-            font-size: 14px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate3D(-50%, -50%, 0);
+        .content {
+            flex: 1;
+            overflow: auto;
         }
     }
 </style>
