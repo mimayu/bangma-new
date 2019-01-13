@@ -23,13 +23,18 @@
                 <Field
                     v-model="plot"
                     label="小区名称"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    v-on:input="handleChange"
                 >
                 </Field>
-                <ul class="estate_list">
-                    <li v-for="item in estateLists">
-                        {{item.sName}}
-                    </li>
-                </ul>
+                <transition name="fade">
+                    <ul class="estate_list" v-show="estateShow">
+                        <li v-for="item in estateLists" @click="handleChose(item)">
+                            {{item.sName}}
+                        </li>
+                    </ul>
+                </transition>
             </div>
             <Cell title="户型" is-link @click="choseHouseType"/>
             <Field
@@ -160,7 +165,9 @@
                     '其它',
                     '露台'
                 ],
-                estateLists: []
+                estateLists: [],
+                estateValues: [],
+                estateShow: false
             };
         },
         created() {
@@ -278,10 +285,34 @@
                 }
                 getEstate(params).then(
                     res => {
-                        this.estateLists = res.value
-                        console.log('res', res);
+                        this.estateLists = res.value;
+                        this.estateValues = res.value;
                     }
                 )
+            },
+            /*
+            * 处理聚焦
+            */
+            handleFocus() {
+                this.estateShow = true;
+            },
+            /*
+            * 处理失焦
+            */
+            handleBlur() {
+                this.estateShow = false;
+            },
+            /*
+            * 处理文字变化
+            */
+            handleChange(value) {
+                this.estateLists = this.estateValues.filter(item => item.sName.includes(value));
+            },
+            /*
+            * 处理小区点击
+            */
+            handleChose(item) {
+                this.plot = item.sName;
             }
         }
     }
@@ -299,11 +330,19 @@
             overflow-y: auto;
             z-index: 99;
             left: 105px;
-            background: red;
+            background: #eee;
+            font-size: 12px;
+            padding-left: 4px;
             li {
                 line-height: 40px;
                 padding-right: 15px;
             }
+        }
+        .fade-enter, .fade-leave-active {
+            opacity: 0
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: all .3s ease-in-out
         }
     }
 </style>
