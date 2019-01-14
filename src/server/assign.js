@@ -24,6 +24,10 @@ const getAllStaff = (params) => {
     return request('/api/accountlist/', params, 'GET');
 }
 
+/**
+ * 待分配客户列表
+ * @param {*} params 
+ */
 const getAssignList = (params) => {
     return request('/api/customer_tobeallocated/', params, 'GET');
 }
