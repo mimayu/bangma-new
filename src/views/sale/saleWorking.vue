@@ -155,7 +155,7 @@
                             this.customerLists = this.customerLists.concat(res.list);
                             this.page += 1;
                             this.loading = false;
-                            if(res.length == 0) {
+                            if(res.list.length == 0) {
                                 this.finished = true;
                             }
                         }
@@ -202,13 +202,6 @@
         }
         .group {
             margin-bottom: 8px;
-        }
-        .empty {
-            font-size: 14px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate3D(-50%, -50%, 0);
         }
     }
 </style>

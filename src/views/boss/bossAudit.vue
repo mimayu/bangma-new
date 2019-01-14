@@ -1,30 +1,37 @@
 <template>
     <div class="bossAudit_container">
-        <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">审核完成</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="预约时间" :value="item.tOrderDate || '-'" />
-            <div class="van-cell btn_wrap" >
-                <button plain type="primary" class="assign_btn" @click="handleGo(8, item.iCustomerId)">完工</button></button>
-                <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
-            </div>
-        </Cell-group>
+        <List
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="handleLoad"
+        >
+            <Cell-group class="group" v-for="item in auditLists" :key="item.iCustomerId">
+                <Cell title="订单号">
+                    <template>
+                        <div class="custom_wrap">
+                            <span class="order_id">{{item.iCustomerId}}</span>
+                            <span class="status">审核完成</span>
+                        </div>
+                    </template>
+                </Cell>
+                <Cell title="姓名" :value="item.sUsername" />
+                <Cell title="手机号" :value="item.sMobile" />
+                <Cell title="地址" :value="item.sAddress" />
+                <Cell title="施工内容" :value="item.sRemarks || '-'" />
+                <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+                <div class="van-cell btn_wrap" v-if="item.actions">
+                    <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+                </div>
+            </Cell-group>
+        </List>
+        <footerNav></footerNav>
     </div>
 </template>
 
 <script>
-    import { getEstate } from '@/server';
-    import { Cell, CellGroup, Button, Field, Toast, Popup, Picker } from 'vant';
+    import { Cell, CellGroup, Button, Field, Toast, Popup, Picker, List } from 'vant';
+    import footerNav from "@/components/footerNav"; // 引入页脚    
     import { getCustomer } from '@/server';
 
     export default {
@@ -36,19 +43,29 @@
             Field,
             Toast,
             Popup, 
-            Picker
+            Picker,
+            List,
+            footerNav
         },
         data() {
             return {
                 page: 1,
-                customerLists: []
+                auditLists: [],
+                loading: false, // 是否加载
+                finished: false, // 是否结束
             };
         },
-        created() {
-            this.getCustomer()
-        },
         methods: {
-            getCustomer(cb) {
+            /*
+            * 处理加载
+            */
+            handleLoad() {
+                this.getCustomer();
+            },
+            /*
+            * 请求数据
+            */
+            getCustomer() {
                 let params = {
                     status: 10,
                     page: this.page
@@ -56,28 +73,16 @@
                 getCustomer(params).then(
                     res => {
                         if(res.success == 1) {
-                            this.customerLists = res.list;
+                            this.auditLists = this.auditLists.concat(res.list);
+                            this.page += 1;
+                            this.loading = false;
+                            if(res.list.length == 0) {
+                                this.finished = true;
+                            }
                         }
                     }
                 )
             },
-            handleGo(type, id) {
-                // 8 -> 完工
-                switch(type) {
-                    case 8:
-                        this.$router.push(
-                            {
-                                name: 'bossFinishAdd',
-                                params: {
-                                    id: id
-                                }
-                            }
-                        )
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 </script>
@@ -118,13 +123,6 @@
         }
         .group {
             margin-bottom: 8px;
-        }
-        .empty {
-            font-size: 14px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate3D(-50%, -50%, 0);
         }
     }
 </style>

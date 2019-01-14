@@ -1,7 +1,7 @@
 <template>
   <div class="bossLoss_cintainer">
-    <Tabs v-model="active" @change="handleChange">
-      <Tab title="基建取消" >
+    <Tabs v-model="active">
+      <Tab title="基建取消">
         <List
           v-model="loading_under"
           :finished="finished_under"
@@ -21,52 +21,66 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="取消时间" :value="item.tOrderDate || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
-              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
           </Cell-group>
         </List>
       </Tab>
       <Tab title="签约失败">
-        <Cell-group class="group" v-for="item in data_success" :key="item.iCustomerId">
-          <Cell title="订单号">
-              <template>
-                  <div class="custom_wrap">
-                      <span class="order_id">{{item.iCustomerId}}</span>
-                      <span class="status">签约失败</span>
-                  </div>
-              </template>
-          </Cell>
-          <Cell title="姓名" :value="item.sUsername" />
-          <Cell title="手机号" :value="item.sMobile" />
-          <Cell title="地址" :value="item.sAddress" />
-          <Cell title="施工内容" :value="item.sRemarks || '-'" />
-          <Cell title="取消时间" :value="item.tOrderDate || '-'" />
-          <div class="van-cell btn_wrap" v-if="item.actions">
-            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
-          </div>
-        </Cell-group>
+        <List
+          v-model="loading_fail"
+          :finished="finished_fail"
+          finished-text="没有更多了"
+          @load="handleSuccessLoad"
+        >
+          <Cell-group class="group" v-for="item in data_fail" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">签约失败</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+            </div>
+          </Cell-group>
+        </List>
       </Tab>
       <Tab title="解约合同">
-        <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
-          <Cell title="订单号">
-              <template>
-                  <div class="custom_wrap">
-                      <span class="order_id">{{item.iCustomerId}}</span>
-                      <span class="status">解约合同</span>
-                  </div>
-              </template>
-          </Cell>
-          <Cell title="姓名" :value="item.sUsername" />
-          <Cell title="手机号" :value="item.sMobile" />
-          <Cell title="地址" :value="item.sAddress" />
-          <Cell title="施工内容" :value="item.sRemarks || '-'" />
-          <Cell title="取消时间" :value="item.tOrderDate || '-'" />
-          <div class="van-cell btn_wrap" v-if="item.actions">
-            <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
-          </div>
-        </Cell-group>
+        <List
+          v-model="loading_cancel"
+          :finished="finished_cancel"
+          finished-text="没有更多了"
+          @load="handleCancelLoad"
+        >
+          <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">解约合同</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+            </div>
+          </Cell-group>
+        </List>
       </Tab>
     </Tabs>
     <footerNav></footerNav>
@@ -75,20 +89,26 @@
 
 <script>
   import { Tab, Tabs, Cell, CellGroup, Toast, List } from 'vant';
-  import { getCustomer } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
+  import { getCustomer } from '@/server';
 
   export default {
-    name: 'detection',
+    name: 'bossLoss',
     data () {
       return {
         active: 0,
         data_under: [],
-        data_success: [],
+        data_fail: [],
         data_cancel: [],
-        currentId: '',
         loading_under: false, // 基建取消
-        finished_under: fasle // 基建取消
+        finished_under: false, // 基建取消
+        page_under: 1, // 基建取消
+        loading_fail: false, // 签约失败 
+        finished_fail: false, // 签约失败 
+        page_fail: 1, // 签约失败 
+        loading_cancel: false, // 解约合同 
+        finished_cancel: false, // 解约合同 
+        page_cancel: 1, // 解约合同 
       }
     },
     components: {
@@ -98,54 +118,120 @@
       CellGroup,
       Toast,
       List,
-      'footerNav': footerNav,
-    },
-    created() {
-      // let params = {
-      //   status: 3,
-      //   page: 1
-      // }
-      // this.getInfo(params, 'data_under');
+      footerNav
     },
     methods: {
       /*
-      * 基建取消
+      * 点击按钮
+      * 1 -> 预约
+      */
+      handleClick(type, id) {
+        switch(type) {
+          case 1:
+            this.handleGo(id, type);
+            break;
+          default:
+            break;
+        }
+      },
+      /*
+      * 处理预约
+      */
+      handleGo(id, type) {
+          this.$router.push(
+              {
+                  name: 'order',
+                  params: {
+                      id: id
+                  }
+              }
+          )
+      },
+      /*
+      * 加载基建数据
       */
       handleUnderLoad() {
-        console.log(1)
+        let params = {
+          status: 3,
+          page: this.page_under,
+        }
+        this.getInfo(params, 'under');
+      },
+      /*
+      * 加载失败数据
+      */
+      handleSuccessLoad() {
+        let params = {
+          status: 101,
+          page: this.page_fail
+        }
+        this.getInfo(params, 'fail');
+      },
+      /*
+      * 加载解约数据
+      */
+      handleCancelLoad() {
+        let params = {
+          status: 102,
+          page: this.page_cancel,
+        }
+        this.getInfo(params, 'cancel');
+      },
+      /*
+      * 获取数据
+      */
+      getInfo(params, type) {
+        let dataType = `data_${type}`;
+        let finishedType = `finished_${type}`;
+        let loadingType = `loading_${type}`;
+        let pageType = `page_${type}`;
+
+        getCustomer(params).then(
+          res => {
+            if(res.success == 1) {
+              this[dataType] = this[dataType].concat(res.list);
+              this[loadingType] = false;
+              if(res.list.length == 0) {
+                this[finishedType] = true;
+              }
+              this[pageType] += 1;
+            }else {
+              Toast(res.msg);
+            }
+            console.log('this[pageType]', this[pageType]);
+          }
+        )
       }
-      // getInfo(params, type) {
-      //   getCustomer(params).then(
-      //     res => {
-      //       if(res.success == 1) {
-      //         this[type] = res.list;
-      //       }
-      //     }
-      //   )
-      // },
-      // handleChange(value) {
-      //   if(value == 1) {
-      //     let params = {
-      //       status: 101,
-      //       page: 1
-      //     }
-      //     this.getInfo(params, 'data_success');
-      //   }
-      //   if(value == 2) {
-      //     let params = {
-      //       status: 102,
-      //       page: 1
-      //     }
-      //     this.getInfo(params, 'data_cancel');
-      //   }
-      // }
     }
   }
 </script>
 
 <style lang="scss">
   .bossLoss_cintainer {
-    background-color: #f6f6f6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 53px;
+    right: 0;
+    // 重新tabs
+    .van-tabs {
+      height: 100%;
+      overflow: hidden;
+    }
+    .van-tabs--line {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: #f6f6f6;
+    }
+    .van-tabs__wrap {
+      position: static;
+    }
+    .van-tabs__content {
+      flex: 1;
+      overflow: auto;
+    }
+    
     .van-cell__title, .van-field .van-cell__title {
         max-width: 100px;
     }
@@ -159,13 +245,13 @@
         justify-content: flex-end;
     }
     .assign_btn {
-        padding: 6px 8px;
-        margin-left: 9px;
-        border: 1px solid #ebedf0;
-        border-radius: 10px;
-        outline: none;
-        color: #333;
-        background: #fff;
+      padding: 6px 8px;
+      margin-left: 9px;
+      border: 1px solid #ebedf0;
+      border-radius: 10px;
+      outline: none;
+      color: #333;
+      background: #fff;
     }
     .custom_wrap {
         display: flex;
