@@ -199,7 +199,7 @@
         }
         let idAndNumberValues = [];
         let iCustomerId = this.$route.params.id || 1;
-        this.this.selectGoods.map(item => {
+        this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
         

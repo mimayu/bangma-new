@@ -5,14 +5,6 @@
         <img class="all_user" src="../../assets/img/home.png">
         新建客户
       </router-link>
-      <router-link to="addStaff" class="alink">
-        <img class="all_user" src="../../assets/img/3.png">
-        新建员工
-      </router-link>
-      <router-link to="addLabourer" class="alink">
-        <img class="all_user" src="../../assets/img/4.png">
-        新建工长
-      </router-link>
       <router-link to="underAssignList" class="alink">
         <img class="all_user" src="../../assets/img/5.png">
         待分配列表
