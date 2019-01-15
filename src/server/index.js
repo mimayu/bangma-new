@@ -22,7 +22,9 @@ import {
     postAssign,
     postAddCustomer,
     getAllStaff,
-    getAssignList
+    getAssignList,
+    getLabourerList,
+    getAssignedList
 } from './assign'
 
 import {
@@ -77,5 +79,7 @@ export {
     salesSortqd,
     salesSortYj,
     salesSortc,
-    datastatistical
+    datastatistical,
+    getLabourerList,
+    getAssignedList
 }

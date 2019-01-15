@@ -32,9 +32,27 @@ const getAssignList = (params) => {
     return request('/api/customer_tobeallocated/', params, 'GET');
 }
 
+/**
+ * 工长列表
+ * @param {*} params 
+ */
+const getLabourerList = (params) => {
+    return request('/api/gongzhanglist/', params, 'GET');
+}
+
+/**
+ * 已分配客户列表
+ * @param {*} params 
+ */
+const getAssignedList = (params) => {
+    return request('/api/customer_allocated/', params, 'GET');
+}
+
 export {
     postAssign,
     postAddCustomer,
     getAllStaff,
-    getAssignList
+    getAssignList,
+    getLabourerList,
+    getAssignedList
 }

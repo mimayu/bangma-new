@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import { getAllStaff } from '@/server';
+    import { getLabourerList } from '@/server';
     import { Cell, CellGroup, Popup, Row, Col, Picker, Toast, Search, List } from 'vant';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
@@ -76,14 +76,14 @@
             * 滚动加载
             */
             handleLoad() {
-                this.getAllStaff();
+                this.getLabourerList();
             },
-            getAllStaff() {
+            getLabourerList() {
                 let params = {
                     'page': this.page,
                     'keyword': this.value,
                 }
-                getAllStaff(params).then(
+                getLabourerList(params).then(
                     res => {
                         if(res.success == 1) {
                             this.staffLists = this.staffLists.concat(res.list);
@@ -106,7 +106,7 @@
                     'page': '',
                     'keyword': this.value,
                 }
-                getAllStaff(params).then(
+                getLabourerList(params).then(
                     res => {
                         if(res.success == 1) {
                             this.staffLists = res.list;

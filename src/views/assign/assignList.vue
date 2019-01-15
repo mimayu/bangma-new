@@ -25,7 +25,7 @@
 <script>
     import { Cell, CellGroup, Toast, List } from 'vant';
     import footerNav from "../../components/footerNav"; // 引入页脚
-    import { getAssignList } from '@/server';
+    import { getAssignedList } from '@/server';
 
     export default {
         name: 'assignList',
@@ -49,16 +49,16 @@
             * 滑动加载
             */
             handleLoad() {
-                this.getAssignList();
+                this.getAssignedList();
             },
             /*
             * 加载数据
             */
-            getAssignList() {
+            getAssignedList() {
                 let params = {
                     'page': this.page
                 }
-                getAssignList(params).then(
+                getAssignedList(params).then(
                     res => {
                         if(res.success == 1) {
                             this.assignLists = this.assignLists.concat(res.list);
