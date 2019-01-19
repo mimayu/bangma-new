@@ -22,54 +22,19 @@
             />
         </Cell-group>
         <div class="am-image-picker-list">
-            <div class="am-flexbox-item-contain">
+            <div class="am-flexbox-item-contain" v-for="item in imgArray" :key="item.id">
                 <div class="am-flexbox-item">
                     <div class="am-image-picker-item">
-                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image"></div>
-                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" style="background-image: url(&quot;https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg&quot;); transform: rotate(0deg);"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="am-flexbox-item-contain">
-                <div class="am-flexbox-item">
-                    <div class="am-image-picker-item">
-                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image"></div>
-                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" style="background-image: url(&quot;https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg&quot;); transform: rotate(0deg);"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="am-flexbox-item-contain">
-                <div class="am-flexbox-item">
-                    <div class="am-image-picker-item">
-                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image"></div>
-                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" style="background-image: url(&quot;https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg&quot;); transform: rotate(0deg);"></div>
+                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image" @click="handleDelete(item.id)"></div>
+                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" :style="changePic(item)"></div>
                     </div>
                 </div>
             </div>
 
             <div class="am-flexbox-item-contain">
                 <div class="am-flexbox-item">
-                    <div class="am-image-picker-item">
-                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image"></div>
-                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" style="background-image: url(&quot;https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg&quot;); transform: rotate(0deg);"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="am-flexbox-item-contain">
-                <div class="am-flexbox-item">
-                    <div class="am-image-picker-item">
-                        <div class="am-image-picker-item-remove" role="button" aria-label="Click and Remove this image"></div>
-                        <div class="am-image-picker-item-content" role="button" aria-label="Image can be clicked" style="background-image: url(&quot;https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg&quot;); transform: rotate(0deg);"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="am-flexbox-item-contain">
-                <div class="am-flexbox-item">
                     <div class="am-image-picker-item am-image-picker-upload-btn" role="button" aria-label="Choose and add image">
-                        <input type="file" accept="image/*" multiple="">
+                        <input ref="input" type="file" class="file-input" name="image" accept="image/*" multiple="multiple" @change="handleInputChange" />
                     </div>
                 </div>
             </div>
@@ -186,6 +151,17 @@
                 dateYujiKaigong: '', // 签约成功 预计开工日期 2018-12-08
                 orderFee: '', // 签约成功 金额
                 orderDingjin: '', // 签约成功 签约定金
+                imgArray: [], // 上传图片设置
+                imgNumber: 0,
+                settings: {
+                    uploadUrl: '/api/do_upload/',
+                    compress: true,
+                    compressionRatio: 20,
+                    data: [],
+                    max: 9,
+                    maxSize: 5 * 1024, // 5MB
+                    typeArray: ['jpeg', 'jpg', 'png', 'gif'],
+                },
             };
         },
         methods: {
@@ -326,7 +302,6 @@
                 return "img-" + new Date().getTime() + "-" + this.imgNumber++;
             },
             handleInputChange(event) {
-                console.log('res', event);
                 const { typeArray, max, maxSize } = this.settings;
                 const imgArray = this.imgArray;
                 const uploadedImgArray = []; // 真正在页面显示的图片数组
@@ -385,7 +360,6 @@
                 // 没错误准备上传
                 // 页面先显示一共上传图片个数
                 this.imgArray = imgArray.concat(uploadedImgArray);
-
                 // 通过该函数获取每次要上传的数组
                 this.uploadGen = this.uploadGenerator(uploadQueue);
                 // 第一次要上传的数量
@@ -543,13 +517,10 @@
                 const imgFile = data.file;
                 const blob = data.blob;
 
-                // type
                 formData.append('type', blob.type);
-                // size
                 formData.append('size', blob.size);
-                // append 文件
                 formData.append('file', blob, imgFile.name);
-                formData.append('customer_id', 1);
+                formData.append('customer_id', this.$route.params.id || 1);
                 this.uploadImg(data, formData);
             },
             uploadImg (data, formData) {
@@ -563,12 +534,14 @@
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
+                        const result = JSON.parse(xhr.responseText);
+                        console.log('result', result);
                         if (xhr.status === 200 || xhr.status === 201) {
                             // 上传成功
-                            _this.handleUploadEnd(data, 2);
+                            _this.handleUploadEnd(data, result, 2);
                         } else {
                             // 上传失败
-                            _this.handleUploadEnd(data, 3);
+                            _this.handleUploadEnd(data, result, 3);
                         }
                     }
                 };
@@ -576,93 +549,35 @@
                 xhr.open('POST', uploadUrl , true);
                 xhr.send(formData);
             },
-            getImagesListDOM () {
-                // 处理显示图片的DOM
-                const { max } = this.settings;
-                const _this = this;
-                const result = [];
-                const uploadingArray = [];
-                const imgArray = this.imgArray;
-
-                imgArray.map((item)=>{
-                    result.push(
-                        <Figure key={item.id} {...item} onDelete={_this.handleDelete.bind(_this)} />
-                    );
-
-                    // 正在上传的图片
-                    if(item.status === 1){
-                        uploadingArray.push(item);
-                    }
-                });
-
-                // 图片数量达到最大值
-                if(result.length >= max ) return result;
-
-                let onPress = ()=>{_this.refs.input.click();};
-
-                //  或者有正在上传的图片的时候 不可再上传图片
-                if(uploadingArray.length > 0) {
-                    onPress = undefined;
-                }
-
-                // 简单的显示文案逻辑判断
-                let text = '上传图片';
-
-                if(uploadingArray.length > 0){
-                    text = (imgArray.length - uploadingArray.length) + '/' + imgArray.length;
-                }
-
-                result.push(
-                    <Touchable
-                        key="add"
-                        activeClassName={'zby-upload-img-active'}
-                        onPress={onPress}
-                    >
-                        <div className="zby-upload-img">
-                            <span key="icon" className="fa fa-camera" />
-                            <p className="text">{text}</p>
-                        </div>
-                    </Touchable>
-                );
-
-                return result;
-            },
             handleDelete(id) {
-                this.setState((previousState)=>{
-                    previousState.imgArray = previousState.imgArray.filter((item)=>(item.id !== id));
-                    return previousState;
-                });
+                let index = this.imgArray.findIndex(item => item.id == id);
+                this.imgArray.splice(index, 1);
             },
             handleProgress (id, e) {
                 // 监听上传进度 操作DOM 显示进度
                 const number = Number.parseInt((e.loaded / e.total) * 100) + "%";
-                console.log('number', number);
-                // const text = document.querySelector('#text-'+id);
-                // const progress = document.querySelector('#progress-'+id);
-
-                // text.innerHTML = number;
-                // progress.style.width = number;
             },
-            handleUploadEnd (data, status) {
+            handleUploadEnd (data, response, status) {
                 // 准备一条标准数据
                 const _this = this;
-                const obj = {id: data.uuid, imgKey: '', imgUrl: '', name: data.file.name, dataUrl: data.dataUrl, status: status};
-                console.log('end', status, obj, this.imgArray);
-                this.imgArray.reducer(() => {
+                const obj = {
+                    id: data.uuid, 
+                    imgKey: '', 
+                    imgUrl: response.imgUrl ? response.imgUrl : '', 
+                    name: data.file.name, 
+                    dataUrl: data.dataUrl, 
+                    status: status
+                };
+                let results = this.imgArray.reduce((init, current) => {
+                    if(current.id === data.uuid){
+                        init.push(obj)
+                    }else {
+                        init.push(current)
+                    }
+                    return init
+                }, [])
+                this.imgArray = results;
 
-                },[])
-                // 更改状态
-                // this.setState((previousState)=>{
-                //     previousState.imgArray = previousState.imgArray.map((item)=>{
-                //         if(item.id === data.uuid){
-                //             item = obj;
-                //         }
-
-                //         return item;
-                //     });
-                //     return previousState;
-                // });
-                console.log('end', status, obj, this.imgArray);
                 // 上传下一个
                 const nextUpload = this.uploadGen.next();
                 if(!nextUpload.done){
@@ -670,6 +585,10 @@
                         _this.transformFileToDataUrl(item, _this.compress, _this.processData);
                     });
                 }
+            },
+            changePic(item) {
+                let style = `background-image: url(${item.dataUrl}); transform: rotate(0deg);`;
+                return style;
             }
         }
     }
@@ -750,7 +669,9 @@
                 height: 100%;
                 width: 100%;
                 border-radius: 3px;
-                background-size: cover;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
             }
             .am-image-picker-item-remove {
                 width: 25px;
