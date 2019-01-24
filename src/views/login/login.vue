@@ -63,7 +63,15 @@ export default {
         res => {
           if(res.success == 1) {
               Toast('登录成功');
-              this.$router.push('/home');
+              if(res.role_type == 1){
+                this.$router.push('/managerHome');
+              }else if(res.role_type == 2 || res.role_type == 3){
+                this.$router.push('/home');
+              }else if(res.role_type == 5){
+                this.$router.push('/assignHome');
+              }
+                
+
               return;
           }
           if(res.success == 2) {
