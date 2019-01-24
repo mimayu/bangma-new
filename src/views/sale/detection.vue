@@ -21,7 +21,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="接单日期" :value="item.tOrderDate || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -48,7 +48,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="再约日期" :value="item.dateZaiyue || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -75,7 +75,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="上门时间" :value="item.dateYuyue || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -102,7 +102,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
