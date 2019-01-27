@@ -5,7 +5,7 @@
         <List
           v-model="loading_under"
           :finished="finished_under"
-          finished-text="没有更多了"
+          :finished-text="finished_under_text"
           @load="handleUnderLoad"
         >
           <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
@@ -32,7 +32,7 @@
         <List
           v-model="loading_success"
           :finished="finished_success"
-          finished-text="没有更多了"
+          :finished-text="finished_success_text"
           @load="handleSuccessLoad"
         >
           <Cell-group class="group" v-for="item in data_success" :key="item.iCustomerId">
@@ -59,7 +59,7 @@
         <List
           v-model="loading_cancel"
           :finished="finished_cancel"
-          finished-text="没有更多了"
+          :finished-text="finished_cancel_text"
           @load="handleCancelLoad"
         >
           <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
@@ -120,12 +120,15 @@
         currentId: '', // 选择的id
         loading_under: false, // 签约等待
         finished_under: false, // 签约等待
+        finished_under_text: '没有更多了',
         page_under: 1, // 签约等待
         loading_success: false, // 签约成功 
         finished_success: false, // 签约成功 
+        finished_success_text: '没有更多了', // 签约成功 
         page_success: 1, // 签约成功 
         loading_cancel: false, // 签约失败 
         finished_cancel: false, // 签约失败 
+        finished_cancel_text: '没有更多了', // 签约成功 
         page_cancel: 1, // 签约失败 
       }
     },
@@ -261,6 +264,7 @@
         let finishedType = `finished_${type}`;
         let loadingType = `loading_${type}`;
         let pageType = `page_${type}`;
+        let finishedTetx = `finished_${type}_text`;
 
         getCustomer(params).then(
           res => {
@@ -272,9 +276,11 @@
               }
               this[pageType] += 1;
             }else {
+              this[finishedTetx] = res.msg;
+              this[loadingType] = false;
+              this[finishedType] = true;
               Toast(res.msg);
             }
-            console.log('this[pageType]', this[pageType]);
           }
         )
       }

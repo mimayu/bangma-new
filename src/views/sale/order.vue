@@ -117,7 +117,6 @@
                 }
                 postYuyueAdd(params).then(
                     res => {
-                        console.log('res', res);
                         if(res.success == 1) {
                             Toast(res.msg);
                             return;

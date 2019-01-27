@@ -5,7 +5,7 @@
         <List
           v-model="loading_under"
           :finished="finished_under"
-          finished-text="没有更多了"
+          :finished-text="finished_under_text"
           @load="handleUnderLoad"
         >
           <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
@@ -32,7 +32,7 @@
         <List
           v-model="loading_order"
           :finished="finished_order"
-          finished-text="没有更多了"
+          :finished-text="finished_order_text"
           @load="handleOrderLoad"
         >
           <Cell-group class="group" v-for="item in data_order" :key="item.iCustomerId">
@@ -59,7 +59,7 @@
         <List
           v-model="loading_confirm"
           :finished="finished_confirm"
-          finished-text="没有更多了"
+          :finished-text="finished_confirm_text"
           @load="handleConfirmLoad"
         >
           <Cell-group class="group" v-for="item in data_confirm" :key="item.iCustomerId">
@@ -86,7 +86,7 @@
         <List
           v-model="loading_cancel"
           :finished="finished_cancel"
-          finished-text="没有更多了"
+          :finished-text="finished_cancel_text"
           @load="handleCancelLoad"
         >
           <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
@@ -135,15 +135,19 @@ export default {
       data_cancel: [],
       loading_under: false, // 基检未约 
       finished_under: false, // 基检未约 
+      finished_under_text: '没有更多了',
       page_under: 1, // 基检未约 
       loading_order: false, // 基检未约 
       finished_order: false, // 基检未约 
+      finished_order_text: '没有更多了',
       page_order: 1, // 基检未约 
       loading_confirm: false, // 基检未约 
       finished_confirm: false, // 基检未约 
+      finished_confirm_text: '没有更多了',
       page_confirm: 1, // 基检未约 
       loading_cancel: false, // 基检未约 
       finished_cancel: false, // 基检未约 
+      finished_cancel_text: '没有更多了',
       page_cancel: 1, // 基检未约 
       modeShow: false, // 选择报价模式
       actions: [
@@ -168,6 +172,9 @@ export default {
     List,
     Actionsheet,
     'footerNav': footerNav
+  },
+  created() {
+    this.active = this.$route.query.active || 0;
   },
   methods: {
     /*
@@ -278,6 +285,7 @@ export default {
       let finishedType = `finished_${type}`;
       let loadingType = `loading_${type}`;
       let pageType = `page_${type}`;
+      let finishedTetx = `finished_${type}_text`;
 
       getCustomer(params).then(
         res => {
@@ -289,6 +297,9 @@ export default {
             }
             this[pageType] += 1;
           }else {
+            this[finishedTetx] = res.msg;
+            this[loadingType] = false;
+            this[finishedType] = true;
             Toast(res.msg);
           }
         }
