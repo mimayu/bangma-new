@@ -22,8 +22,12 @@
         签约成功
       </router-link>
       <router-link :to="{path:'/signStatus', query: {active: 2}}" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/88.png">
         签约失败
+      </router-link>
+      <router-link :to="{path:'/signStatus', query: {active: 3}}" class="alink">
+        <img class="all_user" src="../../assets/img/7.png">
+        合同取消
       </router-link>
     </div>
     <footerNav></footerNav>

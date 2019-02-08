@@ -86,6 +86,14 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
+                            this.$router.push(
+                                {
+                                    name: 'signStatus',
+                                    query: {
+                                        active: 3
+                                    }
+                                }
+                            )
                             return;
                         }
                         Toast(res.msg);

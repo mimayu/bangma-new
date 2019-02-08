@@ -179,21 +179,32 @@
                 if(this.status == '签约等待') {
                    params.iStatus = 4;
                    params.timeNextFollow = this.nextTime;
+                   params.active = 0;
                 }
                 if(this.status == '签约成功') {
                    params.iStatus = 5;
                    params.dateOrder = this.dateOrder;
                    params.dateYujiKaigong = this.dateYujiKaigong;
-                   params.orderFee = this.orderFee
-                   params.orderDingjin = this.orderDingjin
+                   params.orderFee = this.orderFee;
+                   params.orderDingjin = this.orderDingjin;
+                   params.active = 1;
                 }
                 if(this.status == '签约失败') {
                    params.iStatus = 101;
+                   params.active = 2;
                 }
                 postShangmenAdd(params).then(
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
+                            this.$router.push(
+                                {
+                                    name: 'signStatus',
+                                    query: {
+                                        active: params.active
+                                    }
+                                }
+                            )
                             return;
                         }
                         Toast(res.msg);
@@ -520,7 +531,7 @@
                 formData.append('type', blob.type);
                 formData.append('size', blob.size);
                 formData.append('file', blob, imgFile.name);
-                formData.append('customer_id', this.$route.params.id || 1);
+                formData.append('customer_id', this.$route.params.id || 0);
                 this.uploadImg(data, formData);
             },
             uploadImg (data, formData) {

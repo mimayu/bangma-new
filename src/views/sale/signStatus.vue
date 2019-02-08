@@ -21,7 +21,7 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <Cell title="接单日期" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -48,7 +48,7 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -75,13 +75,43 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+            <Cell title="接单日期" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
           </Cell-group>
         </List>
       </Tab>
+
+      <Tab title="合同取消">
+        <List
+          v-model="loading_quxiao"
+          :finished="finished_quxiao"
+          :finished-text="finished_quxiao_text"
+          @load="handleQuxiaoLoad"
+        >
+          <Cell-group class="group" v-for="item in data_quxiao" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">合同取消</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+            </div>
+          </Cell-group>
+        </List>
+      </Tab>
+
+
     </Tabs>
     <Actionsheet
       v-model="modeShow"
@@ -105,6 +135,7 @@
         data_under: [],
         data_success: [],
         data_cancel: [],
+        data_quxiao: [],
         modeShow: false, // 选择模式
         actions: [
           {
@@ -130,6 +161,10 @@
         finished_cancel: false, // 签约失败 
         finished_cancel_text: '没有更多了', // 签约成功 
         page_cancel: 1, // 签约失败 
+        loading_quxiao: false, // 合同取消 
+        finished_quxiao: false, // 合同取消 
+        finished_quxiao_text: '没有更多了', // 合同取消 
+        page_quxiao: 1, // 合同取消 
       }
     },
     components: {
@@ -255,6 +290,16 @@
           page: this.page_cancel,
         }
         this.getInfo(params, 'cancel');
+      },
+      /*
+      * 加载合同取消数据
+      */
+      handleQuxiaoLoad() {
+        let params = {
+          status: 102,
+          page: this.page_quxiao,
+        }
+        this.getInfo(params, 'quxiao');
       },
       /*
       * 获取数据
