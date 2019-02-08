@@ -30,7 +30,7 @@
                         <template>
                             <div class="custom_wrap">
                                 <span class="order_id">{{item.iCustomerId}}</span>
-                                <span class="status">基检未约</span>
+                                <span class="status">{{item.iStatus_name}}</span>
                             </div>
                         </template>
                     </Cell>
@@ -38,7 +38,7 @@
                     <Cell title="手机号" :value="item.sMobile" />
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
-                    <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+                    <Cell title="接单日期" :value="item.tOrderDate || '-'" />
                     <div class="van-cell btn_wrap" v-if="item.actions">
                         <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                     </div>
@@ -99,6 +99,7 @@
                 typeShow: false,
                 timeShow: false,
                 typeLists: [ 
+                    '全部状态',
                     '基检未约',
                     '基检确认',
                     '基检再约',
@@ -115,7 +116,7 @@
                     '合同取消'
                 ],
                 typeCode: [
-                    '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102'
+                    '', '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102'
                 ],
                 customerLists: [],
                 value: '', // 搜索

@@ -5,7 +5,7 @@
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">完工</span>
+                        <span class="status">{{item.iStatus_name}}</span>
                     </div>
                 </template>
             </Cell>
@@ -13,9 +13,8 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+            <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <div class="van-cell btn_wrap" >
-                <button plain type="primary" class="assign_btn" @click="handleGo(8, item.iCustomerId)">完工</button></button>
                 <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
             </div>
         </Cell-group>
@@ -50,7 +49,7 @@
         methods: {
             getCustomer(cb) {
                 let params = {
-                    status: 8,
+                    status: 5,
                     page: this.page
                 }
                 getCustomer(params).then(

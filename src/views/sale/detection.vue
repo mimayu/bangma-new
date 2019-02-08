@@ -13,7 +13,7 @@
                   <template>
                       <div class="custom_wrap">
                           <span class="order_id">{{item.iCustomerId}}</span>
-                          <span class="status">基检未约</span>
+                          <span class="status">{{item.iStatus_name}}</span>
                       </div>
                   </template>
               </Cell>
@@ -21,7 +21,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="接单日期" :value="item.tOrderDate || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -40,7 +40,7 @@
                   <template>
                       <div class="custom_wrap">
                           <span class="order_id">{{item.iCustomerId}}</span>
-                          <span class="status">基检再约</span>
+                          <span class="status">{{item.iStatus_name}}</span>
                       </div>
                   </template>
               </Cell>
@@ -48,7 +48,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="再约日期" :value="item.dateZaiyue || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -67,7 +67,7 @@
                   <template>
                       <div class="custom_wrap">
                           <span class="order_id">{{item.iCustomerId}}</span>
-                          <span class="status">基检确认</span>
+                          <span class="status">{{item.iStatus_name}}</span>
                       </div>
                   </template>
               </Cell>
@@ -75,7 +75,7 @@
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="上门时间" :value="item.dateYuyue || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -94,15 +94,15 @@
                   <template>
                       <div class="custom_wrap">
                           <span class="order_id">{{item.iCustomerId}}</span>
-                          <span class="status">基检未约</span>
+                          <span class="status">{{item.iStatus_name}}</span>
                       </div>
                   </template>
               </Cell>
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile" />
               <Cell title="地址" :value="item.sAddress" />
-              <Cell title="施工内容" :value="item.sRemarks || '-'" />
-              <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+              <Cell title="取消理由" :value="item.quxiaoContent || '-'" />
+              <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
               <div class="van-cell btn_wrap" v-if="item.actions">
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
               </div>
@@ -175,6 +175,7 @@ export default {
   },
   created() {
     this.active = this.$route.query.active || 0;
+
   },
   methods: {
     /*
@@ -248,7 +249,7 @@ export default {
       this.getInfo(params, 'under');
     },
     /*
-    * 基检预约
+    * 基检再约
     */
     handleOrderLoad() {
       let params = {
@@ -300,7 +301,6 @@ export default {
             this[finishedTetx] = res.msg;
             this[loadingType] = false;
             this[finishedType] = true;
-            Toast(res.msg);
           }
         }
       )

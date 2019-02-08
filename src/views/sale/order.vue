@@ -106,19 +106,30 @@
                 if(this.status == '基检确认') {
                    params.dateYuyue = this.time;
                    params.iStatus = 2;
+                   params.active = 2;
                 }
                 if(this.status == '基检取消') {
                    params.quxiaoContent = this.message;
                    params.iStatus = 3;
+                   params.active = 3;
                 }
                 if(this.status == '基检再约') {
                    params.dateZaiyue = this.time;
                    params.iStatus = 103;
+                   params.active = 1;
                 }
                 postYuyueAdd(params).then(
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
+                            this.$router.push(
+                                {
+                                    name: 'detection',
+                                    query: {
+                                        active: params.active
+                                    }
+                                }
+                            )
                             return;
                         }
                         Toast(res.msg);
