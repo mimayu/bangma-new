@@ -190,7 +190,7 @@
           name = 'quotationCancel' 
         }
         if(type == 6) {
-          name = 'assign' 
+          name = 'managerPaigong' 
         }
         this.$router.push(
           {

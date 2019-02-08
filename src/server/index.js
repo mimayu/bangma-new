@@ -20,7 +20,9 @@ import {
 
 import {
     postAssign,
+    postPaigong,
     postAddCustomer,
+    getPaigong,
     getAllStaff,
     getAssignList,
     getLabourerList,
@@ -64,7 +66,9 @@ export {
     postRegiste,
     postReset,
     postAssign,
+    postPaigong,
     postAddCustomer,
+    getPaigong,
     getAllStaff,
     getAssignList,
     getProfile,

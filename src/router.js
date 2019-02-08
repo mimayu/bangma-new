@@ -313,13 +313,21 @@ export default new Router({
       component: () => import(/* webpackChunkName: "assign" */ './views/assign/underAssignList')
     },
     /** 
-    * assign - > 分配操作
+    * managerPaigong - > 派工操作
     */
     {
-      path: '/assign',
-      name: 'assign',
-      component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
+      path: '/managerPaigong',
+      name: 'managerPaigong',
+      component: () => import(/* webpackChunkName: "managerPaigong" */ './views/manager/managerPaigong')
     },
+    /** 
+    * assign - > 分配操作
+    */
+   {
+    path: '/assign',
+    name: 'assign',
+    component: () => import(/* webpackChunkName: "assign" */ './views/assign/assign')
+  },
     /*
     * manager - 工程部首页
     */

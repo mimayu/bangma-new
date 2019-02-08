@@ -9,6 +9,22 @@ const postAssign = (params) => {
 }
 
 /**
+ * 分配工长
+ * @param {*} params 
+ */
+const postPaigong = (params) => {
+    return request('/api/paigongAdd/', params);
+}
+
+/**
+ * 获取分配的工长
+ * @param {*} params 
+ */
+const getPaigong = (params) => {
+    return request('/api/paigong/', params);
+}
+
+/**
  * 新建客户
  * @param {*} params 
  */
@@ -50,7 +66,9 @@ const getAssignedList = (params) => {
 
 export {
     postAssign,
+    postPaigong,
     postAddCustomer,
+    getPaigong,
     getAllStaff,
     getAssignList,
     getLabourerList,
