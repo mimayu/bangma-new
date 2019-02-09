@@ -36,24 +36,64 @@
       </div>
     </section>
     <section class="quote_toolbar">
-      <div class="quote_toolbar_content">
+      <div class="quote_toolbar_content" @click="handleQuotePop">
         工程总价
         <span class="quote_price">¥{{totalPrice}}</span>
       </div>
       <button @click="handleSubmit">保存</button>
     </section>
+    <transition name="fade">
+      <div class="cube-popup" v-show="detailActive">
+        <div class="cube-popup-mask" @click="handleMaskHide">
+        </div>
+        <transition
+          name="move"
+        >
+          <div class="cube-popup-container" v-show="detailActive">
+            <div class="list-header">
+              <h1 class="title">
+                购物车
+              </h1>
+              <span class="empty" @click="handleEmpty">
+                清空
+              </span>
+            </div>
+            <div class="cube-popup-wrap">
+              <ul class="cube-popup-content">
+                <li
+                  class="content-item"
+                  v-for="(item, index) in selectGoods"
+                  :key="index"
+                >
+                  <span class="name">{{item.project}}</span>
+                  <div class="price">
+                    <span>{{getSinglePrice(item.price,item.quantity)}}</span>
+                  </div>
+                  <div class="cart-control-wrapper">
+                    <a class="minus" @click="minusCart(item)">-</a>
+                    <span>{{item.quantity}}</span>
+                    <a class="add" @click="addCart(item)">+</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll';
-  import { Toast } from 'vant';
+  import { Toast, Dialog } from 'vant';
   import { getQuoteChange, getAddQuote, postSubmit } from '@/server';
 
   export default {
     name: 'quotation',
     components: {
-      Toast
+      Toast,
+      Dialog
     },
     data(){
       return {
@@ -64,6 +104,7 @@
         listHeight: [],
         scrollY: 0, // 滑动距离
         tabActive: 0, // 顶部tab激活
+        detailActive: false,
       }
     },
     created() {
@@ -85,13 +126,14 @@
       },
       selectGoods() {
         let lists = [];
-        // this.goods.forEach((good) => {
-        //   good.foods.forEach((food) => {
-        //     if (food.count) {
-        //       foods.push(food);
-        //     }
-        //   });
-        // });
+        this.details.forEach((items) => {
+          items.forEach((item) => {
+            if(item.quantity > 0) {
+              lists.push(item)
+            }
+          })
+        });
+        console.log('lists', lists);
         return lists;
       },
       totalPrice() {
@@ -138,23 +180,24 @@
         this.meunScroll.scrollToElement(el, 300, 0, -100);
       },
       /*
+      * 
+      */
+      handleQuotePop() {
+        if(this.selectGoods.length == 0) {
+          return;
+        }
+        this.detailActive = !this.detailActive;
+      },
+      /*
       * 点击提交
       */
-      handleSubmit() {
-        let lists = [];
-        this.details.forEach((items) => {
-          items.forEach((item) => {
-            if(item.quantity > 0) {
-              lists.push(item)
-            }
-          })
-        });
-        if(lists.length == 0) {
+       handleSubmit() {
+        if(this.selectGoods.length == 0) {
           return;
         }
         let idAndNumberValues = [];
         let iCustomerId = this.$route.params.id || 1;
-        lists.map(item => {
+        this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
         
@@ -256,11 +299,14 @@
       /*
       * 减少
       */
-      minusCart(item) {
+      minusCart(item, type) {
         if(item.quantity == 0) {
           return;
         }
         item.quantity --;
+        if(!this.selectGoods.length) {
+          this.detailActive = false;
+        }
       },
       /*
       * 增加
@@ -268,11 +314,36 @@
       addCart(item) {
         item.quantity ++;
       },
+      /*
+      * 处理点击mask
+      */
+      handleMaskHide() {
+        this.detailActive = false;
+      },
+      /*
+      * 处理清空
+      */
+      handleEmpty() {
+        Dialog.confirm({
+          title: '',
+          message: '<p>清空购物车？</p>'
+        }).then(() => {
+          this.selectGoods.forEach((item) => {
+            item.quantity = 0;
+          })
+        this.detailActive = false;
+        }).catch(() => {
+          console.log(1)
+        });
+      }
     }
   }
 </script>
 
 <style lang="scss">
+  .van-dialog__message {
+      text-align: center !important;
+    }
   .quote_container {
     position: absolute;
     top: 0;
@@ -443,6 +514,130 @@
     .current {
       color: #1E97FF !important;
       background: #fff !important;
+    }
+    .cube-popup {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 51px;
+      z-index: 100;
+      pointer-events: none;
+      overflow: hidden;
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 18px;
+        background: #f3f5f7;
+        .title {
+          font-size: 14px;
+          color: #333;
+        }
+        .empty {
+          font-size: 12px;
+          color: #00a0dc;
+        }
+      }
+      .cube-popup-wrap {
+        position: relative;
+        padding: 0 18px;
+        max-height: 217px;
+        overflow: auto;
+        background: #fff;
+        height: 100%;
+      }
+    }
+    .cube-popup-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+      pointer-events: auto;
+      z-index: 100;
+    }
+    .cube-popup-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      background-color: #07111b;
+      opacity: 0.6;
+      pointer-events: auto;
+    }
+    .fade-enter, .fade-leave-active {
+      opacity: 0
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: all .3s ease-in-out
+    }
+    .move-enter, .move-leave-active {
+      transform: translate3d(0, 100%, 0);
+    }
+    .move-enter-active, .move-leave-active {
+      transition: all .3s ease-in-out
+    } 
+    .content-item {
+      position: relative;
+      padding: 12px 0;
+      box-sizing: border-box;
+      .name {
+        display: inline-block;
+        max-width: 60%;
+        line-height: 24px;
+        font-size: 14px;
+        color: #333;
+      }
+      .price {
+        position: absolute;
+        right: 90px;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 24px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #f01414;
+      }
+      .cart-control-wrapper {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        a{
+          flex: 1;
+          width: 18px;
+          height: 18px; 
+          border-radius: 50%; 
+          text-align:center;
+          line-height: 18px;
+          border: 1px solid #F7F8F9;
+          padding:0;
+          display:inline-block;    
+          vertical-align: middle;
+        }
+        span{
+          flex: 2;
+          font-size: 12px; 
+          color: #000; 
+          vertical-align: middle;
+          text-align:center;
+          line-height: 18px;
+          display: inline-block;
+          padding: 0 10px;
+          margin: 0 4px;
+        }
+        .add{
+          background:#1E97FF;
+          color:#fff;
+        }
+        .minus{
+          color:gray;
+        }
+      }
     }
   }
 </style>
