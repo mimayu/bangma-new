@@ -41,6 +41,8 @@ import {
 
 import {
     postAddWork,
+    postAddWangong,
+    postAddFukuan,
     getProgress,
     getCustomerNew,
     getCustomerOrder,
@@ -78,6 +80,8 @@ export {
     salesSort,
     getCalendar,
     postAddWork,
+    postAddWangong,
+    postAddFukuan,
     getCustomerNew,
     getCustomerOrder,
     salesSortqd,

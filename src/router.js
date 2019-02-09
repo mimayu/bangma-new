@@ -241,6 +241,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "bossFinishAdd" */ './views/boss/bossFinishAdd.vue')
     },
     /** 
+    * boss - > 增加付款
+    */
+   {
+    path: '/bossFukuanAdd',
+    name: 'bossFukuanAdd',
+    component: () => import(/* webpackChunkName: "bossFukuanAdd" */ './views/boss/bossFukuanAdd.vue')
+  },
+    /** 
     * common - > 合同取消
     */
     {

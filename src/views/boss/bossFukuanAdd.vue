@@ -2,6 +2,10 @@
     <div class="bossFinishAdd_container">
         <Cell-group>
             <Cell title="完工日期" is-link :value="startTime" @click="choseTime" />
+            <Field
+                v-model="money"
+                label="尾款金额"
+            />
         </Cell-group>
         <Button type="primary" size="large" @click="Confirm">保存</Button>
         <Popup v-model="show" position="bottom">
@@ -18,11 +22,11 @@
 
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker, Button, Field, Toast } from 'vant';
-    import { postAddWangong } from '@/server';
+    import { postAddFukuan } from '@/server';
     import { timetrans } from '@/utils/time';
 
     export default {
-        name: 'bossFinishAdd',
+        name: 'bossFukuanAdd',
         components: {
             Cell,
             CellGroup,
@@ -39,8 +43,9 @@
                 minDate: new Date(),
                 maxDate: new Date(2019, 10, 1),
                 currentDate: new Date(),
-                show: false, // 完工日期 时间显示
-                startTime: '', // 完工日期
+                show: false, // 收取尾款日期 时间显示
+                startTime: '', // 收取尾款日期
+                money: '', // 收取尾款金额
             };
         },
         methods: {
@@ -48,9 +53,10 @@
                 let iCustomerId = this.$route.params.id || 1;
                 let params = {
                     'iCustomerId': iCustomerId,
-                    'dateWangong': this.startTime
+                    'dateWeikuan': this.startTime,
+                    'orderWeikuan': this.money
                 }
-                postAddWangong(params).then(
+                postAddFukuan(params).then(
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
@@ -58,7 +64,7 @@
                                 {
                                     name: 'saleWorking',
                                     query: {
-                                        active: 2
+                                        active: 3
                                     }
                                 }
                             )

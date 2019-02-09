@@ -9,6 +9,22 @@ const postAddWork = (params) => {
 }
 
 /**
+ * 增加完工
+ * @param {*} params 
+ */
+const postAddWangong = (params) => {
+    return request('/api/wangongAdd/', params);
+}
+
+/**
+ * 增加付款
+ * @param {*} params 
+ */
+const postAddFukuan = (params) => {
+    return request('/api/fukuanAdd/', params);
+}
+
+/**
  * 获取工长进度
  * @param {*} params 
  */
@@ -57,6 +73,8 @@ const datastatistical = (params) => {
 }
 export {
     postAddWork,
+    postAddWangong,
+    postAddFukuan,
     getProgress,
     getCustomerNew,
     getCustomerOrder,

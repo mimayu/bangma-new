@@ -188,6 +188,8 @@
       * 4 -> 报价调整
       * 5 -> 合同解除
       * 6 -> 派工
+      * 7 -> 开工
+      * 8 -> 完工
       */
       handleClick(type, id) {
         switch(type) {
@@ -206,6 +208,15 @@
           case 6:
             this.handleGo(id, type);
             break;
+          case 7:
+            this.handleGo(id, type);
+            break;
+          case 8:
+            this.handleGo(id, type);
+            break;
+          case 9:
+            this.handleGo(id, type);
+            break;
           default:
             break;
         }
@@ -222,10 +233,19 @@
           name = 'quotationList' 
         }
         if(type == 5) {
-          name = 'quotationCancel' 
+          name = 'quotationCancel'; 
         }
         if(type == 6) {
           name = 'managerPaigong' 
+        }
+        if(type == 7) {
+          name = 'bossWorkingAdd' 
+        }
+        if(type == 8) {
+          name = 'bossFinishAdd' 
+        }
+        if(type == 9) {
+          name = 'bossFukuanAdd' 
         }
         this.$router.push(
           {
