@@ -26,7 +26,7 @@
                         <template>
                             <div class="custom_wrap">
                                 <span class="order_id">{{item.iCustomerId}}</span>
-                                <span class="status">新进客户</span>
+                                <span class="status">签约成功</span>
                             </div>
                         </template>
                     </Cell>
@@ -34,21 +34,28 @@
                     <Cell title="手机号" :value="item.sMobile" />
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
-                    <Cell title="开工时间" :value="item.tOrderDate || '-'" />
+                    <Cell title="签约日期" :value="item.dateOrder || '-'" />
                     <div class="van-cell btn_wrap" v-if="item.actions">
                         <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                     </div>
                 </Cell-group>
             </List>
         </div>
+        <Actionsheet
+            v-model="modeShow"
+            :actions="actions"
+            @select="handleSelect"
+        />
+        <footerNav></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Toast, List } from 'vant';
+    import { Cell, CellGroup, Toast, List, Actionsheet } from 'vant';
     import dayjs from 'dayjs';
     import { getCustomerOrder } from '@/server';
     import { switchWeek } from '@/utils/time';
+    import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
         name: 'bossAddCustom',
@@ -56,7 +63,9 @@
             Cell,
             CellGroup,
             Toast,
-            List
+            List,
+            Actionsheet,
+            footerNav: footerNav
         },
         data() {
             return {
@@ -68,7 +77,21 @@
                 customerLists: [],
                 total: 0,
                 loading: false,
-                finished: false
+                finished: false,
+
+                modeShow: false, // 报价显示
+                currentId: '', // 选择id
+                actions: [
+                    {
+                        name: '普装'
+                    },
+                    {
+                        name: '精装'
+                    },
+                    {
+                        name: '奢华'
+                    }
+                ]
             };
         },
         created() {
@@ -90,12 +113,6 @@
                     dateLists.push(current);
                 }
                 return dateLists;
-            },
-            /*
-            * 点击处理
-            */
-            handleClick() {
-
             },
             /*
             * 点击时间切换
@@ -138,6 +155,108 @@
                 this.customerLists = [];
                 this.loading = true;
                 this.finished = false;
+            },
+            /*
+            * 点击操作
+            * 1 -> 预约
+            * 2 -> 上门
+            * 3 -> 报价
+            * 5 -> 合同解除
+            * 8 -> 完工
+            */
+            handleClick(type, id) {
+                switch(type) {
+                    case 1:
+                        this.handleGo(id, type);
+                        break;
+                    case 2:
+                        this.handleGo(id, type);
+                        break;
+                    case 3:
+                        this.handleQuote(id);
+                        break;
+                    case 4:
+                        this.handleGo(id, type);
+                        break;
+                    case 5:
+                        this.handleGo(id, type);
+                        break;
+                    case 6:
+                        this.handleGo(id, type);
+                        break;
+                    case 7:
+                        this.handleGo(id, type);
+                        break;
+                    case 8:
+                        this.handleGo(id, type);
+                        break;
+                    case 9:
+                        this.handleGo(id, type);
+                        break;
+                    default:
+                        break;
+                }
+            },
+            handleGo(id, type) {
+                // 8 -> 完工
+                let name = '';
+                if(type == 1) {
+                    name = 'order' 
+                }
+                if(type == 2) {
+                    name = 'visit' 
+                }
+                if(type == 4) {
+                    name = 'quotationList' 
+                }
+                if(type == 5) {
+                    name = 'quotationCancel'; 
+                }
+                if(type == 6) {
+                    name = 'managerPaigong' 
+                }
+                if(type == 7) {
+                    name = 'bossWorkingAdd' 
+                }
+                if(type == 8) {
+                    name = 'bossFinishAdd' 
+                }
+                if(type == 9) {
+                    name = 'bossFukuanAdd' 
+                }
+                this.$router.push(
+                    {
+                        name: name,
+                        params: {
+                            id: id
+                        }
+                    }
+                )
+            },
+            /*
+            * 处理报价
+            */
+            handleQuote(id) {
+                this.modeShow = true;
+                this.currentId = id;
+            },
+            /*
+            * 处理报价选择
+            */
+            handleSelect(value) {
+                let mode = this.actions.findIndex(item => {
+                    return item.name == value.name;
+                })
+                this.modeShow = false;
+                this.$router.push(
+                    {
+                        name: 'quotation',
+                        params: {
+                            id: this.currentId,
+                            mode: +mode + 1
+                        }
+                    }
+                )
             }
         }
     }

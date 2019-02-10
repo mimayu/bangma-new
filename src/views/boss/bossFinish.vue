@@ -1,12 +1,14 @@
 <template>
     <div class="bossFinish_container">
+    <Tabs v-model="active">
+        <Tab title="完工验收">
         <List
-          v-model="loading"
-          :finished="finished"
+          v-model="loading_yanshou"
+          :finished="finished_yanshou"
           finished-text="没有更多了"
-          @load="handleLoad"
+          @load="handleYanshouLoad"
         >
-            <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
+            <Cell-group class="group" v-for="item in data_yanshou" :key="item.iCustomerId">
                 <Cell title="订单号">
                     <template>
                         <div class="custom_wrap">
@@ -19,12 +21,41 @@
                 <Cell title="手机号" :value="item.sMobile" />
                 <Cell title="地址" :value="item.sAddress" />
                 <Cell title="施工内容" :value="item.sRemarks || '-'" />
-                <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+                <Cell title="完工日期" :value="item.dateWangong || '-'" />
                 <div class="van-cell btn_wrap" v-if="item.actions">
                     <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                 </div>
             </Cell-group>
         </List>
+        </tab>
+       <Tab title="完工付款">
+        <List
+          v-model="loading_fukuan"
+          :finished="finished_fukuan"
+          finished-text="没有更多了"
+          @load="handleFukuanLoad"
+        >
+          <Cell-group class="group" v-for="item in data_fukuan" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">完工付款</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="付款日期" :value="item.orderWeikuan || '-'" />
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+            </div>
+          </Cell-group>
+        </List>
+      </Tab>
+        </Tabs>
         <Actionsheet
             v-model="modeShow"
             :actions="actions"
@@ -35,13 +66,15 @@
 </template>
 
 <script>
-    import { Cell, CellGroup, Button, Field, Toast, Popup, Picker, List, Actionsheet } from 'vant';
+    import { Tab, Tabs, Cell, CellGroup, Button, Field, Toast, Popup, Picker, List, Actionsheet } from 'vant';
     import footerNav from "@/components/footerNav"; // 引入页脚    
     import { getCustomer } from '@/server';
 
     export default {
         name: 'bossFinish',
         components: {
+            Tab,
+            Tabs,
             Cell,
             CellGroup,
             Button,
@@ -55,10 +88,18 @@
         },
         data() {
             return {
-                page: 1,
-                customerLists: [],
-                loading: false, // 是否加载
-                finished: false, // 是否结束
+               active: 0,
+                data_yanshou: [],
+                data_fukuan: [],
+
+                loading_yanshou: false, // 完工验收
+                finished_yanshou: false, // 完工验收
+                page_yanshou: 1, // 完工验收
+                loading_fukuan: false, // 完工付款 
+                finished_fukuan: false, // 完工付款 
+                page_fukuan: 1, // 完工付款 
+
+
                 modeShow: false, // 报价显示
                 currentId: '', // 选择id
                 actions: [
@@ -84,6 +125,9 @@
                 switch(type) {
                     case 3:
                         this.handleQuote(id);
+                        break;
+                    case 4:
+                        this.handleGo(id, type);
                         break;
                     case 9:
                         this.handleGo(id, type);
@@ -121,7 +165,16 @@
             * 取消报价/完工
             */
             handleGo(id, type) {
-                let name = type == 5 ? 'quotationCancel' : 'bossFinishAdd';
+                let name = '';
+                if(type == 4) {
+                    name = 'quotationList' 
+                }
+                if(type == 5) {
+                    name = 'quotationCancel'; 
+                }
+                if(type == 9) {
+                    name = 'bossFukuanAdd' 
+                }
                 this.$router.push(
                     {
                         name: name,
@@ -131,33 +184,51 @@
                     }
                 )
             },
-            /*
-            * 处理加载
+             /*
+            * 加载完工验收数据
             */
-            handleLoad() {
-                this.getCustomer();
-            },
-            /*
-            * 请求数据
-            */
-            getCustomer() {
+            handleYanshouLoad() {
                 let params = {
-                    status: 8,
-                    page: this.page
+                status: 8,
+                page: this.page_yanshou,
                 }
-                getCustomer(params).then(
-                    res => {
-                        if(res.success == 1) {
-                            this.customerLists = this.customerLists.concat(res.list);
-                            this.page += 1;
-                            this.loading = false;
-                            if(res.list.length == 0) {
-                                this.finished = true;
-                            }
-                        }
-                    }
-                )
+                this.getInfo(params, 'yanshou');
             },
+            /*
+            * 加载完工数据
+            */
+            handleFukuanLoad() {
+                let params = {
+                status: 9,
+                page: this.page_fukuan
+                }
+                this.getInfo(params, 'fukuan');
+            },
+            /*
+            * 获取数据
+            */
+            getInfo(params, type) {
+                let dataType = `data_${type}`;
+                let finishedType = `finished_${type}`;
+                let loadingType = `loading_${type}`;
+                let pageType = `page_${type}`;
+
+                getCustomer(params).then(
+                res => {
+                    if(res.success == 1) {
+                    this[dataType] = this[dataType].concat(res.list);
+                    this[loadingType] = false;
+                    if(res.list.length == 0) {
+                        this[finishedType] = true;
+                    }
+                    this[pageType] += 1;
+                    }else {
+                    Toast(res.msg);
+                    }
+                    console.log('this[pageType]', this[pageType]);
+                }
+                )
+            }
         }
     }
 </script>

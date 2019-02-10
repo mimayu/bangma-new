@@ -76,9 +76,6 @@
                 currentId: '' // 选择的id 
             };
         },
-        //created() {
-        //    this.getCustomer()
-        //},
         methods: {
             getCustomer() {
                 let params = {
