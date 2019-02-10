@@ -259,6 +259,24 @@
                     case 3:
                         this.handleQuote(id);
                         break;
+                    case 4:
+                        this.handleGo(id, type);
+                        break;
+                    case 5:
+                        this.handleGo(id, type);
+                        break;
+                    case 6:
+                        this.handleGo(id, type);
+                        break;
+                    case 7:
+                        this.handleGo(id, type);
+                        break;
+                    case 8:
+                        this.handleGo(id, type);
+                        break;
+                    case 9:
+                        this.handleGo(id, type);
+                        break;
                     default:
                         break;
                 }
@@ -267,7 +285,31 @@
             * 处理预约/上门
             */
             handleGo(id, type) {
-                let name = type == 1 ? 'order' : 'visit';
+                let name = '';
+                if(type == 1) {
+                    name = 'order' 
+                }
+                if(type == 2) {
+                    name = 'visit' 
+                }
+                if(type == 4) {
+                    name = 'quotationList' 
+                }
+                if(type == 5) {
+                    name = 'quotationCancel'; 
+                }
+                if(type == 6) {
+                    name = 'managerPaigong' 
+                }
+                if(type == 7) {
+                    name = 'bossWorkingAdd' 
+                }
+                if(type == 8) {
+                    name = 'bossFinishAdd' 
+                }
+                if(type == 9) {
+                    name = 'bossFukuanAdd' 
+                }
                 this.$router.push(
                     {
                         name: name,

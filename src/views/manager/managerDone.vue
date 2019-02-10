@@ -1,11 +1,17 @@
 <template>
     <div class="bossFinish_container">
+        <List
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="handleLoad"
+            >
         <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">完工</span>
+                        <span class="status">{{item.iStatus_name}}</span>
                     </div>
                 </template>
             </Cell>
@@ -15,69 +21,205 @@
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="预约时间" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" >
-                <button plain type="primary" class="assign_btn" @click="handleGo(8, item.iCustomerId)">完工</button></button>
-                <button plain type="primary" class="assign_btn" @click="handleGo(action.type, item.iCustomerId)" v-for="(action, index) in item.actions" :key="action.type">{{action.name}}</button>
+                <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
         </Cell-group>
+        </List>
+          <Actionsheet
+            v-model="modeShow"
+            :actions="actions"
+            @select="handleSelect"
+        />
+        <footerNav class="footer"></footerNav>
     </div>
 </template>
 
 <script>
     import { getEstate } from '@/server';
-    import { Cell, CellGroup, Button, Field, Toast, Popup, Picker } from 'vant';
+    //import { Cell, CellGroup, Button, Field, Toast, Popup, Picker } from 'vant';
+    import { Cell, CellGroup, Popup, Row, Col, Picker, Toast, List, Actionsheet } from 'vant';
     import { getCustomer } from '@/server';
+    import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
         name: 'bossFinish',
         components: {
             Cell,
             CellGroup,
-            Button,
-            Field,
+            Popup,
+            Picker,
+            Row,
+            Col,
             Toast,
-            Popup, 
-            Picker
+            List,
+            Actionsheet,
+            footerNav: footerNav
         },
         data() {
             return {
                 page: 1,
-                customerLists: []
+                status:8,
+                customerLists: [],
+                loading: false,
+                finished: false,
+                modeShow: false, // 选择报价模式
+                actions: [
+                    {
+                    name: '普装'
+                    },
+                    {
+                    name: '精装'
+                    },
+                    {
+                    name: '奢华'
+                    }
+                ],
+                currentId: '' // 选择的id 
             };
         },
-        created() {
-            this.getCustomer()
-        },
         methods: {
-            getCustomer(cb) {
+            getCustomer() {
                 let params = {
-                    status: 8,
-                    page: this.page
+                    status: this.status,
+                    page: this.page,
                 }
                 getCustomer(params).then(
                     res => {
-                        console.log('res', res);
                         if(res.success == 1) {
                             this.customerLists = res.list;
+                            this.page += 1;
+                            this.loading = false;
+                            if(res.list.length == 0) {
+                                this.finished = true;
+                            }
+                        }else {
+                            Toast(res.msg);
                         }
                     }
                 )
             },
-            handleGo(type, id) {
-                // 8 -> 完工
-                switch(type) {
-                    case 8:
-                        this.$router.push(
-                            {
-                                name: 'bossFinishAdd',
-                                params: {
-                                    id: id
-                                }
+            /*
+            * 加载数据
+            */
+            handleLoad() {
+                let params = {
+                    status: this.status,
+                    page: this.page,
+                }
+                getCustomer(params).then(
+                    res => {
+                        if(res.success == 1) {
+                            this.customerLists = this.customerLists.concat(res.list);
+                            this.page += 1;
+                            this.loading = false;
+                            if(res.list.length == 0) {
+                                this.finished = true;
                             }
-                        )
+                        }
+                    }
+                )
+            },
+            /*
+            * 点击操作
+            * 1 -> 预约
+            * 2 -> 上门
+            * 3 -> 报价
+            * 5 -> 合同解除
+            * 8 -> 完工
+            */
+            handleClick(type, id) {
+                switch(type) {
+                    case 1:
+                        this.handleGo(id, type);
+                        break;
+                    case 2:
+                        this.handleGo(id, type);
+                        break;
+                    case 3:
+                        this.handleQuote(id);
+                        break;
+                    case 4:
+                        this.handleGo(id, type);
+                        break;
+                    case 5:
+                        this.handleGo(id, type);
+                        break;
+                    case 6:
+                        this.handleGo(id, type);
+                        break;
+                    case 7:
+                        this.handleGo(id, type);
+                        break;
+                    case 8:
+                        this.handleGo(id, type);
+                        break;
+                    case 9:
+                        this.handleGo(id, type);
                         break;
                     default:
                         break;
                 }
+            },
+            handleGo(id, type) {
+                // 8 -> 完工
+                let name = '';
+                if(type == 1) {
+                    name = 'order' 
+                }
+                if(type == 2) {
+                    name = 'visit' 
+                }
+                if(type == 4) {
+                    name = 'quotationList' 
+                }
+                if(type == 5) {
+                    name = 'quotationCancel'; 
+                }
+                if(type == 6) {
+                    name = 'managerPaigong' 
+                }
+                if(type == 7) {
+                    name = 'bossWorkingAdd' 
+                }
+                if(type == 8) {
+                    name = 'bossFinishAdd' 
+                }
+                if(type == 9) {
+                    name = 'bossFukuanAdd' 
+                }
+                this.$router.push(
+                    {
+                        name: name,
+                        params: {
+                            id: id
+                        }
+                    }
+                )
+            },
+            /*
+            * 处理报价
+            */
+            handleQuote(id) {
+                this.modeShow = true;
+                this.currentId = id;
+            },
+            /*
+            * 处理报价选择
+            */
+            handleSelect(value) {
+                let mode = this.actions.findIndex(item => {
+                    return item.name == value.name;
+                })
+                this.modeShow = false;
+                this.$router.push(
+                    {
+                        name: 'quotation',
+                        params: {
+                            id: this.currentId,
+                            mode: +mode + 1
+                        }
+                    }
+                )
             }
         }
     }

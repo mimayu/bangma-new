@@ -9,7 +9,7 @@
         <img class="all_user" src="../../assets/img/3.png">
         签约成功
       </router-link>
-      <router-link to="managerWork" class="alink">
+      <router-link to="managerAssign" class="alink">
         <img class="all_user" src="../../assets/img/4.png">
         派工完成
       </router-link>
