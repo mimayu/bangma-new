@@ -2,7 +2,7 @@
     <div class="bossAddCustom_container">
         <div class="tips">
             <span class="now">
-                {{current}}<i>今</i>
+                {{time}}<i :class="{'active': clicked==6}">今</i>
             </span>
             <span class="count">
                 {{total}}个
@@ -11,7 +11,7 @@
         <ul class="time_list">
             <li v-for="(item, index) in dateLists" :key="index" class="time_item">
                 <span class="time_item_week">{{item.week}}</span>
-                <span class="time_item_day" :class="{'active': item.today}" @click="handleTime(item.full)">{{item.short}}</span>
+                <span class="time_item_day" :class="{'active': index===clicked}" @click="handleTime(item.full,item.i)">{{item.short}}</span>
             </li>
         </ul>
         <div class="content">
@@ -69,6 +69,8 @@
         },
         data() {
             return {
+
+                clicked:6,
                 dateLists: [], //日历
                 time: dayjs().format('YYYY-MM-DD'), // 切换时间
                 current: dayjs().format('YYYY-MM-DD'), // 当前时间
@@ -108,7 +110,8 @@
                         full: dayjs().add(i, 'day').format('YYYY-MM-DD'),
                         short: dayjs().add(i, 'day').date(),
                         week: switchWeek(dayjs().add(i, 'day').day()),
-                        today: i == 0 ? true : false
+                        today: i == 0 ? true : false,
+                        i:i
                     }
                     dateLists.push(current);
                 }
@@ -117,8 +120,9 @@
             /*
             * 点击时间切换
             */
-            handleTime(value) {
+            handleTime(value,i) {
                 this.time = value;
+                this.clicked = i+6;
                 this.reset();
                 this.getCustomerOrder();
             },
@@ -360,6 +364,10 @@
                     color: #fff;
                     font-size: 12px;
                     font-weight: normal;
+                }
+                .active {
+                    background: #1E97FF;
+                    color: #fff;
                 }
             }
         }
