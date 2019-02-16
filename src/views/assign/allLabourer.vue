@@ -103,7 +103,7 @@
             handleSearch() {
 
                 let params = {
-                    'page': '',
+                    'page': 1,
                     'keyword': this.value,
                 }
                 getLabourerList(params).then(

@@ -76,7 +76,11 @@
             * 提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id || 0;
+                let from = this.$route.params.from || '';
+                let name = from == 'boss' ? 'bossLoss' : 'signStatus';
+                let active = from == 'boss' ? '2' : '3';
+
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateQuxiao': this.time,
@@ -88,9 +92,9 @@
                             Toast(res.msg);
                             this.$router.push(
                                 {
-                                    name: 'signStatus',
+                                    name: name,
                                     query: {
-                                        active: 3
+                                        active: active
                                     }
                                 }
                             )

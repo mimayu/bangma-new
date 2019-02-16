@@ -71,8 +71,16 @@
                 }
                 postAddWork(params).then(
                     res => {
-                        if(res.success == 2) {
+                        if(res.success == 1) {
                             Toast(res.msg);
+                            this.$router.push(
+                                {
+                                    name: 'bossWorking',
+                                    query: {
+                                        active: 1
+                                    }
+                                }
+                            )
                             return;
                         }
                         Toast(res.msg);

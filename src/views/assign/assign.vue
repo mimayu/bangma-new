@@ -66,6 +66,11 @@
                     res => {
                         console.log('res', res);
                         if(res.success == 1) {
+                                this.$router.push(
+                                {
+                                    name: 'assignList'
+                                }
+                            )
                             Toast(res.msg);
                         }
                     }

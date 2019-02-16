@@ -120,6 +120,9 @@
       List,
       footerNav
     },
+    created() {
+      this.active = this.$route.query.active || 0;
+    },
     methods: {
       /*
       * 点击按钮

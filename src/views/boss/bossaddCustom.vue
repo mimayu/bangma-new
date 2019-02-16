@@ -364,10 +364,10 @@
                     font-size: 12px;
                     font-weight: normal;
                 }
-                    .active {
-                        background: #1E97FF;
-                        color: #fff;
-                    }
+                .active {
+                    background: #1E97FF;
+                    color: #fff;
+                }
             }
         }
         .content {

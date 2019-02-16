@@ -54,7 +54,7 @@
                 autosize
             />
         </Cell-group>
-        <Cell-group>
+        <!--Cell-group>
             <Cell title="查看记录" value="" is-link @click="handleCheckRecord" class="check-record"/>
         </Cell-group>
         <Cell-group>
@@ -68,7 +68,7 @@
             <Cell title="客户来源" value="百度"/>
             <Cell title="刷新PSR" value="许祥春"/>
             <Cell title="推荐人" value="陆卫卫"/>
-        </Cell-group>
+        </Cell-group-->
         <Button type="primary" size="large" @click="handleAdd">保存</Button>
 
         <Popup v-model="genderShow" position="bottom">
@@ -234,6 +234,11 @@
                     res => {
                         if(res.success == 1) {
                             Toast('创建客户成功');
+                            this.$router.push(
+                                {
+                                    name: 'underAssignList'
+                                }
+                            )
                             console.log('res', res); 
                         }
                     }

@@ -38,6 +38,7 @@
         },
         data() {
             return {
+                actions: [],
                 assignLists: [],
                 page: 1,
                 loading: false,
@@ -62,6 +63,7 @@
                     res => {
                         if(res.success == 1) {
                             this.assignLists = this.assignLists.concat(res.list);
+                            this.actions = this.actions.concat(res.actions);
                             this.loading = false;
                             this.page += 1;
                             if(res.list.length == 0) {

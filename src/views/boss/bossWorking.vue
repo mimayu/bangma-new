@@ -87,6 +87,9 @@
             Actionsheet,
             footerNav: footerNav
         },
+        created() {
+        this.active = this.$route.query.active || 0;
+        },
         data() {
             return {
 
@@ -203,7 +206,8 @@
                     {
                         name: name,
                         params: {
-                            id: id
+                            id: id,
+                            from: 'boss'
                         }
                     }
                 )

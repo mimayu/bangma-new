@@ -12,7 +12,7 @@
                 <Cell title="手机号" :value="item.sMobile" />
                 <Cell title="地址" :value="item.sAddress" />
                 <Cell title="施工内容" :value="item.sRemarks" />
-                <Cell title="业务员" value="-" />
+                <Cell title="业务员" :value="item.iSalesName" />
                 <div class="van-cell btn_wrap" v-if="item.actions">
                     <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                 </div>
