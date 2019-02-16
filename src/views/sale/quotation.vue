@@ -27,7 +27,9 @@
               </span>
               <section class="price-edit">
                 <a class="minus" @click="minusCart(item)">-</a>
-                <span>{{item.quantity}}</span>
+                <span>
+                  <input style="width:30px;text-align:center;" type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'>
+                </span>
                 <a class="add" @click="addCart(item)">+</a>
               </section>
             </section>
@@ -71,7 +73,9 @@
                   </div>
                   <div class="cart-control-wrapper">
                     <a class="minus" @click="minusCart(item)">-</a>
-                    <span>{{item.quantity}}</span>
+                    <span>
+                      <input style="width:30px;text-align:center;" type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'> 
+                    </span>
                     <a class="add" @click="addCart(item)">+</a>
                   </div>
                 </li>
@@ -108,6 +112,12 @@
         detailActive: false,
       }
     },
+     props:{
+      max: {type: Number, default: Infinity},
+      min: {type: Number, default: -Infinity},
+      value: {type: Number, default: 0},
+      step: {type: Number, default:1},
+    },   
     created() {
       this.iCustomerId = this.$route.params.id || 1;
       this.iMode = this.$route.params.mode || 1;
@@ -142,7 +152,7 @@
         let total = 0;
         this.details.forEach((items) => {
           items.forEach((item) => {
-            total += item.price * item.quantity;
+            total += item.price * Math.round(item.quantity*100)/100;
           })
         });
         return total;
@@ -297,7 +307,7 @@
       * 获取单个订单钱数
       */
       getSinglePrice(price, count) {
-        return price * count
+        return price * Math.round(count*100)/100;
       },
       /*
       * 减少
@@ -338,8 +348,32 @@
         }).catch(() => {
           console.log(1)
         });
+      },
+
+    handleChange(item){
+      let val = event.target.value.trim();
+      let max = this.max;
+      let min = this.min;
+      if(this.isValueNumber(val)){
+        val = Number(val);
+        item.quantity = val;
+        if(val > max){
+          item.quantity = max;
+        } else if(val < min){
+          item.quantity = min;
+        }
+      } else {
+        event.target.value = parseFloat(item.quantity).toFixed(1);
       }
+      console.log(item.quantity);
+    },
+    isValueNumber(value){
+      return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(value + '');
     }
+
+
+    }
+
   }
 </script>
 
