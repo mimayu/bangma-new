@@ -148,13 +148,6 @@ export default {
     created() {
       this.datastatistical();
     },
-    mounted() {
-        setTimeout(
-            () => {
-                this.createChart();
-            }, 4000
-        )
-    },
     methods: {
        datastatistical(type) {
             let params = {
@@ -168,6 +161,9 @@ export default {
                         item.const = 'const';
                         item.num = +item.num;
                         item.sSalesName = item.sSalesName || '-';
+                    })
+                    this.$nextTick(() =>{
+                        this.createChart();
                     })
                 }
             )
