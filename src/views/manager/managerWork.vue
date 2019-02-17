@@ -19,7 +19,11 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="预约时间" :value="item.tOrderDate || '-'" />
+            <Cell title="签约金额" :value="item.orderFee || '-'" />
+            <Cell title="派工工长" :value="item.iForeman_name || '-'" />
+            <Cell title="签约日期" :value="item.dateOrder || '-'" />
+            <Cell title="开工日期" :value="item.dateKaigong || '-'" />
+            <Cell title="预计完工日期" :value="item.dateYujiWangong || '-'" />
             <div class="van-cell btn_wrap" >
                 <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>

@@ -21,7 +21,7 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="接单日期" :value="item.tOrderDate || '-'" />
+            <Cell title="上门日期" :value="item.dateShangmen || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -49,6 +49,8 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="签约日期" :value="item.dateOrder || '-'" />
+            <Cell title="签约金额" :value="item.orderFee || '-'" />
+            <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>

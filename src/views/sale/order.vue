@@ -2,7 +2,7 @@
     <div class="order_container">
         <Cell-group>
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
-            <Cell title="上门时间" is-link :value="time" @click="choseTime" v-if="status !== '基检取消'"/>
+            <Cell :title="status=='基检确认'?'预约时间':'再约时间'" is-link :value="time" @click="choseTime" v-if="status !== '基检取消'"/>
         </Cell-group>
         <Cell-group v-if="status === '基检取消'">
             <Field

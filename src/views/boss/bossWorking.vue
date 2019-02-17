@@ -21,6 +21,11 @@
                 <Cell title="手机号" :value="item.sMobile" />
                 <Cell title="地址" :value="item.sAddress" />
                 <Cell title="施工内容" :value="item.sRemarks || '-'" />
+                <Cell title="签约金额" :value="item.orderFee || '-'" />
+                <Cell title="签约定金" :value="item.orderDingjin || '-'" />
+                <Cell title="合同首付款" :value="item.orderSoufu || '-'" />
+                <Cell title="派工工长" :value="item.iForeman_name || '-'" />
+                <Cell title="签约日期" :value="item.dateOrder || '-'" />
                 <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
                 <div class="van-cell btn_wrap" v-if="item.actions">
                     <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
@@ -48,6 +53,11 @@
             <Cell title="手机号" :value="item.sMobile" />
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="签约金额" :value="item.orderFee || '-'" />
+            <Cell title="签约定金" :value="item.orderDingjin || '-'" />
+            <Cell title="合同首付款" :value="item.orderSoufu || '-'" />
+            <Cell title="派工工长" :value="item.iForeman_name || '-'" />
+            <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <Cell title="开工日期" :value="item.dateKaigong || '-'" />
             <Cell title="预计完工日期" :value="item.dateYujiWangong || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">

@@ -50,7 +50,10 @@
         },
         methods: {
             Confirm() {
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id || 0;
+                let from = this.$route.params.from || '';
+                let name = from == 'boss' ? 'bossFinish' : 'saleWorking';
+                let active = from == 'boss' ? '1' : '3';
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateWeikuan': this.startTime,
@@ -62,9 +65,9 @@
                             Toast(res.msg);
                             this.$router.push(
                                 {
-                                    name: 'saleWorking',
+                                    name: name,
                                     query: {
-                                        active: 3
+                                        active: active
                                     }
                                 }
                             )
