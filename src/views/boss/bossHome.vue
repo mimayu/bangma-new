@@ -55,13 +55,13 @@
     </div>
 
 
-    <Tabs v-model="active">
+    <Tabs v-model="active" @click="toggleTab">
         <Tab title="今天">
             <h3>数据统计</h3>
             <Row class=mini>
                 <Col span="6">%</Col>
-                <Col span="6">上门率{{data.shangmen_rate * 100}}%</Col>
-                <Col span="6">签单率{{data.qiandan_rate * 100}}%</Col>
+                <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+                <Col span="6">签单率{{data.qiandan_rate}}%</Col>
                 <Col span="6">%</Col>
             </Row>
             <Row class="order">
@@ -72,15 +72,32 @@
             </Row>
             <div class="chart-wrapper">
                 <h3>签单占比</h3>
-                <canvas id="visit" class="piechart"></canvas>
+                <Tabs v-model="active1"  @click="toggleTab1">
+                <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit00" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数</h3>
+                    <canvas id="visit01" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数</h3>
+                    <canvas id="visit02" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额</h3>
+                    <canvas id="visit03" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
             </div>
        </Tab>
         <Tab title="本周">
             <h3>数据统计</h3>
             <Row class=mini>
                 <Col span="6">%</Col>
-                <Col span="6">上门率{{data.shangmen_rate * 100}}%</Col>
-                <Col span="6">签单率{{data.qiandan_rate * 100}}%</Col>
+                <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+                <Col span="6">签单率{{data.qiandan_rate}}%</Col>
                 <Col span="6">%</Col>
             </Row>
             <Row class="order">
@@ -89,15 +106,35 @@
                 <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
                 <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
             </Row>
-            <h3>签单占比</h3>
+            <div class="chart-wrapper">
+                <h3>签单占比</h3>
+                <Tabs v-model="active1" @click="toggleTab1">
+                <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit10" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数1</h3>
+                    <canvas id="visit11" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数1</h3>
+                    <canvas id="visit12" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额1</h3>
+                    <canvas id="visit13" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
+            </div>
         </Tab>
       <Tab title="本月">
          <h3>数据统计</h3>
 
           <Row class=mini>
             <Col span="6">%</Col>
-            <Col span="6">上门率{{data.shangmen_rate * 100}}%</Col>
-            <Col span="6">签单率{{data.qiandan_rate * 100}}%</Col>
+            <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+            <Col span="6">签单率{{data.qiandan_rate}}%</Col>
             <Col span="6">%</Col>
 
           </Row>
@@ -107,7 +144,65 @@
             <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
             <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
           </Row>
-          <h3>签单占比</h3>
+            <div class="chart-wrapper">
+                <h3>签单占比</h3>
+                <Tabs v-model="active1" @click="toggleTab1">
+                 <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit20" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数2</h3>
+                    <canvas id="visit21" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数2</h3>
+                    <canvas id="visit22" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额2</h3>
+                    <canvas id="visit23" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
+            </div>
+      </Tab>
+      <Tab title="本年">
+         <h3>数据统计</h3>
+
+          <Row class=mini>
+            <Col span="6">%</Col>
+            <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+            <Col span="6">签单率{{data.qiandan_rate}}%</Col>
+            <Col span="6">%</Col>
+
+          </Row>
+          <Row class="order">
+            <Col span="6">{{data.all_num}}<br/>总接单数</Col>
+            <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
+          </Row>
+            <div class="chart-wrapper">
+                <h3>签单占比</h3>
+                <Tabs v-model="active1" @click="toggleTab1">
+                <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit30" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数3</h3>
+                    <canvas id="visit31" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数3</h3>
+                    <canvas id="visit32" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额3</h3>
+                    <canvas id="visit33" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
+            </div>
       </Tab>
     </Tabs>
 
@@ -142,7 +237,12 @@ export default {
         return {
             data: {},
             active: 0,
-            list_all: []
+            active1: 0,
+            index1:0,
+            index2:0,
+            visit:'visit00',
+            list_all: [],
+            type:'today'
         }
     },
     created() {
@@ -153,24 +253,45 @@ export default {
             let params = {
                 'type': this.type,
             }
+            console.log(params);
             datastatistical(params).then(
                 res => {
                     this.data = res.statistics;
-                    this.list_all = res.statistics.all_num_groupby_res;
+                    if(this.index2 == 0){
+                        this.list_all = res.statistics.all_num_groupby_res;
+                    }else if(this.index2 == 1){
+                        this.list_all = res.statistics.shangmen_num_groupby_res;
+                    }else if(this.index2 == 2){
+                        this.list_all = res.statistics.qiandan_num_groupby_res;
+                    }else{
+                        this.list_all = res.statistics.qiandan_fee_groupby_res;
+                    }
+                    
                     this.list_all.map(item => {
                         item.const = 'const';
-                        item.num = +item.num;
+                        if(this.index2 == 0){
+                            item.num = +item.num;
+                        }else if(this.index2 == 1){
+                            item.num = +item.num;
+                        }else if(this.index2 == 2){
+                            item.num = +item.num;
+                        }else{
+                            item.num = +item.allFee;
+                        }
+                        //item.num = +item.num;
                         item.sSalesName = item.sSalesName || '-';
                     })
                     this.$nextTick(() =>{
-                        this.createChart();
+                        console.log(this.visit+'1');
+                        this.createChart(this.visit);
                     })
                 }
             )
         },
-        createChart() {
+        createChart(visit) {
+            console.log(visit);
             let chart = new F2.Chart({
-                id: 'visit',
+                id: this.visit,
                 plugins: PieLabel
             });
             chart.source(this.list_all);
@@ -200,7 +321,29 @@ export default {
             });
             chart.interval().position('const*num').color('sSalesName', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14']).adjust('stack');
             chart.render();
-        }
+        },
+        toggleTab(index, title) {
+            if(index==0){
+                this.type = "today"
+            }else if (index==1){
+                this.type = "week"
+            }else if(index == 2){
+                this.type="month"
+            }else{
+                this.type="year"
+            }
+            this.index1 = index;
+            this.visit = "visit"+index+this.index2;
+            this.datastatistical(this.type)
+                       
+        },
+        toggleTab1(index, title) {
+            this.index2 = index;
+            this.visit = "visit"+this.index1+index;
+            this.datastatistical()         
+        },
+    
+    
     },
 }
 </script>
