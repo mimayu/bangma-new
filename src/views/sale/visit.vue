@@ -3,8 +3,8 @@
         <Cell-group>
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
             <Cell title="上门时间" is-link :value="time" @click="choseTime" />
-            <Cell title="重点跟进" is-link :value="level" @click="choseLevel"/>
-            <Cell title="客户反馈" is-link :value="action" @click="choseCustom"/>
+            <Cell title="重点跟进" is-link :value="level" @click="choseLevel" v-if="status !== '签约成功'"/>
+            <Cell title="客户反馈" is-link :value="action" @click="choseCustom"  v-if="status !== '签约成功'"/>
             <Cell title="跟进时间" is-link :value="nextTime" @click="choseNextTime" v-if="status === '签约等待'" />
             <Cell title="签约日期" is-link :value="dateOrder" @click="showOrderTime" v-if="status === '签约成功'" />
             <Cell title="预计开工日期" is-link :value="dateYujiKaigong" @click="showWorkTime" v-if="status === '签约成功'" />
