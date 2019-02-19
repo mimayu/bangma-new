@@ -114,15 +114,15 @@
                     <canvas id="visit10" class="piechart"></canvas>
                 </Tab>
                 <Tab title="上门数">
-                    <h3>上门数1</h3>
+                    <h3>上门数</h3>
                     <canvas id="visit11" class="piechart"></canvas>
                 </Tab>
                  <Tab title="签单数">
-                     <h3>签单数1</h3>
+                     <h3>签单数</h3>
                     <canvas id="visit12" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
-                    <h3>签约额1</h3>
+                    <h3>签约额</h3>
                     <canvas id="visit13" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
@@ -152,15 +152,15 @@
                     <canvas id="visit20" class="piechart"></canvas>
                 </Tab>
                 <Tab title="上门数">
-                    <h3>上门数2</h3>
+                    <h3>上门数</h3>
                     <canvas id="visit21" class="piechart"></canvas>
                 </Tab>
                  <Tab title="签单数">
-                     <h3>签单数2</h3>
+                     <h3>签单数</h3>
                     <canvas id="visit22" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
-                    <h3>签约额2</h3>
+                    <h3>签约额</h3>
                     <canvas id="visit23" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
@@ -190,15 +190,15 @@
                     <canvas id="visit30" class="piechart"></canvas>
                 </Tab>
                 <Tab title="上门数">
-                    <h3>上门数3</h3>
+                    <h3>上门数</h3>
                     <canvas id="visit31" class="piechart"></canvas>
                 </Tab>
                  <Tab title="签单数">
-                     <h3>签单数3</h3>
+                     <h3>签单数</h3>
                     <canvas id="visit32" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
-                    <h3>签约额3</h3>
+                    <h3>签约额</h3>
                     <canvas id="visit33" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
@@ -253,7 +253,6 @@ export default {
             let params = {
                 'type': this.type,
             }
-            console.log(params);
             datastatistical(params).then(
                 res => {
                     this.data = res.statistics;
@@ -282,7 +281,6 @@ export default {
                         item.sSalesName = item.sSalesName || '-';
                     })
                     this.$nextTick(() =>{
-                        console.log(this.visit+'1');
                         this.createChart(this.visit);
                     })
                 }
