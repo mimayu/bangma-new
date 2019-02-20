@@ -671,11 +671,11 @@
           text-align:center;
           line-height: 18px;
           display: inline-block;
-          padding: 0 10px;
-          margin: 0 4px;
+          padding: 0 2px;
+          margin: 0 1px;
         }
         input {
-          width:18px;
+          width:24px;
           text-align:center;
           border:0px;
           outline:none;
