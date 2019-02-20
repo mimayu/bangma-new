@@ -287,7 +287,6 @@ export default {
             )
         },
         createChart(visit) {
-            console.log(visit);
             let chart = new F2.Chart({
                 id: this.visit,
                 plugins: PieLabel

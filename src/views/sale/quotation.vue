@@ -28,7 +28,7 @@
               <section class="price-edit">
                 <a class="minus" @click="minusCart(item)">-</a>
                 <span>
-                  <input style="width:30px;text-align:center;" type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'>
+                  <input type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'>
                 </span>
                 <a class="add" @click="addCart(item)">+</a>
               </section>
@@ -74,7 +74,7 @@
                   <div class="cart-control-wrapper">
                     <a class="minus" @click="minusCart(item)">-</a>
                     <span>
-                      <input style="width:30px;text-align:center;" type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'> 
+                      <input type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'> 
                     </span>
                     <a class="add" @click="addCart(item)">+</a>
                   </div>
@@ -516,6 +516,14 @@
         padding:0 10px;
         margin:0 10px;
       }
+      input {
+        width:24px;
+        text-align:center;
+        border:0px;
+        outline:none;
+        cursor:pointer;
+        margin-top:1px;
+      }
       .add{
         background:#1E97FF;color:#fff;
       }
@@ -666,6 +674,14 @@
           display: inline-block;
           padding: 0 10px;
           margin: 0 4px;
+        }
+        input {
+          width:18px;
+          text-align:center;
+          border:0px;
+          outline:none;
+          cursor:pointer;
+          margin-top:1px;
         }
         .add{
           background:#1E97FF;
