@@ -1,29 +1,30 @@
 <template>
     <div class="remind_container">
         <vue-event-calendar :events="saleLists" @day-changed="handleDay"></vue-event-calendar>
-        <Tabs v-model="active">
-            <Tab title="提醒" >
-                <div v-if="remindLists.length > 0">
+        <Tabs v-model="active" @click="onClick">
+            <Tab title="预约提醒" >
+                <div v-if="remindLists != null && remindLists.length > 0">
                     <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
-                        <dt class="on">10:55</dt>
+                        <dt class="on">{{item.date}}</dt>
                         <dd class="orderNum">
                             <a>
-                                <span>订单号:</span>
+                                <span>订单号:</span>{{item.iCustomerId}}
                             </a>
-                            <span class="timeout">上门倒计时01：53</span>
-                            <span class="red">签约成功</span>
+                            <span class="timeout">
+                                {{item.title}}</span>
+                            <span class="red">{{item.iStatus_name}}</span>
                         </dd>
                         <dd>
                             <span>姓名:</span>
-                            巴啦啦
+                            {{item.sUsername}}
                         </dd>
                         <dd>
                             <span>手机号:</span>
-                            18217157168
+                            {{item.sMobile}}{{item.sTelPhone ? '/'+item.sTelPhone:''}}
                         </dd>
                         <dd>
                             <span>地址:</span>
-                            静安区 皇家大道 15号
+                            {{item.sAddress}}
                         </dd>
                     </dl>
                 </div>
@@ -32,9 +33,94 @@
                 </div>
             </Tab>
 
-            <Tab title="事项">
-                <div>
-                    暂无事项
+            <Tab title="开工提醒">
+                <div v-if="remindLists != null && remindLists.length > 0">
+                    <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
+                        <dt class="on">{{item.date}}</dt>
+                        <dd class="orderNum">
+                            <a>
+                                <span>订单号:</span>{{item.iCustomerId}}
+                            </a>
+                            <span class="timeout">
+                                {{item.title}}</span>
+                            <span class="red">{{item.iStatus_name}}</span>
+                        </dd>
+                        <dd>
+                            <span>姓名:</span>
+                            {{item.sUsername}}
+                        </dd>
+                        <dd>
+                            <span>手机号:</span>
+                            {{item.sMobile}}{{item.sTelPhone ? '/'+item.sTelPhone:''}}
+                        </dd>
+                        <dd>
+                            <span>地址:</span>
+                            {{item.sAddress}}
+                        </dd>
+                    </dl>
+                </div>
+                <div v-else>
+                    暂无提醒
+                </div>
+            </Tab>
+            <Tab title="再约提醒">
+                <div v-if="remindLists != null && remindLists.length > 0">
+                    <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
+                        <dt class="on">{{item.date}}</dt>
+                        <dd class="orderNum">
+                            <a>
+                                <span>订单号:</span>{{item.iCustomerId}}
+                            </a>
+                            <span class="timeout">
+                                {{item.title}}</span>
+                            <span class="red">{{item.iStatus_name}}</span>
+                        </dd>
+                        <dd>
+                            <span>姓名:</span>
+                            {{item.sUsername}}
+                        </dd>
+                        <dd>
+                            <span>手机号:</span>
+                            {{item.sMobile}}{{item.sTelPhone ? '/'+item.sTelPhone:''}}
+                        </dd>
+                        <dd>
+                            <span>地址:</span>
+                            {{item.sAddress}}
+                        </dd>
+                    </dl>
+                </div>
+                <div v-else>
+                    暂无提醒
+                </div>
+            </Tab>
+            <Tab title="跟进提醒">
+                <div v-if="remindLists != null && remindLists.length > 0">
+                    <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
+                        <dt class="on">{{item.date}}</dt>
+                        <dd class="orderNum">
+                            <a>
+                                <span>订单号:</span>{{item.iCustomerId}}
+                            </a>
+                            <span class="timeout">
+                                {{item.title}}</span>
+                            <span class="red">{{item.iStatus_name}}</span>
+                        </dd>
+                        <dd>
+                            <span>姓名:</span>
+                            {{item.sUsername}}
+                        </dd>
+                        <dd>
+                            <span>手机号:</span>
+                            {{item.sMobile}}{{item.sTelPhone ? '/'+item.sTelPhone:''}}
+                        </dd>
+                        <dd>
+                            <span>地址:</span>
+                            {{item.sAddress}}
+                        </dd>
+                    </dl>
+                </div>
+                <div v-else>
+                    暂无提醒
                 </div>
             </Tab>
         </Tabs>
@@ -60,6 +146,7 @@
                 saleLists: [],
                 remindLists: [],
                 active:0,
+                type:1
             }
         },
         created() {
@@ -72,23 +159,36 @@
             dayChange (day) {
                 console.log(day)
             },
-            getCalendar() {
+            getCalendar(type) {
                 let params = {
-
+                    type:this.type
                 }
                 getCalendar(params).then(
                     res => {
                         this.saleLists = res.allForDateArr;
                         this.remindLists = res.allForDateArr;
-                        console.log('res', this.saleLists);
                     }
                 )
-                console.log('1');
+                //console.log('1');
             },
             handleDay(value) {
                 console.log('value', value);
                 this.remindLists = value.events;
-            }
+            },
+             onClick(index, title) {
+                  //console.log(index, title)
+                  if(index==0){
+                      this.type = 1
+                  }else if (index==1){
+                      this.type = 2
+                  }else if(index == 2){
+                      this.type=3
+                  }else if(index == 3){
+                      this.type=4
+                  }
+                  this.getCalendar(this.type)
+                       
+                },
         }
     }
 </script>
