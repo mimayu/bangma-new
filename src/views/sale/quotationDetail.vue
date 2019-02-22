@@ -33,7 +33,7 @@ export default {
     }
   },
   created() {
-    this.iCustomerId = this.$route.params.id || 4154;
+    this.iCustomerId = this.$route.params.id || 0;
     this.getSubmitInfo();
   },
   methods: {

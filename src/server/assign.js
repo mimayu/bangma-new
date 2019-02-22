@@ -33,6 +33,14 @@ const postAddCustomer = (params) => {
 }
 
 /**
+ * 预览客户详情
+ * @param {*} params 
+ */
+const getCustomerInfo = (params) => {
+    return request('/api/getCustomerInfo/', params, 'GET');
+}
+
+/**
  * 员工列表
  * @param {*} params 
  */
@@ -68,6 +76,7 @@ export {
     postAssign,
     postPaigong,
     postAddCustomer,
+    getCustomerInfo,
     getPaigong,
     getAllStaff,
     getAssignList,

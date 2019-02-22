@@ -137,6 +137,9 @@
             */
             handleClick(type, id) {
                 switch(type) {
+                    case 0:
+                        this.handleGo(id, type);
+                        break;
                     case 1:
                         this.handleGo(id, type);
                         break;
@@ -171,6 +174,9 @@
             handleGo(id, type) {
                 // 8 -> 完工
                 let name = '';
+               if(type == 0) {
+                    name = 'previewCustom' 
+                }
                 if(type == 1) {
                     name = 'order' 
                 }

@@ -29,7 +29,7 @@
                     </dl>
                 </div>
                 <div v-else>
-                    暂无提醒
+                    暂无预约提醒
                 </div>
             </Tab>
 
@@ -60,7 +60,7 @@
                     </dl>
                 </div>
                 <div v-else>
-                    暂无提醒
+                    暂无开工提醒
                 </div>
             </Tab>
             <Tab title="再约提醒">
@@ -90,7 +90,7 @@
                     </dl>
                 </div>
                 <div v-else>
-                    暂无提醒
+                    暂无再约提醒
                 </div>
             </Tab>
             <Tab title="跟进提醒">
@@ -120,7 +120,7 @@
                     </dl>
                 </div>
                 <div v-else>
-                    暂无提醒
+                    暂无跟进提醒
                 </div>
             </Tab>
         </Tabs>
@@ -169,7 +169,6 @@
                         this.remindLists = res.allForDateArr;
                     }
                 )
-                //console.log('1');
             },
             handleDay(value) {
                 console.log('value', value);

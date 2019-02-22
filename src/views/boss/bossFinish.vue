@@ -140,6 +140,9 @@
             */
             handleClick(type, id) {
                 switch(type) {
+                    case 0:
+                        this.handleGo(id, type);
+                        break;
                     case 3:
                         this.handleQuote(id);
                         break;
@@ -183,6 +186,9 @@
             */
             handleGo(id, type) {
                 let name = '';
+               if(type == 0) {
+                    name = 'previewCustom' 
+                }
                 if(type == 4) {
                     name = 'quotationList' 
                 }

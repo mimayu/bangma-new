@@ -273,6 +273,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "assign" */ './views/assign/addCustom')
     },
     /** 
+    * assign - > 预览客户
+    */
+   {
+    path: '/previewCustom',
+    name: 'previewCustom',
+    component: () => import(/* webpackChunkName: "assign" */ './views/assign/previewCustom')
+  },
+    /** 
     * assign - > 员工列表
     */
     {
