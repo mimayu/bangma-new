@@ -7,7 +7,14 @@
             <Cell title="年龄" :value="aCustomerInfo.age > 0 ?  aCustomerInfo.age:'-'"/>
             <Cell title="手机" :value="aCustomerInfo.sMobile || '-'"/>
             <Cell title="家庭电话" :value="aCustomerInfo.sTelPhone || '-'"/>
+            <Cell title="区域" :value="aCustomerInfo.region_name || '-'"/>
+            <Cell title="小区" :value="aCustomerInfo.sXiaoqu || '-'"/>
             <Cell title="住址" :value="aCustomerInfo.sAddress || '-'"/>
+
+            <Cell title="房屋类型" :value="aCustomerInfo.housetype_name || '-'"/>
+            <Cell title="房屋户型" :value="aCustomerInfo.huxing_name || '-'"/>
+            <Cell title="居住属性" :value="aCustomerInfo.livetype_name || '-'"/>
+            <Cell title="房屋面积" :value="aCustomerInfo.acreage || '-'"/>
             <Cell
                 title="施工内容"
                 type="textarea"
@@ -19,14 +26,50 @@
 
         <Cell-group>
             <Cell title="接单日期" :value="aCustomerInfo.tOrderDate || '-'"/>
-            <Cell title="业务员" value="董春华"/>
+            <Cell title="业务员" :value="aCustomerInfo.sale_name || '-'"/>
             <Cell title="订单状态" :value="aCustomerInfo.iStatus_name || '-'"/>
         </Cell-group>
-        <!--Cell-group>
-            <Cell title="客户来源" value="百度"/>
-            <Cell title="刷新PSR" value="许祥春"/>
-            <Cell title="推荐人" value="陆卫卫"/>
-        </Cell-group-->
+        <Cell-group>
+            <Cell title="客户来源" :value="aCustomerInfo.iSource_name || '-'"/>
+            <Cell title="配合人" :value="aCustomerInfo.coordinatorName || '-'"/>
+            <Cell title="推荐人" :value="aCustomerInfo.introducerName || '-'"/>
+        </Cell-group>
+
+        <Cell-group v-if="aCustomerInfo.iStatus === 2">
+            <Cell title="预约日期" :value="aCustomerInfo.dateYuyue || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="in_array(aCustomerInfo.iStatus,array(4,5,6,7,8,9,10,11,101,102))">
+            <Cell title="上门日期" :value="aCustomerInfo.dateShangmen || '-'"/>
+            <Cell title="上门反馈" :value="aCustomerInfo.shangmenContent || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="in_array(aCustomerInfo.iStatus,array(5,6,7,8,9,10,11,102))">
+            <Cell title="签约日期" :value="aCustomerInfo.dateOrder || '-'"/>
+            <Cell title="预计开工日期" :value="aCustomerInfo.dateYujiKaigong || '-'"/>
+            <Cell title="签约金额" :value="aCustomerInfo.orderFee || '-'"/>
+            <Cell title="签约定金" :value="aCustomerInfo.orderDingjin || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="aCustomerInfo.iStatus === 6">
+            <Cell title="施工工长" :value="aCustomerInfo.iForeman_name || '-'"/>
+        </Cell-group>    
+        <Cell-group v-if="aCustomerInfo.iStatus >= 7 && aCustomerInfo.iStatus<=11">
+            <Cell title="开工日期" :value="aCustomerInfo.dateKaigong || '-'"/>
+            <Cell title="预计完工日期" :value="aCustomerInfo.dateYujiWangong || '-'"/>
+            <Cell title="首付金额" :value="aCustomerInfo.orderSoufu || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="aCustomerInfo.iStatus >= 8 && aCustomerInfo.iStatus<=11">    
+            <Cell title="完工日期" :value="aCustomerInfo.dateWangong || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="aCustomerInfo.iStatus >= 9 && aCustomerInfo.iStatus<=11"> 
+            <Cell title="尾款金额" :value="aCustomerInfo.orderWeikuan || '-'"/>
+            <Cell title="收尾款日期" :value="aCustomerInfo.dateWeikuan || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="aCustomerInfo.iStatus === 3 || aCustomerInfo.iStatus === 102">
+            <Cell title="取消日期" :value="aCustomerInfo.dateQuxiao || '-'"/>
+            <Cell title="取消原因" :value="aCustomerInfo.quxiaoContent || '-'"/>
+        </Cell-group>
+        <Cell-group v-if="aCustomerInfo.iStatus === 103">    
+            <Cell title="再约日期" :value="aCustomerInfo.dateZaiyue || '-'"/>
+        </Cell-group>
 
 
 
