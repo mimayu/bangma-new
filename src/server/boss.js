@@ -1,5 +1,11 @@
 import { request } from './http';
-
+/**
+ * 判断首页路径
+ * @param {*} params 
+ */
+const checkRoleType = () => {
+    return request('/api/checkRoleType/', params);
+}
 /**
  * 增加开工
  * @param {*} params 
@@ -72,6 +78,7 @@ const datastatistical = (params) => {
     return request('/api/statistics/', params, 'GET');
 }
 export {
+    checkRoleType,
     postAddWork,
     postAddWangong,
     postAddFukuan,

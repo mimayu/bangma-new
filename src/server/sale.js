@@ -1,6 +1,14 @@
 import { request } from './http';
 
 /**
+ * 判断首页路径
+ * @param {*} params 
+ */
+const checkRoleType = () => {
+    return request('/api/checkRoleType/', params);
+}
+
+/**
  * 上门
  * @param {*} params 
  */
@@ -89,6 +97,7 @@ const postCancel = (params) => {
 }
 
 export {
+    checkRoleType,
     postShangmenAdd,
     postYuyueAdd,
     postQuxiaoAdd,

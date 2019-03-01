@@ -38,11 +38,11 @@
         <Cell-group v-if="aCustomerInfo.iStatus === 2">
             <Cell title="预约日期" :value="aCustomerInfo.dateYuyue || '-'"/>
         </Cell-group>
-        <Cell-group v-if="in_array(aCustomerInfo.iStatus,array(4,5,6,7,8,9,10,11,101,102))">
+        <Cell-group v-if="(aCustomerInfo.iStatus>=4 && aCustomerInfo.iStatus<=11)||aCustomerInfo.iStatus === 101 || aCustomerInfo.iStatus === 102">
             <Cell title="上门日期" :value="aCustomerInfo.dateShangmen || '-'"/>
             <Cell title="上门反馈" :value="aCustomerInfo.shangmenContent || '-'"/>
         </Cell-group>
-        <Cell-group v-if="in_array(aCustomerInfo.iStatus,array(5,6,7,8,9,10,11,102))">
+        <Cell-group v-if="(aCustomerInfo.iStatus>=5 && aCustomerInfo.iStatus<=11)||aCustomerInfo.iStatus === 102">
             <Cell title="签约日期" :value="aCustomerInfo.dateOrder || '-'"/>
             <Cell title="预计开工日期" :value="aCustomerInfo.dateYujiKaigong || '-'"/>
             <Cell title="签约金额" :value="aCustomerInfo.orderFee || '-'"/>

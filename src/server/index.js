@@ -31,6 +31,7 @@ import {
 } from './assign'
 
 import {
+    checkRoleType,
     getProfile,
     getOrganization,
     doLogout
@@ -54,6 +55,7 @@ import {
 } from './boss'
 
 export {
+    checkRoleType,
     postShangmenAdd,
     postYuyueAdd,
     postQuxiaoAdd,

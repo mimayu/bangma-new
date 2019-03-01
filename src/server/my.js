@@ -23,7 +23,16 @@ const doLogout = () => {
     return request('/api/doLogout/');
 }
 
+/**
+ * 判断首页路径
+ * @param {*} params 
+ */
+const checkRoleType = () => {
+    return request('/api/checkRoleType/');
+}
+
 export {
+    checkRoleType,
     getProfile,
     getOrganization,
     doLogout

@@ -1,6 +1,6 @@
 <template>
   <div class="footerNav_container">
-    <router-link to="/home" class="alink">
+    <router-link :to="'/'+homeurl" class="alink">
       <div class="tab-link">
         <img class="home_icon" src="../assets/img/22x.png">
         {{home}}
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { checkRoleType } from '@/server';
+
 export default {
   name: 'footerNav',
   data () {
@@ -30,8 +32,21 @@ export default {
       home: '首页',
       msg: '消息',
       me: '我的',
+      homeurl: 'home'
     }
   },
+  created() {
+    this.getHomeUrl();
+  },
+  methods: {
+    getHomeUrl() {
+        checkRoleType().then(
+          res => {
+              this.homeurl = res.homeurl;
+            }
+        )
+    },
+  }
 }
 </script>
 
