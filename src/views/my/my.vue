@@ -7,7 +7,7 @@
             <Cell title="性别" :value="changeGender(user.sSex)" />
         </Cell-group>
         <Cell-group class="group">
-            <Cell title="年龄" :value="user.iAge" />
+            <Cell title="年龄" :value="user.iAge || '-'" />
         </Cell-group>
         <Cell-group class="group">
             <Cell title="手机号" :value="user.sMobilePhone" />
@@ -16,7 +16,7 @@
             <Cell title="住址" :value="user.sAddress" />
         </Cell-group>
         <Cell-group class="group">
-            <Cell title="故乡" :value="user.iHometown " />
+            <Cell title="故乡" :value="user.sHometownName || '-'" />
         </Cell-group>
         <footerNav class="footer"></footerNav>
     </div>
@@ -46,7 +46,13 @@
         },
         methods: {
            changeGender(gener) {
-                return gener == 'M' ? '男' : '女';
+               if(gener == 'M'){
+                    return '男';
+                }else if(gener == 'F'){
+                    return '女';
+                }else{
+                    return '';
+                }
             }, 
         }
     }

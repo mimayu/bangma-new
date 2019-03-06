@@ -42,14 +42,20 @@
         },
         methods: {
             changeGender(gener) {
-                return gener == 'M' ? '男' : '女';
+                if(gener == 'M'){
+                    return '男';
+                }else if(gener == 'F'){
+                    return '女';
+                }else{
+                    return '';
+                }
             },
             getProfile() {
                 getProfile().then(
                     res => {
                         if(res.success == 1) {
                             this.account = res.account;
-                            console.log(121, this.$store)
+                            //console.log(121, this.$store)
                             this.$store.dispatch("setUser", res.account);
                         }else {
                             Toast(res.msg)
