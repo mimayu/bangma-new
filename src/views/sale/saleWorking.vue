@@ -218,6 +218,9 @@
       */
       handleClick(type, id) {
         switch(type) {
+          case 0:
+            this.handleGo(id, type);
+            break;
           case 2:
             this.handleGo(id, type);
             break;
@@ -251,6 +254,9 @@
       */
       handleGo(id, type) {
         let name = '';
+        if(type == 0) {
+          name = 'previewCustom' 
+        }
         if(type == 2) {
           name = 'visit' 
         }

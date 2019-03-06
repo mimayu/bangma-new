@@ -186,6 +186,9 @@ export default {
     */
     handleClick(type, id) {
       switch(type) {
+         case 0:
+            this.handleGo(id, type);
+            break;
         case 1:
           this.handleGo(id, type);
           break;
@@ -203,7 +206,16 @@ export default {
     * 处理预约/上门
     */
     handleGo(id, type) {
-      let name = type == 1 ? 'order' : 'visit';
+      let name = '';
+      if(type == 0) {
+        name = 'previewCustom' 
+      }
+      if(type == 1) {
+        name = 'order' 
+      }
+      if(type == 2) {
+        name = 'visit' 
+      }
       this.$router.push(
         {
             name: name,
