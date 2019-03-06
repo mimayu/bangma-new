@@ -14,6 +14,10 @@
                                 {{item.title}}</span>
                             <span class="red">{{item.iStatus_name}}</span>
                         </dd>
+                        <dd v-if="roleType === 1 || roleType === 4 || roleType === 10">
+                            <span>业务员:</span>
+                            {{item.sName}}
+                        </dd>
                         <dd>
                             <span>姓名:</span>
                             {{item.sUsername}}
@@ -45,6 +49,10 @@
                                 {{item.title}}</span>
                             <span class="red">{{item.iStatus_name}}</span>
                         </dd>
+                        <dd v-if="roleType === 1 || roleType === 4 || roleType === 10">
+                            <span>业务员:</span>
+                            {{item.sName}}
+                        </dd>
                         <dd>
                             <span>姓名:</span>
                             {{item.sUsername}}
@@ -75,6 +83,10 @@
                                 {{item.title}}</span>
                             <span class="red">{{item.iStatus_name}}</span>
                         </dd>
+                        <dd v-if="roleType === 1 || roleType === 4 || roleType === 10">
+                            <span>业务员:</span>
+                            {{item.sName}}
+                        </dd>
                         <dd>
                             <span>姓名:</span>
                             {{item.sUsername}}
@@ -104,6 +116,10 @@
                             <span class="timeout">
                                 {{item.title}}</span>
                             <span class="red">{{item.iStatus_name}}</span>
+                        </dd>
+                        <dd v-if="roleType === 1 || roleType === 4 || roleType === 10">
+                            <span>业务员:</span>
+                            {{item.sName}}
                         </dd>
                         <dd>
                             <span>姓名:</span>
@@ -146,7 +162,8 @@
                 saleLists: [],
                 remindLists: [],
                 active:0,
-                type:1
+                type:1,
+                roleType:0,
             }
         },
         created() {
@@ -165,8 +182,8 @@
                 }
                 getCalendar(params).then(
                     res => {
-                        this.saleLists = res.allForDateArr;
                         this.remindLists = res.allForDateArr;
+                        this.roleType = res.roleType;
                     }
                 )
             },
