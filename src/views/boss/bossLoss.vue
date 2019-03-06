@@ -128,26 +128,44 @@
       this.active = this.$route.query.active || 0;
     },
     methods: {
+
       /*
-      * 点击按钮
+      * 点击操作
       * 1 -> 预约
+      * 2 -> 上门
+      * 3 -> 报价
+      * 5 -> 合同解除
+      * 8 -> 完工
       */
       handleClick(type, id) {
-        switch(type) {
-          case 1:
-            this.handleGo(id, type);
-            break;
-          default:
-            break;
-        }
+          switch(type) {
+              case 0:
+                  this.handleGo(id, type);
+                  break;
+              case 1:
+                  this.handleGo(id, type);
+                  break;
+                case 10:
+                  window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/allUser/';
+                  break; 
+              default:
+                  break;
+          }
       },
       /*
-      * 处理预约
+      * 处理预约/上门
       */
       handleGo(id, type) {
+          let name = '';
+          if(type == 0) {
+              name = 'previewCustom' 
+          }
+          if(type == 1) {
+              name = 'order' 
+          }
           this.$router.push(
               {
-                  name: 'order',
+                  name: name,
                   params: {
                       id: id
                   }

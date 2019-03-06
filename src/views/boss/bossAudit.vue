@@ -65,6 +65,41 @@
         },
         methods: {
             /*
+            * 点击按钮
+            * 0 -> 查看
+            * 10 -> 编辑
+            */
+            handleClick(type, id) {
+                switch(type) {
+                    case 0:
+                        this.handleGo(id, type);
+                        break;
+                    case 10:
+                        window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/bossAudit/';
+                        break;  
+                    default:
+                        break;
+                }
+            },
+            /*
+            * 取消报价/完工
+            */
+            handleGo(id, type) {
+                let name = '';
+               if(type == 0) {
+                    name = 'previewCustom' 
+                }
+                this.$router.push(
+                    {
+                        name: name,
+                        params: {
+                            id: id,
+                            from: 'boss'
+                        }
+                    }
+                )
+            },
+            /*
             * 处理加载
             */
             handleLoad() {

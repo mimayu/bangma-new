@@ -74,30 +74,44 @@
             },
             /*
             * 点击操作
-            * 1 -> 分配
+            * 1 -> 派单
+            * 10 -> 编辑
             */
             handleClick(type, id) {
                 switch(type) {
+                    case 0:
+                        this.handleGo(id, type);
+                        break;
                     case 1:
                         this.handleGo(id, type);
                         break;
+                        case 10:
+                        window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/assignList/';
+                        break; 
                     default:
                         break;
                 }
             },
             /*
-            * 跳转分配页面
+            * 处理预约/上门
             */
             handleGo(id, type) {
+                let name = '';
+                if(type == 0) {
+                    name = 'previewCustom' 
+                }
+                if(type == 1) {
+                    name = 'assign' 
+                }
                 this.$router.push(
                     {
-                        name: 'assign',
+                        name: name,
                         params: {
                             id: id
                         }
                     }
                 )
-            }
+            },
         }
     }
 </script>

@@ -280,6 +280,9 @@
                     case 9:
                         this.handleGo(id, type);
                         break;
+                     case 10:
+                        window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/allUser/';
+                        break; 
                     default:
                         break;
                 }
