@@ -38,7 +38,8 @@
                 doLogout().then(
                     res => {
                         if(res.success == 1) {
-                            Toast('退出成功')
+                            Toast('退出成功');
+                            this.$router.push('/login');
                         }else {
                             Toast('退出失败')
                         }
