@@ -16,72 +16,80 @@
             <Tab  title="本日" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
+                        <Col span="2">排行</Col>
+                        <Col span="6">渠道名称</Col>
                         <Col span="4">单数</Col>
                         <Col span="4">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签约额</Col>
+                        <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="2">{{index+1}}</Col>
+                        <Col span="6">{{item.sSourceName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
+                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
             <Tab  title="本周" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
+                        <Col span="2">排行</Col>
+                        <Col span="6">渠道名称</Col>
                         <Col span="4">单数</Col>
                         <Col span="4">签单数</Col>
                         <Col span="5">签单率</Col>
+                        <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="2">{{index+1}}</Col>
+                        <Col span="6">{{item.sSourceName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
+                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
             <Tab  title="本月" >
                 <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
+                        <Col span="2">排行</Col>
+                        <Col span="6">渠道名称</Col>
                         <Col span="4">单数</Col>
                         <Col span="4">签单数</Col>
                         <Col span="5">签单率</Col>
+                        <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="2">{{index+1}}</Col>
+                        <Col span="6">{{item.sSourceName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
+                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
             <Tab title="本年" >
                  <div>
                     <Row>
-                        <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
+                        <Col span="2">排行</Col>
+                        <Col span="6">渠道名称</Col>
                         <Col span="4">单数</Col>
                         <Col span="4">签单数</Col>
                         <Col span="5">签单率</Col>
+                        <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
-                        <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="2">{{index+1}}</Col>
+                        <Col span="6">{{item.sSourceName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
+                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
@@ -194,9 +202,21 @@
                       this.type="year"
 
                   }
-                  this.salesSortqd(this.type)
-                       
-                },
+                  this.salesSortqd(this.type)         
+            },
+            /*
+            * 查看具体渠道
+            */
+            handleGo(iSource) {
+                this.$router.push(
+                    {
+                        name: 'salesSortc',
+                        query: {
+                            iSource:iSource
+                        }
+                    }
+                )
+            },
         }
     }
 </script>

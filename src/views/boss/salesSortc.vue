@@ -1,6 +1,6 @@
 <template>
     <div class="salesSort">
-        <h1 class="sales-title">某一渠道 业务排行排行
+        <h1 class="sales-title">{{iSource_name}}渠道 业务排行排行
            <!-- <a @click="choseType">筛选</a>-->
             <Popup v-model="show" position="bottom">
              <datetime-picker
@@ -17,14 +17,14 @@
                 <div>
                     <Row>
                         <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
-                        <Col span="4">单数</Col>
+                        <Col span="7">业务员</Col>
+                        <Col span="4">接单数</Col>
                         <Col span="4">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
@@ -35,14 +35,14 @@
                 <div>
                     <Row>
                         <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
-                        <Col span="4">单数</Col>
+                        <Col span="7">业务员</Col>
+                        <Col span="4">接单数</Col>
                         <Col span="4">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
@@ -53,14 +53,14 @@
                 <div>
                     <Row>
                         <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
-                        <Col span="4">单数</Col>
+                        <Col span="7">业务员</Col>
+                        <Col span="4">接单数</Col>
                         <Col span="4">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
@@ -71,14 +71,14 @@
                  <div>
                     <Row>
                         <Col span="4">排行</Col>
-                        <Col span="7">渠道名称</Col>
-                        <Col span="4">单数</Col>
+                        <Col span="7">业务员</Col>
+                        <Col span="4">总单数</Col>
                         <Col span="4">签单数</Col>
-                        <Col span="5">签单率</Col>
+                        <Col span="5">签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
-                        <Col span="7">{{item.sSourceName}}</Col>
+                        <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
                         <Col span="4">{{item.qianyue_num}}</Col>
                         <Col span="5">{{item.allFee}}</Col>
@@ -94,7 +94,7 @@
 <script>
     import footerNav from "../../components/footerNav"; // 引入页脚
     import { Cell, CellGroup, Popup, Row, Col, Picker, Toast,Tab, Tabs ,DatetimePicker } from 'vant';
-    import { salesSortqd } from '@/server';
+    import { salesSortc } from '@/server';
     import { timetrans } from '@/utils/time';
 
     export default {
@@ -120,7 +120,9 @@
                 maxDate: new Date(2019, 10, 1),
                 currentDate: new Date(),
                 startTime: '', // 收取尾款日期
-                type:'today'
+                type:'today',
+                iSource:0,
+                iSource_name:''
             }
         },
         computed:{
@@ -129,19 +131,24 @@
             // }
         },
         created() {
-            this.salesSortqd()
+            this.iSource = this.$route.query.iSource || 0;
+            //console.log(this.$route.query);
+            this.salesSortc();
         },
         methods: {
-             salesSortqd(type) {
+             salesSortc(type) {
                 let params = {
+                    'iSource':this.iSource,
                     'type': this.type,
                 }
-                salesSortqd(params).then(
+                //console.log(params);
+                salesSortc(params).then(
                  res => {
                     this.list = res.statistics;
+                    this.iSource_name = res.iSource_name;
                     }
                 )
-                console.log(this.list)
+                //console.log(this.list)
             },
             choseType() {
                 this.show = true;
@@ -153,7 +160,7 @@
                 this.show = false;
             },
             Confirm() {
-                console.log("Confirm")
+                //console.log("Confirm")
                 let iCustomerId = this.$route.params.id || 1;
                 let params = {
                     'iCustomerId': iCustomerId,
@@ -181,8 +188,8 @@
             handleCancel(e) {
                 this.show = false;
             },
-             onClick(index, title) {
-                  console.log(index, title)
+            onClick(index, title) {
+                  //console.log(index, title)
                   if(index==0){
                        this.type = "today"
                   }else if (index==1){
@@ -194,7 +201,7 @@
                       this.type="year"
 
                   }
-                  this.salesSortqd(this.type)
+                  this.salesSortc(this.type)
                        
                 },
         }
