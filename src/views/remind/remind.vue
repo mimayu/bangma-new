@@ -164,6 +164,7 @@
                 active:0,
                 type:1,
                 roleType:0,
+                thisDate:'',
             }
         },
         created() {
@@ -178,7 +179,8 @@
             },
             getCalendar(type) {
                 let params = {
-                    type:this.type
+                    type:this.type,
+                    thisDate:this.thisDate
                 }
                 getCalendar(params).then(
                     res => {
@@ -188,8 +190,10 @@
                 )
             },
             handleDay(value) {
-                console.log('value', value);
-                this.remindLists = value.events;
+                this.thisDate = value.date;
+                this.getCalendar();
+                //console.log('value', value.date);
+                //this.remindLists = value.events;
             },
              onClick(index, title) {
                   //console.log(index, title)
@@ -202,6 +206,7 @@
                   }else if(index == 3){
                       this.type=4
                   }
+                  this.thisDate = '';
                   this.getCalendar(this.type)
                        
                 },
