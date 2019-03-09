@@ -150,6 +150,7 @@
 <script>
   import { Tab, Tabs, Cell, CellGroup, Toast, List, Actionsheet } from 'vant';
   import { getCustomer } from '@/server';
+  import { getBaojiaMode } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
 
   export default {
@@ -162,17 +163,8 @@
         data_yanshou: [],
         data_wancheng: [],
         modeShow: false, // 选择模式
-        actions: [
-          {
-            name: '普装'
-          },
-          {
-            name: '精装'
-          },
-          {
-            name: '奢华'
-          }
-        ],
+        actions: [],
+        actionids:[],
         currentId: '', // 选择的id
         loading_paigong: false, // 签约等待
         finished_paigong: false, // 签约等待
@@ -204,6 +196,7 @@
     },
     created() {
       this.active = this.$route.query.active || 0;
+      this.getBaojiaMode();
     },
     methods: {
       /*
@@ -288,6 +281,24 @@
         )
       },
       /*
+      * 创建报价基础
+      */
+      getBaojiaMode() {
+          getBaojiaMode().then(
+              res => {
+                  let actions = [];
+                  let actionids = [];
+                  var array = Object.keys(res.actions).map(function(el){
+                      actions.push({'name': res.actions[el]});
+                      actionids.push(el);
+                  });
+
+                  this.actions = actions;
+                  this.actionids = actionids;
+              }
+          )
+      },
+      /*
       * 处理报价
       */
       handleQuote(id) {
@@ -298,19 +309,20 @@
       * 处理报价选择
       */
       handleSelect(value) {
-        let mode = this.actions.findIndex(item => {
-          return item.name == value.name
-        })
-        this.modeShow = false;
-        this.$router.push(
-          {
-              name: 'quotation',
-              params: {
-                  id: this.currentId,
-                  mode: +mode + 1
+          let index = this.actions.findIndex(item => {
+              return item.name == value.name;
+          })
+          let mode = this.actionids[index];
+          this.modeShow = false;
+          this.$router.push(
+              {
+                  name: 'quotation',
+                  params: {
+                      id: this.currentId,
+                      mode:mode
+                  }
               }
-          }
-        )
+          )
       },
       /*
       * 加载派工完成数据

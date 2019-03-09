@@ -1,6 +1,6 @@
 <template>
     <div class="salesSort">
-        <h1 class="sales-title">{{iSource_name}}渠道 业务排行排行
+        <h1 class="sales-title">{{iSource_name}}渠道 业务排行榜
            <!-- <a @click="choseType">筛选</a>-->
             <Popup v-model="show" position="bottom">
              <datetime-picker

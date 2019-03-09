@@ -55,6 +55,14 @@ const getCustomerOrder = (params) => {
 }
 
 /**
+ * 获取报价模版类型
+ * @param {*} params 
+ */
+const getBaojiaMode = () => {
+    return request('/api/getBaojiaMode/')
+}
+
+/**
  * 获取我的
  * @param {*} params 
  */
@@ -85,6 +93,7 @@ export {
     getProgress,
     getCustomerNew,
     getCustomerOrder,
+    getBaojiaMode,
     salesSortqd,
     salesSortYj,
     salesSortc,

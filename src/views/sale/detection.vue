@@ -122,6 +122,7 @@
 <script>
 import { Tab, Tabs, Cell, CellGroup, List, Actionsheet } from 'vant';
 import { getCustomer } from '@/server';
+import { getBaojiaMode } from '@/server';
 import footerNav from "@/components/footerNav"; // 引入页脚
 
 export default {
@@ -150,17 +151,8 @@ export default {
       finished_cancel_text: '没有更多了',
       page_cancel: 1, // 基检未约 
       modeShow: false, // 选择报价模式
-      actions: [
-        {
-          name: '普装'
-        },
-        {
-          name: '精装'
-        },
-        {
-          name: '奢华'
-        }
-      ],
+      actions: [],
+      actionids:[],
       currentId: '' // 选择的id
     }
   },
@@ -175,6 +167,7 @@ export default {
   },
   created() {
     this.active = this.$route.query.active || 0;
+    this.getBaojiaMode();
 
   },
   methods: {
@@ -201,6 +194,24 @@ export default {
         default:
           break;
       }
+    },
+    /*
+    * 创建报价基础
+    */
+    getBaojiaMode() {
+        getBaojiaMode().then(
+            res => {
+                let actions = [];
+                let actionids = [];
+                var array = Object.keys(res.actions).map(function(el){
+                    actions.push({'name': res.actions[el]});
+                    actionids.push(el);
+                });
+
+                this.actions = actions;
+                this.actionids = actionids;
+            }
+        )
     },
     /*
     * 处理预约/上门
@@ -236,19 +247,20 @@ export default {
     * 处理报价选择
     */
     handleSelect(value) {
-      let mode = this.actions.findIndex(item => {
-        return item.name == value.name;
-      })
-      this.modeShow = false;
-      this.$router.push(
-        {
-            name: 'quotation',
-            params: {
-                id: this.currentId,
-                mode: +mode + 1
+        let index = this.actions.findIndex(item => {
+            return item.name == value.name;
+        })
+        let mode = this.actionids[index];
+        this.modeShow = false;
+        this.$router.push(
+            {
+                name: 'quotation',
+                params: {
+                    id: this.currentId,
+                    mode:mode
+                }
             }
-        }
-      )
+        )
     },
     /*
     * 基检未约

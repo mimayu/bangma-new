@@ -80,6 +80,7 @@
 <script>
     import { Tab, Tabs, Cell, CellGroup, Button, Field, Toast, Popup, Picker, List, Actionsheet } from 'vant';
     import { getCustomer } from '@/server';
+    import { getBaojiaMode } from '@/server';
     import footerNav from "../../components/footerNav"; // 引入页脚
     export default {
         name: 'saleWorking',
@@ -117,18 +118,12 @@
 
                 modeShow: false, // 报价显示
                 currentId: '', // 选择id
-                actions: [
-                    {
-                        name: '普装'
-                    },
-                    {
-                        name: '精装'
-                    },
-                    {
-                        name: '奢华'
-                    }
-                ]
+                actions: [],
+                actionids:[],
             };
+        },
+        created() {
+            this.getBaojiaMode();
         },
         methods: {
             /*
@@ -175,17 +170,36 @@
             * 处理报价选择
             */
             handleSelect(value) {
-                let mode = this.actions.findIndex(item => {
-                    return item.name == value.name
+                let index = this.actions.findIndex(item => {
+                    return item.name == value.name;
                 })
+                let mode = this.actionids[index];
                 this.modeShow = false;
                 this.$router.push(
                     {
                         name: 'quotation',
                         params: {
                             id: this.currentId,
-                            mode: +mode + 1
+                            mode:mode
                         }
+                    }
+                )
+            },
+            /*
+            * 创建报价基础
+            */
+            getBaojiaMode() {
+                getBaojiaMode().then(
+                    res => {
+                        let actions = [];
+                        let actionids = [];
+                        var array = Object.keys(res.actions).map(function(el){
+                            actions.push({'name': res.actions[el]});
+                            actionids.push(el);
+                        });
+
+                        this.actions = actions;
+                        this.actionids = actionids;
                     }
                 )
             },
@@ -272,7 +286,7 @@
                     }else {
                     Toast(res.msg);
                     }
-                    console.log('this[pageType]', this[pageType]);
+                    //console.log('this[pageType]', this[pageType]);
                 }
                 )
             }

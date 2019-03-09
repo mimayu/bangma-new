@@ -13,6 +13,7 @@ import {
 } from './sale'
 
 import {
+    getIsLogin,
     postLogin,
     postRegiste,
     postReset
@@ -48,6 +49,7 @@ import {
     getProgress,
     getCustomerNew,
     getCustomerOrder,
+    getBaojiaMode,
     salesSortqd,
     salesSortYj,
     salesSortc,
@@ -67,6 +69,7 @@ export {
     getSubmitInfo,
     postCancel,
     getQuoteChange,
+    getIsLogin,
     postLogin,
     postRegiste,
     postReset,
@@ -88,6 +91,7 @@ export {
     postAddFukuan,
     getCustomerNew,
     getCustomerOrder,
+    getBaojiaMode,    
     salesSortqd,
     salesSortYj,
     salesSortc,

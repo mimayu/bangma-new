@@ -119,7 +119,7 @@
       step: {type: Number, default:1},
     },   
     created() {
-      this.iCustomerId = this.$route.params.id || 1;
+      this.iCustomerId = this.$route.params.id || 0;
       this.iMode = this.$route.params.mode || 1;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);

@@ -120,7 +120,7 @@
     },
 
     created() {
-      this.iCustomerId = this.$route.params.id || 1;
+      this.iCustomerId = this.$route.params.id || 0;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);
     },
@@ -145,7 +145,7 @@
             }
           })
         });
-        console.log('lists', lists);
+        //console.log('lists', lists);
         return lists;
       },
       totalPrice() {
@@ -208,7 +208,7 @@
           return;
         }
         let idAndNumberValues = [];
-        let iCustomerId = this.$route.params.id || 1;
+        let iCustomerId = this.$route.params.id || 0;
         this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })

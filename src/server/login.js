@@ -1,6 +1,14 @@
 import { request } from './http';
 
 /**
+ * 判断是否已登录
+ * @param {*} params 
+ */
+const getIsLogin = () => {
+    return request('/api/getIsLogin/');
+}
+
+/**
  * 登录
  * @param {*} params 
  */
@@ -25,6 +33,7 @@ const postReset = (params) => {
 }
 
 export {
+    getIsLogin,
     postLogin,
     postRegiste,
     postReset
