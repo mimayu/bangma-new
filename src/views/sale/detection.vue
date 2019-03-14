@@ -191,6 +191,12 @@ export default {
         case 3:
           this.handleQuote(id);
           break;
+        case 4:
+            this.handleGo(id, type);
+            break;
+        case 5:
+            this.handleGo(id, type);
+            break;
         default:
           break;
       }
@@ -226,6 +232,12 @@ export default {
       }
       if(type == 2) {
         name = 'visit' 
+      }
+      if(type == 4) {
+          name = 'quotationList' 
+      }
+      if(type == 5) {
+          name = 'quotationCancel'; 
       }
       this.$router.push(
         {
