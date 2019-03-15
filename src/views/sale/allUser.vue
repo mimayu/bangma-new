@@ -35,7 +35,7 @@
                         </template>
                     </Cell>
                     <Cell title="姓名" :value="item.sUsername" />
-                    <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
+                    <Cell title="手机号" :value="item.sMobile" />
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
                     <Cell title="接单日期" :value="item.tOrderDate || '-'" />
@@ -136,10 +136,6 @@
             this.getBaojiaMode();
         },
         methods: {
-            doTel(mobile){
-                //console.log(mobile);
-                window.location.href = "tel:"+mobile;
-            },
             /*
             * 初始化数据加载
             */
