@@ -54,42 +54,6 @@
       </router-link>
     </div>
     <Tabs v-model="active" @click="toggleTab">
-        <Tab title="本周">
-            <h3>数据统计</h3>
-            <Row class=mini>
-                <Col span="6">%</Col>
-                <Col span="6">上门率{{data.shangmen_rate}}%</Col>
-                <Col span="6">签单率{{data.qiandan_rate}}%</Col>
-                <Col span="6">%</Col>
-            </Row>
-            <Row class="order">
-                <Col span="6">{{data.all_num}}<br/>总接单数</Col>
-                <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
-                <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
-                <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
-            </Row>
-            <div class="chart-wrapper">
-                <h3>签单占比</h3>
-                <Tabs v-model="active1" @click="toggleTab1">
-                <Tab title="接单数">
-                    <h3>上门数</h3>
-                    <canvas id="visit10" class="piechart"></canvas>
-                </Tab>
-                <Tab title="上门数">
-                    <h3>上门数</h3>
-                    <canvas id="visit11" class="piechart"></canvas>
-                </Tab>
-                 <Tab title="签单数">
-                     <h3>签单数</h3>
-                    <canvas id="visit12" class="piechart"></canvas>
-                </Tab>
-                <Tab title="签约额">
-                    <h3>签约额</h3>
-                    <canvas id="visit13" class="piechart"></canvas>
-                </Tab>
-                </Tabs>
-            </div>
-        </Tab>
         <Tab title="今天">
             <h3>数据统计</h3>
             <Row class=mini>
@@ -126,9 +90,44 @@
                 </Tabs>
             </div>
        </Tab>
+        <Tab title="本周">
+            <h3>数据统计</h3>
+            <Row class=mini>
+                <Col span="6">%</Col>
+                <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+                <Col span="6">签单率{{data.qiandan_rate}}%</Col>
+                <Col span="6">%</Col>
+            </Row>
+            <Row class="order">
+                <Col span="6">{{data.all_num}}<br/>总接单数</Col>
+                <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
+                <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
+                <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
+            </Row>
+            <div class="chart-wrapper">
+                <h3>签单占比</h3>
+                <Tabs v-model="active1" @click="toggleTab1">
+                <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit10" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数</h3>
+                    <canvas id="visit11" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数</h3>
+                    <canvas id="visit12" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额</h3>
+                    <canvas id="visit13" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
+            </div>
+        </Tab>
       <Tab title="本月">
          <h3>数据统计</h3>
-
           <Row class=mini>
             <Col span="6">%</Col>
             <Col span="6">上门率{{data.shangmen_rate}}%</Col>
@@ -240,7 +239,7 @@ export default {
             index2:0,
             visit:'visit00',
             list_all: [],
-            type:'week'
+            type:'month'
         }
     },
     created() {
@@ -319,11 +318,11 @@ export default {
         },
         toggleTab(index, title) {
             if(index==0){
-                this.type = "week"
+                this.type = "month"
             }else if (index==1){
                 this.type = "today"
             }else if(index == 2){
-                this.type="month"
+                this.type="week"
             }else{
                 this.type="year"
             }

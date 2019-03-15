@@ -11,7 +11,9 @@
     <section class="quote_contents list-box">
       <div class="left-box" ref="menuWrapper">
         <ul>
-          <li v-for="(item, index) in goods" ref="menuList" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">{{item}}</li>
+          <li v-for="(item, index) in goods" ref="menuList" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">{{item}}
+            <span class="red-point" v-show="typeLists[index+1]>0"></span>
+            </li>
         </ul>
       </div>
       <div class="right-box" ref="foodsWrapper">
@@ -28,7 +30,7 @@
               <section class="price-edit">
                 <a class="minus" @click="minusCart(item)">-</a>
                 <span>
-                  <input type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'>
+                  <input type="number" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'>
                 </span>
                 <a class="add" @click="addCart(item)">+</a>
               </section>
@@ -74,7 +76,7 @@
                   <div class="cart-control-wrapper">
                     <a class="minus" @click="minusCart(item)">-</a>
                     <span>
-                      <input type="text" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'> 
+                      <input type="number" :value="item.quantity" @change="handleChange(item)" @keyup.up='addCart(item)' @keyup.down='minusCart(item)'> 
                     </span>
                     <a class="add" @click="addCart(item)">+</a>
                   </div>
@@ -110,6 +112,7 @@
         scrollY: 0, // 滑动距离
         tabActive: 0, // 顶部tab激活
         detailActive: false,
+        typeLists:[],
       }
     },
      props:{
@@ -138,14 +141,19 @@
       },
       selectGoods() {
         let lists = [];
-        this.details.forEach((items) => {
+        let type = 0;
+        this.details.forEach((items,index) => {
+          type = index + 1;
+          this.typeLists[type] = 0;
           items.forEach((item) => {
             if(item.quantity > 0) {
               lists.push(item)
+              if(item.type == type)
+                this.typeLists[type] += 1;
             }
           })
         });
-        console.log('lists', lists);
+        console.log('typeLists', this.typeLists);
         return lists;
       },
       totalPrice() {
@@ -155,7 +163,8 @@
             total += item.price * Math.round(item.quantity*100)/100;
           })
         });
-        return total;
+        total = parseInt(total+total*0.15);
+        return total
       },
     },
     methods: {
@@ -326,6 +335,7 @@
       */
       addCart(item) {
         item.quantity ++;
+        this.selectGoods;
       },
       /*
       * 处理点击mask
@@ -346,16 +356,17 @@
           })
         this.detailActive = false;
         }).catch(() => {
-          console.log(1)
+          //console.log(1)
         });
       },
 
     handleChange(item){
       let val = event.target.value.trim();
+      val = Number(val);
       let max = this.max;
       let min = this.min;
       if(this.isValueNumber(val)){
-        val = Number(val);
+        //val = Number(val);
         item.quantity = val;
         if(val > max){
           item.quantity = max;
@@ -365,7 +376,8 @@
       } else {
         event.target.value = parseFloat(item.quantity).toFixed(1);
       }
-      console.log(item.quantity);
+      this.selectGoods;
+      //console.log(item.quantity);
     },
     isValueNumber(value){
       return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(value + '');
@@ -381,6 +393,21 @@
   .van-dialog__message {
       text-align: center !important;
     }
+  .red-point{
+    position: relative;
+  }
+
+  .red-point::before{
+    content: " ";
+    border: 3px solid red;/*设置红色*/
+    border-radius:5px;/*设置圆角*/
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    margin-right: -8px;
+    margin-top:18px;
+  }
+
   .quote_container {
     position: absolute;
     top: 0;
@@ -478,10 +505,11 @@
       }
     }
     h3{
-      height:30px;
-      line-height:30px;
+      height:40px;
+      line-height:40px;
       margin-bottom:10px;
-      font-size: 12px;
+      font-size: 18px;
+      font-weight:bold;
       background: #F6F6F6;
     }
     .pricem{
