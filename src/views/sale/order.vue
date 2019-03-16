@@ -56,7 +56,7 @@
                 minHour: 10,
                 maxHour: 20,
                 minDate: new Date(),
-                maxDate: new Date(2019, 10, 1),
+                maxDate: new Date(),
                 orderActions: [
                     '基检确认', '基检取消', '基检再约'
                 ],
@@ -67,7 +67,13 @@
                 orderShow: false // 选择状态
             }
         },
+        created() {
+            this.setMaxDate();
+        },
         methods: {
+            setMaxDate(){
+                this.maxDate.setMonth(this.minDate.getMonth()+3);
+            },
             /*
             * 选择状态
             */

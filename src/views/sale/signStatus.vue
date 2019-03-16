@@ -18,7 +18,7 @@
                 </template>
             </Cell>
             <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="上门日期" :value="item.dateShangmen || '-'" />
@@ -45,7 +45,7 @@
                 </template>
             </Cell>
             <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="签约日期" :value="item.dateOrder || '-'" />
@@ -76,7 +76,7 @@
                 </template>
             </Cell>
             <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="接单日期" :value="item.tOrderDate || '-'" />
@@ -104,7 +104,7 @@
                 </template>
             </Cell>
             <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
@@ -178,6 +178,10 @@
       this.getBaojiaMode();
     },
     methods: {
+      doTel(mobile){
+          //console.log(mobile);
+          window.location.href = "tel:"+mobile;
+      },   
       /*
       * 点击按钮
       * 2 -> 上门

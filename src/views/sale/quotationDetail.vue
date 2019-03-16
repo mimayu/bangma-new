@@ -9,7 +9,7 @@
         </div>
       </Collapse-item>
     </Collapse>
-    <Button type="primary" size="large" @click="handleSubmit">打印</Button>
+    <Button type="primary" size="large" @click="handleSubmit">请打开"邦马"公众号进行打印报价操作</Button>
   </div>
 </template>
 
@@ -29,29 +29,32 @@ export default {
     return {
       iCustomerId: '',
       activeNames: [0],
-      lists: []
+      lists: [],
+      iMode:0,
     }
   },
   created() {
     this.iCustomerId = this.$route.params.id || 0;
+    this.iMode = this.$route.params.iMode || 1;
     this.getSubmitInfo();
   },
   methods: {
     getSubmitInfo() {
       let params = {
-        'iCustomerId': this.iCustomerId
+        'iCustomerId': this.iCustomerId,
+        'iMode': this.iMode,
       }
       getSubmitInfo(params).then(
         res => {
           if(res.success == 1) {
             this.lists = Object.values(res.result);
-            console.log('this.lists', this.lists);
+            //console.log('this.lists', this.lists);
           }
         }
       )
     },
     handleSubmit() {
-      console.log(11);
+      //console.log(11);
     }
   }
 }

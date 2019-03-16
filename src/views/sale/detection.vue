@@ -18,7 +18,7 @@
                   </template>
               </Cell>
               <Cell title="姓名" :value="item.sUsername" />
-              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
               <Cell title="接单日期" :value="item.tOrderDate || '-'" />
@@ -45,7 +45,7 @@
                   </template>
               </Cell>
               <Cell title="姓名" :value="item.sUsername" />
-              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
               <Cell title="再约日期" :value="item.dateZaiyue || '-'" />
@@ -72,7 +72,7 @@
                   </template>
               </Cell>
               <Cell title="姓名" :value="item.sUsername" />
-              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="施工内容" :value="item.sRemarks || '-'" />
               <Cell title="预约时间" :value="item.dateYuyue || '-'" />
@@ -99,7 +99,7 @@
                   </template>
               </Cell>
               <Cell title="姓名" :value="item.sUsername" />
-              <Cell title="手机号" :value="item.sMobile" />
+              <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
               <Cell title="取消理由" :value="item.quxiaoContent || '-'" />
               <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
@@ -171,6 +171,10 @@ export default {
 
   },
   methods: {
+    doTel(mobile){
+        //console.log(mobile);
+        window.location.href = "tel:"+mobile;
+    },    
     /*
     * 点击操作
     * 1 -> 预约

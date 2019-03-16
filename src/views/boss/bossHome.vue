@@ -54,7 +54,7 @@
       </router-link>
     </div>
     <Tabs v-model="active" @click="toggleTab">
-        <Tab title="今天">
+        <Tab title="本周">
             <h3>数据统计</h3>
             <Row class=mini>
                 <Col span="6">%</Col>
@@ -90,7 +90,7 @@
                 </Tabs>
             </div>
        </Tab>
-        <Tab title="本周">
+        <Tab title="今天">
             <h3>数据统计</h3>
             <Row class=mini>
                 <Col span="6">%</Col>
@@ -239,7 +239,7 @@ export default {
             index2:0,
             visit:'visit00',
             list_all: [],
-            type:'month'
+            type:'week'
         }
     },
     created() {
@@ -318,11 +318,11 @@ export default {
         },
         toggleTab(index, title) {
             if(index==0){
-                this.type = "month"
+                this.type = "week"
             }else if (index==1){
                 this.type = "today"
             }else if(index == 2){
-                this.type="week"
+                this.type="month"
             }else{
                 this.type="year"
             }

@@ -5,7 +5,7 @@
             <Tab title="预约提醒" >
                 <div v-if="remindLists != null && remindLists.length > 0">
                     <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
-                        <dt class="on">{{item.date}}</dt>
+                        <dt class="on">{{item.dateYuyue}}</dt>
                         <dd class="orderNum">
                             <a>
                                 <span>订单号:</span>{{item.iCustomerId}}
@@ -74,7 +74,7 @@
             <Tab title="再约提醒">
                 <div v-if="remindLists != null && remindLists.length > 0">
                     <dl class="remind-list" v-for="(item, index) in remindLists" :key="index">
-                        <dt class="on">{{item.date}}</dt>
+                        <dt class="on">{{item.dateZaiyue}}</dt>
                         <dd class="orderNum">
                             <a>
                                 <span>订单号:</span>{{item.iCustomerId}}
