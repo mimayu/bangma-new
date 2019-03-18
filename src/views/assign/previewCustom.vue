@@ -48,7 +48,7 @@
             <Cell title="签约金额" :value="aCustomerInfo.orderFee || '-'"/>
             <Cell title="签约定金" :value="aCustomerInfo.orderDingjin || '-'"/>
         </Cell-group>
-        <Cell-group v-if="aCustomerInfo.iStatus === 6">
+        <Cell-group v-if="aCustomerInfo.iStatus >= 6">
             <Cell title="施工工长" :value="aCustomerInfo.iForeman_name || '-'"/>
         </Cell-group>    
         <Cell-group v-if="aCustomerInfo.iStatus >= 7 && aCustomerInfo.iStatus<=11">
