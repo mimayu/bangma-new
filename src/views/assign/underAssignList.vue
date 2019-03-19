@@ -2,7 +2,7 @@
     <div class="underAssignList_container">
         <Row class="header">
             <Col span="6">
-                <Cell title="筛选" is-link arrow-direction="down" @click="choseStatus"/>
+                <Cell title="筛选" is-link arrow-direction="down" @click="choseSource"/>
             </Col>
             <Col span="18" class="search_bar">
                 <Search
@@ -39,8 +39,8 @@
             </Cell-group>
         </List>
         </div>
-        <Popup v-model="statusShow" position="bottom">
-            <Picker show-toolbar :columns="statusLists" @cancel="handleStatusCancel" @confirm="handleStatusComfirm" />
+        <Popup v-model="sourceShow" position="bottom">
+            <Picker show-toolbar :columns="sourceLists" @cancel="handleSourceCancel" @confirm="handleSourceComfirm" />
         </Popup>
         <footerNav class="footer"></footerNav>
     </div>
@@ -68,29 +68,43 @@
         data() {
             return {
                 assignLists: [],
-                statusShow: false,
-                statusLists: [ 
+                sourceShow: false,
+                sourceLists: [ 
                     '全部状态',
-                    '基检未约',
-                    '基检确认',
-                    '基检再约',
-                    '基检取消',
-                    '签约等待',
-                    '签约成功',
-                    '派工完成',
-                    '开工进场',
-                    '完工验收',
-                    '完工付款',
-                    '审核完成',
-                    '已结算',
-                    '签约失败',
-                    '合同取消'
+                    '刷新转单',
+                    '刷新PSR推荐',
+                    '刷新工长推荐',
+                    'icolor转单',
+                    '尚品转单',
+                    '家居顾问老客户',
+                    '施工管家老客户',
+                    '优居客转单',
+                    '百度来源',
+                    '刷新门店',
+                    '天猫',
+                    '老板电器',
+                    '索菲亚',
+                    '其它'
                 ],
-                statusCode: [
-                    '', '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102'
+                sourceCode: [
+                    '', 
+                    '11', 
+                    '12', 
+                    '13', 
+                    '14', 
+                    '15', 
+                    '16', 
+                    '17', 
+                    '18', 
+                    '19', 
+                    '20', 
+                    '21', 
+                    '22',
+                    '23',
+                    '101'
                 ],
                 value: '', // 搜索内容
-                status: '', // 删选类型
+                source: '', // 删选类型
                 page: 1,
                 loading: false,
                 finished: false
@@ -171,7 +185,7 @@
 
                 let params = {
                     'page': 1,
-                    'status':this.status,
+                    'source':this.source,
                     'keyword': this.value,
                 }
                 getAssignList(params).then(
@@ -190,19 +204,19 @@
             /*
             * 处理选择
             */
-            choseStatus() {
-                this.statusShow = true;
+            choseSource() {
+                this.sourceShow = true;
             },
-            handleStatusComfirm(value) {
-                let index = this.statusLists.findIndex((item) => {
+            handleSourceComfirm(value) {
+                let index = this.sourceLists.findIndex((item) => {
                     return item == value
                 });
-                let status = this.statusCode[index];
-                this.status = status;
-                this.statusShow = false;
+                let source = this.sourceCode[index];
+                this.source = source;
+                this.sourceShow = false;
             },
-            handleStatusCancel() {
-                this.statusShow = false;
+            handleSourceCancel() {
+                this.sourceShow = false;
             },
 
         }
