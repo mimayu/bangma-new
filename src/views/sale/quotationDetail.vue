@@ -9,7 +9,13 @@
         </div>
       </Collapse-item>
     </Collapse>
-    <Button type="primary" size="large" @click="handleSubmit">请打开"邦马"公众号进行打印报价操作</Button>
+    <section class="quote_toolbar">
+      <div class="quote_toolbar_content">
+        <span class="quote_price">¥{{totalPrice}}</span>
+      </div>
+      <Button size="large" @click="handleSubmit">请打开"邦马"公众号打印</Button>
+    </section>
+    
   </div>
 </template>
 
@@ -38,6 +44,19 @@ export default {
     this.iMode = this.$route.params.iMode || 1;
     this.getSubmitInfo();
   },
+  computed: {
+    totalPrice() {
+      let total = 0;
+      //console.log(this.lists);
+      this.lists.forEach((items) => {
+        items.list.forEach((item) => {
+          total += item.price * Math.round(item.quantity*100)/100;
+        })
+      });
+      total = parseInt(total+total*0.15);
+      return total;
+    },
+  },
   methods: {
     getSubmitInfo() {
       let params = {
@@ -52,7 +71,7 @@ export default {
           }
         }
       )
-    },
+    },   
     handleSubmit() {
       //console.log(11);
     }
@@ -94,6 +113,30 @@ export default {
       .area{
         color: #9A9A9A;
         margin:0  23px 0 3px;
+      }
+    }
+    .quote_toolbar {
+      display: flex;
+      line-height: 50px;
+      .quote_toolbar_content {
+        flex: 1;
+        padding-left: 15px;
+        background: #333333;
+        font-size: 14px;
+        color: #fff;
+        .quote_price {
+          margin-left: 4px;
+          margin-right:12px;
+          font-size: 18px;
+        }
+      }
+      button {
+        padding: 0 20px;
+        font-size: 18px;
+        color: #FFFFFF;
+        text-align: center;
+        background: #FF5C12;
+        border: 0;
       }
     }
   }

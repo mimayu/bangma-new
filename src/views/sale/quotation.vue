@@ -153,7 +153,7 @@
             }
           })
         });
-        console.log('typeLists', this.typeLists);
+        //console.log('typeLists', this.typeLists);
         return lists;
       },
       totalPrice() {
@@ -273,22 +273,31 @@
       * 头部+点击
       */
       handleAddQuote() {
-        let iCustomerId = this.$route.params.id || 1;
-        let params = {
-          'iCustomerId': iCustomerId
-        }
-        getAddQuote(params).then(
-          res => {
-            if(res.success == 1) {
-              let id = res.zengxiang_customer_id;
-              this.iCustomerId = id;
-              this.tabs.push(id);
-              this.tabActive = this.tabs.length - 1;
-              this.reset();
-              this.getQuote(false);
-            }
+
+        Dialog.confirm({
+          title: '',
+          message: '<p>确定需要增项？</p>'
+        }).then(() => {
+
+          let iCustomerId = this.$route.params.id || 1;
+          let params = {
+            'iCustomerId': iCustomerId
           }
-        )
+          getAddQuote(params).then(
+            res => {
+              if(res.success == 1) {
+                let id = res.zengxiang_customer_id;
+                this.iCustomerId = id;
+                this.tabs.push(id);
+                this.tabActive = this.tabs.length - 1;
+                this.reset();
+                this.getQuote(false);
+              }
+            }
+          )
+        }).catch(() => {
+          //console.log(1)
+        });
       },
       /*
       * 请求数据 只需要一次初始化
