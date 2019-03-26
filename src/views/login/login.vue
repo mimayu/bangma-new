@@ -102,7 +102,7 @@ export default {
                 //清空Cookie
                 self.clearCookie();
               }
-              this.$router.push('/api/setHudong/');
+              window.location.href = 'http://www.51bangma.com/api/setHudong/';
               // if(res.role_type == 1 || res.role_type == 10){
               //   this.$router.push('/bossHome');
               // }else if(res.role_type == 2){

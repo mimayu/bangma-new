@@ -66,17 +66,18 @@
                     res => {
                         console.log('res', res);
                         if(res.success == 1) {
-                                this.$router.push(
-                                {
-                                    //name: 'assignList'
-                                    name: 'api/sendMessage',
-                                    params: {
-                                        'iCustomerId': id,
-                                        'iSalesId': this.iSalesId
-                                    }
-                                }
-                            )
                             Toast(res.msg);
+                            window.location.href = 'http://www.51bangma.com/api/sendMessage/?iCustomerId='+id+'&iSalesId='+this.iSalesId;
+                            //     this.$router.push(
+                            //     {
+                            //         //name: 'assignList'
+                            //         name: 'api/sendMessage',
+                            //         params: {
+                            //             'iCustomerId': id,
+                            //             'iSalesId': this.iSalesId
+                            //         }
+                            //     }
+                            // )
                         }
                     }
                 )
