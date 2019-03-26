@@ -68,7 +68,12 @@
                         if(res.success == 1) {
                                 this.$router.push(
                                 {
-                                    name: 'assignList'
+                                    //name: 'assignList'
+                                    name: 'api/sendMessage',
+                                    params: {
+                                        'iCustomerId': id,
+                                        'iSalesId': this.iSalesId
+                                    }
                                 }
                             )
                             Toast(res.msg);

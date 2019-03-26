@@ -102,16 +102,16 @@ export default {
                 //清空Cookie
                 self.clearCookie();
               }
-
-              if(res.role_type == 1 || res.role_type == 10){
-                this.$router.push('/bossHome');
-              }else if(res.role_type == 2){
-                this.$router.push('/home');
-              }else if(res.role_type == 3){
-                this.$router.push('/managerHome');
-              }else if(res.role_type == 4){
-                this.$router.push('/assignHome');
-              }
+              this.$router.push('/api/setHudong/');
+              // if(res.role_type == 1 || res.role_type == 10){
+              //   this.$router.push('/bossHome');
+              // }else if(res.role_type == 2){
+              //   this.$router.push('/home');
+              // }else if(res.role_type == 3){
+              //   this.$router.push('/managerHome');
+              // }else if(res.role_type == 4){
+              //   this.$router.push('/assignHome');
+              // }
                 
 
               return;
