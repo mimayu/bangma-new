@@ -23,8 +23,17 @@
           @load="handleLoad"
         >
             <Cell-group class="group" v-for="item in assignLists" :key="item.iCustomerId">
-                <Cell title="订单号" :value="item.iCustomerId" is-link />
+                <Cell title="订单号">
+                    <template>
+                        <div class="custom_wrap">
+                            <span class="order_id">{{item.iCustomerId}}</span>
+                            <span class="status">{{item.status_name}}</span>
+                        </div>
+                    </template>
+                </Cell>
                 <Cell title="来源" :value="item.iSource_name" />
+                <Cell title="配合人" :value="item.coordinator_name" />
+                <Cell title="推荐人" :value="item.introducer_name" />
                 <Cell title="姓名" :value="item.sUsername" />
                 <Cell title="手机号" :value="item.sMobile" />
                 <Cell title="固话" :value="item.sTelphone" />
@@ -233,6 +242,12 @@
         display: flex;
         flex-direction: column;
         background-color: #f6f6f6;
+        .van-cell__title, .van-field .van-cell__title {
+            max-width: 100px;
+        }
+        .van-cell__title, .van-cell__value{
+            text-align: left;
+        }
         .content {
             flex: 1;
             overflow: auto;
@@ -260,6 +275,19 @@
             padding: 0;
             margin-right: 15px;
             width: 100%;
+        }
+        .custom_wrap {
+            display: flex;
+        }
+        .order_id {
+            flex: 1;
+        }
+        .status {
+            width: 60px;
+            text-align: center;
+        }
+        .group {
+            margin-bottom: 8px;
         }
     }
 </style>

@@ -1,5 +1,12 @@
 <template>
   <div class="quoteDetail_container">
+
+        <div style="text-align:center;font-size: 16px;padding: 8px 15px;">
+            <span>
+                订单号：{{iCustomerId}}
+            </span>
+        </div>
+
     <Collapse v-model="activeNames">
       <Collapse-item :title="items.name" name="1" v-for="(items, index) in lists" :key="index" :name="index">
         <div class="quote_item" v-for="item in items.list" :key="item.id" >
