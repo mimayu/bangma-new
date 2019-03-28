@@ -281,7 +281,9 @@
           {
               name: name,
               params: {
-                  id: id
+                  id: id,
+                  backurl:'saleWorking',
+                  active:this.active
               }
           }
         )

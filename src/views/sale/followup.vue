@@ -100,9 +100,14 @@
                 level: '', // 客户重要程度
                 action: '', // 操作
                 nextTime: '', //跟进日期 签约等待
-
+                backurl:'',
+                active:'',
 
             };
+        },
+        created() {
+            this.active = this.$route.params.active || 0;
+            this.backurl = this.$route.params.backurl || 0;
         },
         methods: {
             /*
@@ -124,9 +129,9 @@
                             Toast(res.msg);
                             this.$router.push(
                                 {
-                                    name: 'signStatus',
+                                    name: this.backurl,
                                     query: {
-                                        active: params.active
+                                        active: this.active
                                     }
                                 }
                             )

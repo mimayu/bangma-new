@@ -254,7 +254,9 @@ export default {
         {
             name: name,
             params: {
-                id: id
+                id: id,
+                backurl:'detection',
+                active:this.active,
             }
         }
       )
