@@ -33,6 +33,13 @@ const postAddCustomer = (params) => {
 }
 
 /**
+ * 获取客户基础数据
+ */
+const getCustomerAddParams = () => {
+    return request('/api/getCustomerAddParams/');
+}
+
+/**
  * 预览客户详情
  * @param {*} params 
  */
@@ -71,15 +78,25 @@ const getLabourerList = (params) => {
 const getAssignedList = (params) => {
     return request('/api/customer_allocated/', params, 'GET');
 }
+/**
+ * 跟进列表
+ * @param {*} params 
+ */
+const getFollowupList = (params) => {
+    return request('/api/getFollowupList/', params, 'GET');
+}
+
 
 export {
     postAssign,
     postPaigong,
+    getCustomerAddParams,
     postAddCustomer,
     getCustomerInfo,
     getPaigong,
     getAllStaff,
     getAssignList,
     getLabourerList,
-    getAssignedList
+    getAssignedList,
+    getFollowupList
 }

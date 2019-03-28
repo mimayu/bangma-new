@@ -54,7 +54,7 @@ Axios.interceptors.response.use(
             return res.data;
         }
         // todo 弹窗提示等
-        console.log(`request error：${res}`);
+        //console.log(`request error：${res}`);
     },
     error => {
         return {

@@ -3,6 +3,7 @@
     - register // 注册
 - Sale
     - visit  // 上门页面
+    - folowup  // 跟进页面
     - allUser // 全部客户
     - detection  // 基检列表
     - signStatus  // 签约状态
@@ -15,6 +16,7 @@
     - allStall // 全部员工
     - assign // 分配
     - assignList // 分配列表
+    - getFollowupList //跟进列表
 - my
     -profile // 我的页面入口
     -my // 我的信息

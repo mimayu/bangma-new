@@ -300,6 +300,9 @@
                      case 10:
                         window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/allUser/';
                         break; 
+                     case 11:
+                        this.handleGo(id, type);
+                        break;
                     default:
                         break;
                 }
@@ -335,6 +338,9 @@
                 }
                 if(type == 9) {
                     name = 'bossFukuanAdd' 
+                }
+                 if(type == 11) {
+                    name = 'followup' 
                 }
                 this.$router.push(
                     {

@@ -4,12 +4,12 @@
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
             <Cell :title="status=='基检确认'?'预约时间':'再约时间'" is-link :value="time" @click="choseTime" v-if="status !== '基检取消'"/>
         </Cell-group>
-        <Cell-group v-if="status === '基检取消'">
+        <Cell-group>
             <Field
                 v-model="message"
-                label="取消理由"
+                :label="status == '基检取消'?'取消理由':'补充说明'"
                 type="textarea"
-                placeholder="请输入取消理由"
+                :placeholder="status == '基检取消'?'请输入取消理由':'请输入补充说明'"
                 rows="2"
                 autosize
             />
@@ -110,6 +110,7 @@
                     'iCustomerId': iCustomerId
                 }
                 if(this.status == '基检确认') {
+                   params.followMsg = this.message; 
                    params.dateYuyue = this.time;
                    params.iStatus = 2;
                    params.active = 2;
@@ -120,6 +121,7 @@
                    params.active = 3;
                 }
                 if(this.status == '基检再约') {
+                   params.followMsg = this.message;
                    params.dateZaiyue = this.time;
                    params.iStatus = 103;
                    params.active = 1;

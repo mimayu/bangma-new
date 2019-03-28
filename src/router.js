@@ -37,6 +37,11 @@ export default new Router({
       name: 'visit',
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
     },
+    {
+      path: '/followup',
+      name: 'followup',
+      component: () => import(/* webpackChunkName: "followup" */ './views/sale/followup')
+    },
     /*
     * sale 基检状态 - > 预约
     */
@@ -279,6 +284,14 @@ export default new Router({
     path: '/previewCustom',
     name: 'previewCustom',
     component: () => import(/* webpackChunkName: "assign" */ './views/assign/previewCustom')
+  },
+    /** 
+    * followuplist - > 预览客户
+    */
+   {
+    path: '/followupList',
+    name: 'followupList',
+    component: () => import(/* webpackChunkName: "assign" */ './views/assign/followupList')
   },
     /** 
     * assign - > 员工列表

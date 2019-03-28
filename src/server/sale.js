@@ -17,6 +17,14 @@ const postShangmenAdd = (params) => {
 }
 
 /**
+ * 跟进
+ * @param {*} params 
+ */
+const postFollowupAdd = (params) => {
+    return request('/api/followupadd/', params);
+}
+
+/**
  * 预约操作
  * @param {*} params 
  */
@@ -99,6 +107,7 @@ const postCancel = (params) => {
 export {
     checkRoleType,
     postShangmenAdd,
+    postFollowupAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,

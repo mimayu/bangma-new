@@ -201,6 +201,9 @@ export default {
         case 5:
             this.handleGo(id, type);
             break;
+        case 11:
+          this.handleGo(id, type);
+          break;
         default:
           break;
       }
@@ -243,6 +246,10 @@ export default {
       if(type == 5) {
           name = 'quotationCancel'; 
       }
+      if(type == 11) {
+          name = 'followup'; 
+      }
+      
       this.$router.push(
         {
             name: name,

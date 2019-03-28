@@ -21,6 +21,11 @@
                 autosize
             />
         </Cell-group>
+        <Cell-group>
+            <Field
+                label="户型图、现场勘查图"
+            />
+        </Cell-group>
         <div class="am-image-picker-list">
             <div class="am-flexbox-item-contain" v-for="item in imgArray" :key="item.id">
                 <div class="am-flexbox-item">
@@ -140,7 +145,12 @@
                     'A', 'B', 'C', 'D'
                 ],
                 customActions: [
-                    '客户需要商量考虑', '已加微信，继续跟进', '预留电话，已约定下次联系时间', '时间安排不过来，不做了', '价格太贵，不做了'
+                    '',
+                    '客户需要商量考虑。', 
+                    '已加微信，继续跟进。', 
+                    '预留电话，已约定下次联系时间。', 
+                    '时间安排不过来，不做了。', 
+                    '价格太贵，不做了。'
                 ],
                 status: '签约等待', // 状态
                 time: '', // 时间

@@ -238,6 +238,9 @@
           case 9:
             this.handleGo(id, type);
             break;
+          case 11:
+            this.handleGo(id, type);
+            break;
           default:
             break;
         }
@@ -270,6 +273,9 @@
         }
         if(type == 9) {
           name = 'bossFukuanAdd' 
+        }
+        if(type == 11) {
+            name = 'followup'; 
         }
         this.$router.push(
           {

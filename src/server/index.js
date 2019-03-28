@@ -1,5 +1,6 @@
 import {
     postShangmenAdd,
+    postFollowupAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
@@ -28,7 +29,8 @@ import {
     getAllStaff,
     getAssignList,
     getLabourerList,
-    getAssignedList
+    getAssignedList,
+    getFollowupList
 } from './assign'
 
 import {
@@ -59,6 +61,7 @@ import {
 export {
     checkRoleType,
     postShangmenAdd,
+    postFollowupAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
@@ -97,5 +100,6 @@ export {
     salesSortc,
     datastatistical,
     getLabourerList,
-    getAssignedList
+    getAssignedList,
+    getFollowupList
 }
