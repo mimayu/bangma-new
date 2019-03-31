@@ -14,6 +14,11 @@
           <span class="area">{{item.quantity}}{{item.unit}}</span>
           <span class="price">￥{{item.total}}</span>
         </div>
+        <div class="quote_item">
+          <p></p>
+          <span class="area"></span>
+          <span class="price">小计：￥{{items.total}}</span>
+        </div>
       </Collapse-item>
     </Collapse>
     <section class="quote_toolbar">
