@@ -61,7 +61,7 @@
                 minHour: 10,
                 maxHour: 20,
                 minDate: new Date(),
-                maxDate: new Date(2019, 10, 1),
+                maxDate: new Date(),
                 currentDate: new Date(),
                 show: false,
                 nextShow: false, //跟进日期 签约等待
@@ -74,17 +74,10 @@
 
             };
         },
-        mounted () {
-            let nowDate = new Date();
-            let year = nowDate.getFullYear();
-            let min_month = nowDate.getMonth();
-            let max_month = nowDate.getMonth() + 2;
-            let day = nowDate.getDate();
-            this.minDate = new Date(year + ', ' + min_month + ', ' + day); // 向前推迟一周的时间点
-            this.maxDate = new Date(year + ', ' + max_month + ', ' + day); // 当前的时间点
-        },
         created() {
             this.active = this.$route.params.active || 0;
+            this.minDate.setMonth(this.minDate.getMonth()-1);
+            this.maxDate.setMonth(this.minDate.getMonth()+2);
         },
         methods: {
             /*
