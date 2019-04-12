@@ -24,6 +24,7 @@
                 type="datetime"
                 :min-date="minDate"
                 :max-date="maxDate"
+                v-model="currentDate"
             />
         </Popup>
 
@@ -57,6 +58,7 @@
                 maxHour: 20,
                 minDate: new Date(),
                 maxDate: new Date(),
+                currentDate: new Date(),
                 orderActions: [
                     '基检确认', '基检取消', '基检再约'
                 ],
@@ -72,6 +74,7 @@
         },
         methods: {
             setMaxDate(){
+                this.minDate.setMonth(this.minDate.getMonth()-1);
                 this.maxDate.setMonth(this.minDate.getMonth()+3);
             },
             /*

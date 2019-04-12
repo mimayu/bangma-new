@@ -16,6 +16,7 @@
                 type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
+                v-model="currentDate"
             />
         </Popup>
         <Popup v-model="endShow" position="bottom">
@@ -25,6 +26,7 @@
                 type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
+                v-model="currentDate"
             />
         </Popup>
     </div>
@@ -51,7 +53,7 @@
                 minHour: 10,
                 maxHour: 20,
                 minDate: new Date(),
-                maxDate: new Date(2019, 10, 1),
+                maxDate: new Date(),
                 currentDate: new Date(),
                 show: false, // 开工日期 时间显示
                 endShow: false, // 预计完工日期 时间显示
@@ -59,6 +61,15 @@
                 endTime: '', // 预计完工日期
                 money: '', // 首付
             };
+        },
+        mounted () {
+            let nowDate = new Date();
+            let year = nowDate.getFullYear();
+            let min_month = nowDate.getMonth();
+            let max_month = nowDate.getMonth() + 2;
+            let day = nowDate.getDate();
+            this.minDate = new Date(year + ', ' + min_month + ', ' + day); // 向前推迟一周的时间点
+            this.maxDate = new Date(year + ', ' + max_month + ', ' + day); // 当前的时间点
         },
         methods: {
             Confirm() {

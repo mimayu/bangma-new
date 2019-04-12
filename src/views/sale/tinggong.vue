@@ -33,6 +33,7 @@
                 type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
+                v-model="currentDate"
             />
         </Popup>
     </div>
@@ -72,6 +73,15 @@
                 active:'',
 
             };
+        },
+        mounted () {
+            let nowDate = new Date();
+            let year = nowDate.getFullYear();
+            let min_month = nowDate.getMonth();
+            let max_month = nowDate.getMonth() + 2;
+            let day = nowDate.getDate();
+            this.minDate = new Date(year + ', ' + min_month + ', ' + day); // 向前推迟一周的时间点
+            this.maxDate = new Date(year + ', ' + max_month + ', ' + day); // 当前的时间点
         },
         created() {
             this.active = this.$route.params.active || 0;
