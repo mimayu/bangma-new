@@ -15,6 +15,7 @@
                 type="date"
                 :min-date="minDate"
                 :max-date="maxDate"
+                v-model="currentDate"
             />
         </Popup>
     </div>
@@ -41,12 +42,21 @@
                 minHour: 10,
                 maxHour: 20,
                 minDate: new Date(),
-                maxDate: new Date(2019, 10, 1),
+                maxDate: new Date(),
                 currentDate: new Date(),
                 show: false, // 收取尾款日期 时间显示
                 startTime: '', // 收取尾款日期
                 money: '', // 收取尾款金额
             };
+        },
+        mounted () {
+            let nowDate = new Date();
+            let year = nowDate.getFullYear();
+            let min_month = nowDate.getMonth();
+            let max_month = nowDate.getMonth() + 2;
+            let day = nowDate.getDate();
+            this.minDate = new Date(year + ', ' + min_month + ', ' + day); // 向前推迟一周的时间点
+            this.maxDate = new Date(year + ', ' + max_month + ', ' + day); // 当前的时间点
         },
         methods: {
             Confirm() {
