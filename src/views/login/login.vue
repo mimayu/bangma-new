@@ -20,7 +20,7 @@
       <Button type="primary" class="enter" @click="handleSubmit" >登录</Button>
     </div>
     <div class="do-register">
-      <Button type="primary" class="register" @click="handleRegister" >立即注册使用</Button>
+      <Button type="primary" class="register" @click="handleRegister" >公司立即申请使用</Button>
     </div>
   </div>
 </template>

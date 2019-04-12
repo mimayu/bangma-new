@@ -1,12 +1,12 @@
 <template>
   <div class="register_container">
     <Cell-group>
-      <Field v-model="mobile" placeholder="请输入用户名" />
-      <Field v-model="name" placeholder="请输入手机号" />
-      <Field v-model="contact" placeholder="请输入公司名称" />
+      <Field v-model="mobile" placeholder="请输入手机号" />
+      <Field v-model="name" placeholder="请输入公司名称" />
+      <Field v-model="contact" placeholder="请输入联系人" />
     </Cell-group>
     <div class="do-register">
-      <Button type="primary" class="enter" @click="handleSubmit" >立即注册使用</Button>
+      <Button type="primary" class="enter" @click="handleSubmit" >公司立即申请使用</Button>
     </div>
   </div>
 </template>
