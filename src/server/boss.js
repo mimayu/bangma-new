@@ -13,6 +13,13 @@ const checkRoleType = () => {
 const postAddWork = (params) => {
     return request('/api/kaigongAdd/', params);
 }
+/**
+ * 增加复工
+ * @param {*} params 
+ */
+const postAddFugong = (params) => {
+    return request('/api/fugongAdd/', params);
+}
 
 /**
  * 增加完工
@@ -88,6 +95,7 @@ const datastatistical = (params) => {
 export {
     checkRoleType,
     postAddWork,
+    postAddFugong,
     postAddWangong,
     postAddFukuan,
     getProgress,

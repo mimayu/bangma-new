@@ -1,46 +1,14 @@
 <template>
-  <div class="saleWorking_container">
+  <div class="saleFinish_container">
     <Tabs v-model="active">
-      <Tab title="派工完成">
+      <Tab title="完工验收">
         <List
-          v-model="loading_paigong"
-          :finished="finished_paigong"
-          :finished-text="finished_paigong_text"
-          @load="handlePaigongLoad"
+          v-model="loading_yanshou"
+          :finished="finished_yanshou"
+          :finished-text="finished_yanshou_text"
+          @load="handleYanshouLoad"
         >
-          <Cell-group class="group" v-for="item in data_paigong" :key="item.iCustomerId">
-            <Cell title="订单号">
-                <template>
-                    <div class="custom_wrap">
-                        <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">{{item.iStatus_name}}</span>
-                    </div>
-                </template>
-            </Cell>
-            <Cell title="姓名" :value="item.sUsername" />
-            <Cell title="手机号" :value="item.sMobile" />
-            <Cell title="地址" :value="item.sAddress" />
-            <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="签约金额" :value="item.orderFee || '-'" />
-            <Cell title="签约定金" :value="item.orderDingjin || '-'" />
-            <Cell title="合同首付款" :value="item.orderSoufu || '-'" />
-            <Cell title="派工工长" :value="item.iForeman_name || '-'" />
-            <Cell title="签约日期" :value="item.dateOrder || '-'" />
-            <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
-            <div class="van-cell btn_wrap" v-if="item.actions">
-              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
-            </div>
-          </Cell-group>
-        </List>
-      </Tab>
-      <Tab title="开工进场">
-        <List
-          v-model="loading_kaigong"
-          :finished="finished_kaigong"
-          :finished-text="finished_kaigong_text"
-          @load="handleKaigongLoad"
-        >
-          <Cell-group class="group" v-for="item in data_kaigong" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_yanshou" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
@@ -59,26 +27,27 @@
             <Cell title="派工工长" :value="item.iForeman_name || '-'" />
             <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <Cell title="开工日期" :value="item.dateKaigong || '-'" />
-            <Cell title="预计完工日期" :value="item.dateYujiWangong || '-'" />
+            <Cell title="完工日期" :value="item.dateWangong || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
           </Cell-group>
         </List>
       </Tab>
-      <Tab title="施工暂停">
+
+      <Tab title="完工收款">
         <List
-          v-model="loading_tinggong"
-          :finished="finished_tinggong"
-          finished-text="没有更多了"
-          @load="handleTinggongLoad"
+          v-model="loading_wancheng"
+          :finished="finished_wancheng"
+          :finished-text="finished_wancheng_text"
+          @load="handleWanchengLoad"
         >
-          <Cell-group class="group" v-for="item in data_tinggong" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_wancheng" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">施工暂停</span>
+                        <span class="status">{{item.iStatus_name}}</span>
                     </div>
                 </template>
             </Cell>
@@ -92,9 +61,9 @@
             <Cell title="派工工长" :value="item.iForeman_name || '-'" />
             <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <Cell title="开工日期" :value="item.dateKaigong || '-'" />
-            <Cell title="停工日期" :value="item.tinggongDate || '-'" />
-            <Cell title="停工原因" :value="item.tTinggongContent || '-'" />
-            <Cell title="预计再次开工日期" :value="item.yujizaiciKaigongDate || '-'" />
+            <Cell title="完工日期" :value="item.dateWangong || '-'" />
+            <Cell title="尾款金额" :value="item.orderWeikuan || '-'" />
+            <Cell title="尾款日期" :value="item.dateWeikuan || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -126,25 +95,20 @@
         active: 0,
         data_paigong: [],
         data_kaigong: [],
-        data_tinggong: [],
-
+        data_yanshou: [],
+        data_wancheng: [],
         modeShow: false, // 选择模式
         actions: [],
         actionids:[],
         currentId: '', // 选择的id
-        loading_paigong: false, // 派工完成
-        finished_paigong: false, // 派工完成
-        finished_paigong_text: '没有更多了',
-        page_paigong: 1, // 派工完成
-        loading_kaigong: false, // 开工进场 
-        finished_kaigong: false, // 开工进场 
-        finished_kaigong_text: '没有更多了', // 开工进场 
-        page_kaigong: 1, // 开工进场 
-
-        loading_tinggong: false, // 施工暂停 
-        finished_tinggong: false, // 施工暂停 
-        finished_tinggong_text: '没有更多了', // 施工暂停 
-        page_tinggong: 1, // 施工暂停 
+        loading_yanshou: false, // 完工验收 
+        finished_yanshou: false, // 完工验收 
+        finished_yanshou_text: '没有更多了', // 完工验收 
+        page_yanshou: 1, // 完工验收 
+        loading_wancheng: false, // 完工收款 
+        finished_wancheng: false, // 完工收款 
+        finished_wancheng_text: '没有更多了', // 完工收款 
+        page_wancheng: 1, // 完工收款 
       }
     },
     components: {
@@ -173,6 +137,7 @@
       * 8 -> 完工
       */
       handleClick(type, id) {
+        console.log(type);
         switch(type) {
           case 0:
             this.handleGo(id, type);
@@ -207,9 +172,6 @@
           case 12:
             this.handleGo(id, type);
             break;  
-          case 13:
-            this.handleGo(id, type);
-            break;           
           default:
             break;
         }
@@ -249,16 +211,13 @@
         if(type == 12) {
             name = 'tinggong';
         }
-        if(type == 13) {
-            name = 'bossFugongAdd';
-        }
         
         this.$router.push(
           {
               name: name,
               params: {
                   id: id,
-                  backurl:'saleWorking',
+                  backurl:'saleFinish',
                   active:this.active
               }
           }
@@ -309,34 +268,24 @@
           )
       },
       /*
-      * 加载派工完成数据
+      * 加载完工验收数据
       */
-      handlePaigongLoad() {
+      handleYanshouLoad() {
         let params = {
-          status: 6,
-          page: this.page_paigong,
+          status: 8,
+          page: this.page_yanshou,
         }
-        this.getInfo(params, 'paigong');
+        this.getInfo(params, 'yanshou');
       },
       /*
-      * 加载开工进场数据
+      * 加载合同取消数据
       */
-      handleKaigongLoad() {
+      handleWanchengLoad() {
         let params = {
-          status: 7,
-          page: this.page_kaigong
+          status: 9,
+          page: this.page_wancheng,
         }
-        this.getInfo(params, 'kaigong');
-      },
-      /*
-      * 加载施工暂停数据
-      */
-      handleTinggongLoad() {
-        let params = {
-          status: 104,
-          page: this.page_tinggong,
-        }
-        this.getInfo(params, 'tinggong');
+        this.getInfo(params, 'wancheng');
       },
       /*
       * 获取数据
@@ -371,7 +320,7 @@
 </script>
 
 <style lang="scss">
-    .saleWorking_container {
+    .saleFinish_container {
         background-color: #f6f6f6;
         .van-cell__title, .van-field .van-cell__title {
             max-width: 100px;

@@ -1,11 +1,8 @@
 <template>
-    <div class="bossFinishAdd_container">
+    <div class="bossFugongAdd_container">
         <Cell-group>
-            <Cell title="完工日期" is-link :value="startTime" @click="choseTime" />
-            <Field
-                v-model="money"
-                label="尾款金额"
-            />
+            <Cell title="实际再次开工日期" is-link :value="startTime" @click="choseTime" />
+            <Cell title="预计完工日期" is-link :value="endTime" @click="choseEndTime" />
         </Cell-group>
         <Button type="primary" size="large" @click="Confirm">保存</Button>
         <Popup v-model="show" position="bottom">
@@ -17,16 +14,25 @@
                 :max-date="maxDate"
             />
         </Popup>
+        <Popup v-model="endShow" position="bottom">
+            <datetime-picker
+                @confirm="handleEndComfirm"
+                @cancel="handleEndCancel"
+                type="date"
+                :min-date="minDate"
+                :max-date="maxDate"
+            />
+        </Popup>
     </div>
 </template>
 
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker, Button, Field, Toast } from 'vant';
-    import { postAddFukuan } from '@/server';
+    import { postAddFugong } from '@/server';
     import { timetrans } from '@/utils/time';
 
     export default {
-        name: 'bossFukuanAdd',
+        name: 'bossFugongAdd',
         components: {
             Cell,
             CellGroup,
@@ -43,23 +49,23 @@
                 minDate: new Date(),
                 maxDate: new Date(2019, 10, 1),
                 currentDate: new Date(),
-                show: false, // 收取尾款日期 时间显示
-                startTime: '', // 收取尾款日期
-                money: '', // 收取尾款金额
+                show: false, // 开工日期 时间显示
+                endShow: false, // 预计完工日期 时间显示
+                startTime: '', // 开工日期
+                endTime: '', // 预计完工日期
             };
         },
         methods: {
             Confirm() {
-                let iCustomerId = this.$route.params.id || 0;
+                let iCustomerId = this.$route.params.id || 1;
                 let from = this.$route.params.from || '';
-                let name = from == 'boss' ? 'bossFinish' : 'saleFinish';
-                let active = from == 'boss' ? '1' : '1';
+                let name = from == 'boss' ? 'bossWorking' : 'saleWorking';
                 let params = {
                     'iCustomerId': iCustomerId,
-                    'dateWeikuan': this.startTime,
-                    'orderWeikuan': this.money
+                    'shijizaiciKaigongDate': this.startTime,
+                    'dateYujiWangong': this.endTime,
                 }
-                postAddFukuan(params).then(
+                postAddFugong(params).then(
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
@@ -67,7 +73,7 @@
                                 {
                                     name: name,
                                     query: {
-                                        active: active
+                                        active: 1
                                     }
                                 }
                             )
@@ -87,13 +93,24 @@
             },
             handleCancel(e) {
                 this.show = false;
+            },
+            choseEndTime() {
+                this.endShow = true;
+            },
+            handleEndComfirm(value) {
+                let data = timetrans(value, 1);
+                this.endTime = data;
+                this.endShow = false;
+            },
+            handleEndCancel(e) {
+                this.endShow = false;
             }
         }
     }
 </script>
 
 <style lang="scss">
-    .bossFinishAdd_container {
+    .bossFugongAdd_container {
         .van-cell__title, .van-field .van-cell__title {
             max-width: 100px;
         }

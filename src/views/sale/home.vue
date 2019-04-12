@@ -21,14 +21,20 @@
         <img class="all_user" src="../../assets/img/6.png">
         签约成功
       </router-link>
-      <router-link :to="{path:'/signStatus', query: {active: 2}}" class="alink">
+      <router-link to="saleFinish" class="alink">
         <img class="all_user" src="../../assets/img/88.png">
-        签约失败
+        完工
       </router-link>
-      <router-link :to="{path:'/signStatus', query: {active: 3}}" class="alink">
+      <router-link to="saleLoss" class="alink">
         <img class="all_user" src="../../assets/img/7.png">
-        合同取消
+        流失
       </router-link>
+      
+      <a :href="'http://www.51bangma.com/anli/browse/'" class="alink">
+        <img class="all_user" src="../../assets/img/service_icon01.png">
+        案例
+      </a>
+
     </div>
     <footerNav></footerNav>
   </div>

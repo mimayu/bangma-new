@@ -47,8 +47,8 @@
             Confirm() {
                 let iCustomerId = this.$route.params.id || 1;
                 let from = this.$route.params.from || '';
-                let name = from == 'boss' ? 'bossFinish' : 'saleWorking';
-                let active = from == 'boss' ? '0' : '2';
+                let name = from == 'boss' ? 'bossFinish' : 'saleFinish';
+                let active = from == 'boss' ? '0' : '0';
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateWangong': this.startTime

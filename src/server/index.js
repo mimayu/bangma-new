@@ -1,6 +1,7 @@
 import {
     postShangmenAdd,
     postFollowupAdd,
+    postTinggongAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
@@ -46,6 +47,7 @@ import {
 
 import {
     postAddWork,
+    postAddFugong,
     postAddWangong,
     postAddFukuan,
     getProgress,
@@ -62,6 +64,7 @@ export {
     checkRoleType,
     postShangmenAdd,
     postFollowupAdd,
+    postTinggongAdd,
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
@@ -90,6 +93,7 @@ export {
     salesSort,
     getCalendar,
     postAddWork,
+    postAddFugong,
     postAddWangong,
     postAddFukuan,
     getCustomerNew,

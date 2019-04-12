@@ -66,6 +66,43 @@
           </Cell-group>
         </List>
       </Tab>
+
+       <Tab title="施工暂停">
+        <List
+          v-model="loading_tinggong"
+          :finished="finished_tinggong"
+          finished-text="没有更多了"
+          @load="handleTinggongLoad"
+        >
+          <Cell-group class="group" v-for="item in data_tinggong" :key="item.iCustomerId">
+            <Cell title="订单号">
+                <template>
+                    <div class="custom_wrap">
+                        <span class="order_id">{{item.iCustomerId}}</span>
+                        <span class="status">施工暂停</span>
+                    </div>
+                </template>
+            </Cell>
+            <Cell title="姓名" :value="item.sUsername" />
+            <Cell title="手机号" :value="item.sMobile" />
+            <Cell title="地址" :value="item.sAddress" />
+            <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="签约金额" :value="item.orderFee || '-'" />
+            <Cell title="签约定金" :value="item.orderDingjin || '-'" />
+            <Cell title="合同首付款" :value="item.orderSoufu || '-'" />
+            <Cell title="派工工长" :value="item.iForeman_name || '-'" />
+            <Cell title="签约日期" :value="item.dateOrder || '-'" />
+            <Cell title="开工日期" :value="item.dateKaigong || '-'" />
+            <Cell title="停工日期" :value="item.tinggongDate || '-'" />
+            <Cell title="停工原因" :value="item.tTinggongContent || '-'" />
+            <Cell title="预计再次开工日期" :value="item.yujizaiciKaigongDate || '-'" />
+            <div class="van-cell btn_wrap" v-if="item.actions">
+              <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+            </div>
+          </Cell-group>
+        </List>
+      </Tab>
+
         </Tabs>
 
         <Actionsheet
@@ -107,13 +144,19 @@
                 active: 0,
                 data_paigong: [],
                 data_kaigong: [],
+                data_tinggong: [],
 
                 loading_paigong: false, // 派工完成
                 finished_paigong: false, // 派工完成
                 page_paigong: 1, // 派工完成
+                
                 loading_kaigong: false, // 开工实施 
                 finished_kaigong: false, // 开工实施 
                 page_kaigong: 1, // 开工实施 
+
+                loading_tinggong: false, // 开工实施 
+                finished_tinggong: false, // 开工实施 
+                page_tinggong: 1, // 开工实施 
 
 
                 modeShow: false, // 报价显示
@@ -123,6 +166,7 @@
             };
         },
         created() {
+            this.active = this.$route.query.active || 0;
             this.getBaojiaMode();
         },
         methods: {
@@ -155,6 +199,12 @@
                     case 10:
                         window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/bossWorking/';
                         break;  
+                    case 12:
+                        this.handleGo(id, type);
+                        break;    
+                    case 13:
+                        this.handleGo(id, type);
+                        break; 
                     default:
                         break;
                 }
@@ -235,6 +285,12 @@
                 if(type == 9) {
                     name = 'bossFukuanAdd' 
                 }
+                if(type == 12) {
+                    name = 'tinggong';
+                }
+                if(type == 13) {
+                    name = 'bossFugongAdd';
+                }
                 this.$router.push(
                     {
                         name: name,
@@ -264,6 +320,16 @@
                 page: this.page_kaigong
                 }
                 this.getInfo(params, 'kaigong');
+            },
+            /*
+            * 加载完工数据
+            */
+            handleTinggongLoad() {
+                let params = {
+                status: 104,
+                page: this.page_tinggong
+                }
+                this.getInfo(params, 'tinggong');
             },
             /*
             * 获取数据

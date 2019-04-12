@@ -1,19 +1,19 @@
 <template>
-  <div class="sign_status_cintainer">
+  <div class="sale_loss_cintainer">
     <Tabs v-model="active">
-      <Tab title="签约等待">
+      <Tab title="签约失败">
         <List
-          v-model="loading_under"
-          :finished="finished_under"
-          :finished-text="finished_under_text"
-          @load="handleUnderLoad"
+          v-model="loading_cancel"
+          :finished="finished_cancel"
+          :finished-text="finished_cancel_text"
+          @load="handleCancelLoad"
         >
-          <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_cancel" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">签约等待</span>
+                        <span class="status">签约失败</span>
                     </div>
                 </template>
             </Cell>
@@ -21,26 +21,27 @@
             <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="上门日期" :value="item.dateShangmen || '-'" />
+            <Cell title="接单日期" :value="item.tOrderDate || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
           </Cell-group>
         </List>
       </Tab>
-      <Tab title="签约成功">
+
+      <Tab title="合同取消">
         <List
-          v-model="loading_success"
-          :finished="finished_success"
-          :finished-text="finished_success_text"
-          @load="handleSuccessLoad"
+          v-model="loading_quxiao"
+          :finished="finished_quxiao"
+          :finished-text="finished_quxiao_text"
+          @load="handleQuxiaoLoad"
         >
-          <Cell-group class="group" v-for="item in data_success" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_quxiao" :key="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
                         <span class="order_id">{{item.iCustomerId}}</span>
-                        <span class="status">签约成功</span>
+                        <span class="status">合同取消</span>
                     </div>
                 </template>
             </Cell>
@@ -48,11 +49,7 @@
             <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="签约日期" :value="item.dateOrder || '-'" />
-            <Cell title="签约金额" :value="item.orderFee || '-'" />
-            <Cell title="合同定金" :value="item.orderDingjin || '-'" />
-            <Cell title="留言" :value="item.shangmenContent || '-'" />
-            <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
+            <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -78,26 +75,25 @@
   import footerNav from '../../components/footerNav' // 引入login.vue组件
 
   export default {
-    name: 'signStatus',
+    name: 'saleLoss',
     data () {
       return {
         active: 0,
-        data_under: [],
-        data_success: [],
-
+        data_cancel: [],
+        data_quxiao: [],
         modeShow: false, // 选择模式
         actions: [],
         actionids:[],
         currentId: '', // 选择的id
-        loading_under: false, // 签约等待
-        finished_under: false, // 签约等待
-        finished_under_text: '没有更多了',
-        page_under: 1, // 签约等待
-        loading_success: false, // 签约成功 
-        finished_success: false, // 签约成功 
-        finished_success_text: '没有更多了', // 签约成功 
-        page_success: 1, // 签约成功 
-
+        
+        loading_cancel: false, // 签约失败 
+        finished_cancel: false, // 签约失败 
+        finished_cancel_text: '没有更多了', // 签约成功 
+        page_cancel: 1, // 签约失败 
+        loading_quxiao: false, // 合同取消 
+        finished_quxiao: false, // 合同取消 
+        finished_quxiao_text: '没有更多了', // 合同取消 
+        page_quxiao: 1, // 合同取消 
       }
     },
     components: {
@@ -233,24 +229,24 @@
           )
       },
       /*
-      * 加载等待数据
+      * 加载失败数据
       */
-      handleUnderLoad() {
+      handleCancelLoad() {
         let params = {
-          status: 4,
-          page: this.page_under,
+          status: 101,
+          page: this.page_cancel,
         }
-        this.getInfo(params, 'under');
+        this.getInfo(params, 'cancel');
       },
       /*
-      * 加载成功数据
+      * 加载合同取消数据
       */
-      handleSuccessLoad() {
+      handleQuxiaoLoad() {
         let params = {
-          status: 5,
-          page: this.page_success
+          status: 102,
+          page: this.page_quxiao,
         }
-        this.getInfo(params, 'success');
+        this.getInfo(params, 'quxiao');
       },
       /*
       * 获取数据
@@ -285,7 +281,7 @@
 </script>
 
 <style lang="scss">
-  .sign_status_cintainer {
+  .sale_loss_cintainer {
     position: absolute;
     top: 0;
     left: 0;

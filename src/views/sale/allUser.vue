@@ -114,10 +114,11 @@
                     '审核完成',
                     '已结算',
                     '签约失败',
-                    '合同取消'
+                    '合同取消',
+                    '施工暂停'
                 ],
                 typeCode: [
-                    '', '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102'
+                    '', '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102', '104'
                 ],
                 customerLists: [],
                 value: '', // 搜索
@@ -303,6 +304,9 @@
                      case 11:
                         this.handleGo(id, type);
                         break;
+                     case 12:
+                        this.handleGo(id, type);
+                        break;   
                     default:
                         break;
                 }
@@ -339,8 +343,14 @@
                 if(type == 9) {
                     name = 'bossFukuanAdd' 
                 }
-                 if(type == 11) {
+                if(type == 11) {
                     name = 'followup' 
+                }
+                if(type == 12) {
+                    name = 'tinggong' 
+                }
+                if(type == 13) {
+                    name = 'bossFugongAdd' 
                 }
                 this.$router.push(
                     {

@@ -42,6 +42,11 @@ export default new Router({
       name: 'followup',
       component: () => import(/* webpackChunkName: "followup" */ './views/sale/followup')
     },
+    {
+      path: '/tinggong',
+      name: 'tinggong',
+      component: () => import(/* webpackChunkName: "tinggong" */ './views/sale/tinggong')
+    },
     /*
     * sale 基检状态 - > 预约
     */
@@ -68,10 +73,34 @@ export default new Router({
       name: 'saleWorking',
       component: () => import(/* webpackChunkName: "saleWorking" */ './views/sale/saleWorking')
     },
+    /** 
+    * sale - > 签约
+    */
     {
       path: '/signStatus',
       name: 'signStatus',
       component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus')
+    },
+    /** 
+    * sale - > 完工 
+    */
+    {
+      path: '/saleFinish',
+      name: 'saleFinish',
+      component: () => import(/* webpackChunkName: "saleFinish" */ './views/sale/saleFinish')
+    },
+    /** 
+    * sale - > 流失 
+    */
+   {
+    path: '/saleLoss',
+    name: 'saleLoss',
+    component: () => import(/* webpackChunkName: "saleLoss" */ './views/sale/saleLoss')
+  },
+    {
+      path: '/tinggonglist',
+      name: 'tinggonglist',
+      component: () => import(/* webpackChunkName: "tinggonglist" */ './views/sale/tinggonglist')
     },
     {
       path: '/record',
@@ -236,6 +265,14 @@ export default new Router({
       path: '/bossWorkingAdd',
       name: 'bossWorkingAdd',
       component: () => import(/* webpackChunkName: "bossWorkingAdd" */ './views/boss/bossWorkingAdd.vue')
+    },
+    /** 
+    * boss - > 增加复工
+    */
+    {
+      path: '/bossFugongAdd',
+      name: 'bossFugongAdd',
+      component: () => import(/* webpackChunkName: "bossFugongAdd" */ './views/boss/bossFugongAdd.vue')
     },
     /** 
     * boss - > 增加完工
