@@ -2,7 +2,7 @@
   <div id="quote" class="quote_container">
     <ul class="quote_tabs">
       <li class="quote_item" :class="{'quote_item_active': tabActive === index}" v-for="(item, index) in tabs" @click="handleClickTab(item, index)">
-        {{index>0?'增项报价'+index:'报价'}}
+        {{index>0?'增项报价'+item:'报价'}}
       </li>
       <li class="quote_item_add" @click="handleAddQuote">
         <span>+</span>
