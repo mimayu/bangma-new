@@ -64,7 +64,7 @@
         },
         created() {
             this.minDate.setMonth(this.minDate.getMonth()-1);
-            this.maxDate.setMonth(this.minDate.getMonth()+2);
+            this.maxDate.setMonth(this.minDate.getMonth()+7);
         },
         methods: {
             Confirm() {

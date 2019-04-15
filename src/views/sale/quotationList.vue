@@ -2,7 +2,7 @@
   <div id="quote" class="quote_container">
     <ul class="quote_tabs">
       <li class="quote_item" :class="{'quote_item_active': tabActive === index}" v-for="(item, index) in tabs" @click="handleClickTab(item, index)">
-        厨卫报价
+        {{index>0?'增项报价'+index:'报价'}}
       </li>
       <li class="quote_item_add" @click="handleAddQuote">
         <span>+</span>
@@ -254,7 +254,7 @@
       */
       handleClickTab(item, index) {
         this.tabActive = index;
-        this.iCustomerId = item.iCustomerId;
+        this.iCustomerId = item;
         this.reset();
         this.getQuote(false);
       },
@@ -311,7 +311,20 @@
             if(res.success == 1) {
               this.goods = Object.values(res.type_arr);
               this.details = Object.values(res.result);
-              this.tabs = this.tabs.concat(res.zengxiang_arr);
+              var flag;
+              for(let index in res.zengxiang_arr) {
+                flag = false;
+                for(var j=0;j<this.tabs.length;j++){
+          　　　　　　if(res.zengxiang_arr[index]['iCustomerId'] == this.tabs[j]){
+                      flag = true;
+  　　　　　　　　       break;
+          　　　　　　} 
+                  } 
+            　　　 if(!flag){
+            　　　　　　this.tabs.push(res.zengxiang_arr[index]['iCustomerId']);
+            　　　 }
+              }
+              //this.tabs = this.tabs.concat(res.zengxiang_arr);
               this.$nextTick(() => {
                 isInit && this._initScroll();
                 this._calculateHeight();
