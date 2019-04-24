@@ -173,7 +173,7 @@ export default {
   created() {
     this.active = this.$route.query.active || this.$store.getters.getActive;
     let recruitScrollY = this.$store.state.recruitScrollY
-    console.log(recruitScrollY);
+    //console.log(recruitScrollY);
     window.scroll(0, recruitScrollY)
     this.getBaojiaMode();
 
