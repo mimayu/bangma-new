@@ -122,8 +122,8 @@
       step: {type: Number, default:1},
     },   
     created() {
-      this.iCustomerId = this.$route.params.id || 0;
-      this.iMode = this.$route.params.mode || 1;
+      this.iCustomerId = this.$route.params.id || this.$route.query.id;
+      this.iMode = this.$route.params.mode || this.$route.query.mode;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);
     },
@@ -310,7 +310,14 @@
         }
         getQuote(params).then(
           res => {
-            if(res.success == 1) {
+            if(res.is_baojia){
+                this.$router.push(
+                    {
+                      name: 'detection'
+                    }
+                )
+            }
+            else if(res.success == 1) {
               this.goods = Object.values(res.type_arr);
               this.details = Object.values(res.result);
               var flag;

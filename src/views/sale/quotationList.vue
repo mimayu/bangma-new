@@ -106,7 +106,7 @@
         tabs: [], // 顶部
         goods: [], // 左侧
         details: [], // 右侧
-        iCustomerId: 1, // id
+        iCustomerId: 0, // id
         listHeight: [],
         scrollY: 0, // 滑动距离
         tabActive: 0, // 顶部tab激活
@@ -123,7 +123,7 @@
     },
 
     created() {
-      this.iCustomerId = this.$route.params.id || 0;
+      this.iCustomerId = this.$route.params.id || this.$route.query.id;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);
     },
@@ -217,7 +217,7 @@
           return;
         }
         let idAndNumberValues = [];
-        let iCustomerId = this.$route.params.id || 0;
+        let iCustomerId = this.$route.params.id || this.$route.query.id;
         this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
@@ -278,7 +278,7 @@
           title: '',
           message: '<p>确定需要增项？</p>'
         }).then(() => {
-          let iCustomerId = this.$route.params.id || 1;
+          let iCustomerId = this.$route.params.id || this.$route.query.id;
           let params = {
             'iCustomerId': iCustomerId
           }

@@ -17,6 +17,7 @@
                       </div>
                   </template>
               </Cell>
+              <Cell title="来源" :value="item.iSource_name" />
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
@@ -44,6 +45,7 @@
                       </div>
                   </template>
               </Cell>
+              <Cell title="来源" :value="item.iSource_name" />
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
@@ -55,6 +57,7 @@
           </Cell-group>
         </List>
       </Tab>
+      
       <Tab title="基检确认">
         <List
           v-model="loading_confirm"
@@ -71,6 +74,7 @@
                       </div>
                   </template>
               </Cell>
+              <Cell title="来源" :value="item.iSource_name" />
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
@@ -98,6 +102,7 @@
                       </div>
                   </template>
               </Cell>
+              <Cell title="来源" :value="item.iSource_name" />
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />
@@ -166,13 +171,15 @@ export default {
     'footerNav': footerNav
   },
   created() {
-    this.active = this.$route.query.active || 0;
+    this.active = this.$route.query.active || this.$store.getters.getActive;
+    let recruitScrollY = this.$store.state.recruitScrollY
+    console.log(recruitScrollY);
+    window.scroll(0, recruitScrollY)
     this.getBaojiaMode();
 
   },
   methods: {
     doTel(mobile){
-        //console.log(mobile);
         window.location.href = "tel:"+mobile;
     },    
     /*
@@ -249,17 +256,29 @@ export default {
       if(type == 11) {
           name = 'followup'; 
       }
-      
-      this.$router.push(
-        {
-            name: name,
-            params: {
-                id: id,
-                backurl:'detection',
-                active:this.active,
-            }
-        }
-      )
+      if(type == 4){
+          this.$router.push(
+              {
+                name: name,
+                query: {
+                    id: id,
+                    backurl:'detection',
+                    active:this.active,
+                }
+              }
+          )
+      }else{
+        this.$router.push(
+          {
+              name: name,
+              params: {
+                  id: id,
+                  backurl:'detection',
+                  active:this.active,
+              }
+          }
+        )
+      }
     },
     /*
     * 处理报价
@@ -280,7 +299,7 @@ export default {
         this.$router.push(
             {
                 name: 'quotation',
-                params: {
+                query: {
                     id: this.currentId,
                     mode:mode
                 }
@@ -295,6 +314,7 @@ export default {
         status: 1,
         page: this.page_under,
       }
+      this.$store.dispatch("setActive", 0);
       this.getInfo(params, 'under');
     },
     /*
@@ -305,6 +325,7 @@ export default {
         status: 103,
         page: this.page_order,
       }
+      this.$store.dispatch("setActive", 1);
       this.getInfo(params, 'order');
     },
     /*
@@ -315,6 +336,7 @@ export default {
         status: 2,
         page: this.page_confirm,
       }
+      this.$store.dispatch("setActive", 2);
       this.getInfo(params, 'confirm');
     },
     /*
@@ -325,6 +347,7 @@ export default {
         status: 3,
         page: this.page_cancel,
       }
+      this.$store.dispatch("setActive", 3);
       this.getInfo(params, 'cancel');
     },
     /*
@@ -354,6 +377,12 @@ export default {
         }
       )
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    let position = window.scrollY  //记录离开页面的位置
+    if (position == null) position = 0
+    this.$store.commit('changeRecruitScrollY', position) //离开路由时把位置存起来
+    next()
   }
 }
 </script>

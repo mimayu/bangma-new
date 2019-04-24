@@ -4,17 +4,17 @@
             <Cell title="订单号" :value="aCustomerInfo.iCustomerId || '-'"/>
             <Cell title="姓名" :value="aCustomerInfo.sUsername" />
             <Cell title="性别" :value="aCustomerInfo.sex === 'F' ? '女':'男'"/>
-            <Cell title="年龄" :value="aCustomerInfo.age > 0 ?  aCustomerInfo.age:'-'"/>
+            <Cell title="年龄" :value="aCustomerInfo.age > 0 ?  aCustomerInfo.age:''" v-if="aCustomerInfo.age>0"/>
             <Cell title="手机" :value="aCustomerInfo.sMobile || '-'"/>
-            <Cell title="家庭电话" :value="aCustomerInfo.sTelPhone || '-'"/>
-            <Cell title="区域" :value="aCustomerInfo.region_name || '-'"/>
-            <Cell title="小区" :value="aCustomerInfo.sXiaoqu || '-'"/>
+            <Cell title="家庭电话" :value="aCustomerInfo.sTelPhone || '-'" v-if="aCustomerInfo.sTelPhone"/>
+            <Cell title="区域" :value="aCustomerInfo.region_name || '-'" v-if="aCustomerInfo.region_name"/>
+            <Cell title="小区" :value="aCustomerInfo.sXiaoqu || '-'" v-if="aCustomerInfo.sXiaoqu"/>
             <Cell title="住址" :value="aCustomerInfo.sAddress || '-'"/>
 
-            <Cell title="房屋类型" :value="aCustomerInfo.housetype_name || '-'"/>
-            <Cell title="房屋户型" :value="aCustomerInfo.huxing_name || '-'"/>
-            <Cell title="居住属性" :value="aCustomerInfo.livetype_name || '-'"/>
-            <Cell title="房屋面积" :value="aCustomerInfo.acreage || '-'"/>
+            <Cell title="房屋类型" :value="aCustomerInfo.housetype_name || '-'" v-if="aCustomerInfo.housetype_name"/>
+            <Cell title="房屋户型" :value="aCustomerInfo.huxing_name || '-'" v-if="aCustomerInfo.huxing_name"/>
+            <Cell title="居住属性" :value="aCustomerInfo.livetype_name || '-'" v-if="aCustomerInfo.livetype_name"/>
+            <Cell title="房屋面积" :value="aCustomerInfo.acreage || '-'" v-if="aCustomerInfo.acreage>0"/>
             <Cell
                 title="施工内容"
                 type="textarea"

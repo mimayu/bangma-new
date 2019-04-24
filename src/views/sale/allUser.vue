@@ -34,6 +34,7 @@
                             </div>
                         </template>
                     </Cell>
+                    <Cell title="来源" :value="item.iSource_name" />
                     <Cell title="姓名" :value="item.sUsername" />
                     <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
                     <Cell title="地址" :value="item.sAddress" />
@@ -134,6 +135,7 @@
             };
         },
        created() {
+           console.log(this.$store.state.active)
             this.getBaojiaMode();
         },
         methods: {
@@ -352,15 +354,27 @@
                 if(type == 13) {
                     name = 'bossFugongAdd' 
                 }
-                this.$router.push(
-                    {
-                        name: name,
-                        params: {
-                            id: id,
-                            backurl: 'allUser'
+                if(type == 4){
+                   this.$router.push(
+                        {
+                            name: name,
+                            query: {
+                                id: id,
+                                backurl: 'allUser'
+                            }
                         }
-                    }
-                )
+                    )
+                }else{
+                    this.$router.push(
+                        {
+                            name: name,
+                            params: {
+                                id: id,
+                                backurl: 'allUser'
+                            }
+                        }
+                    )
+                }
             },
             /*
             * 处理报价
