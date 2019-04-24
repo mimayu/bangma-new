@@ -171,6 +171,7 @@ export default {
     'footerNav': footerNav
   },
   created() {
+    console.log(this.$store.getters.getActive);
     this.active = this.$route.query.active || this.$store.getters.getActive;
     let recruitScrollY = this.$store.state.recruitScrollY
     //console.log(recruitScrollY);
