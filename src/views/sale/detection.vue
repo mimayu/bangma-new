@@ -171,7 +171,7 @@ export default {
     'footerNav': footerNav
   },
   created() {
-    console.log(this.$store.getters.getActive);
+    //console.log(this.$store.getters.getActive);
     this.active = this.$route.query.active || this.$store.getters.getActive;
     let recruitScrollY = this.$store.state.recruitScrollY
     //console.log(recruitScrollY);
@@ -390,11 +390,6 @@ export default {
 
 <style lang="scss">
   .detection_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 53px;
-    right: 0;
     // 重新tabs
     .van-tabs {
       height: 100%;
