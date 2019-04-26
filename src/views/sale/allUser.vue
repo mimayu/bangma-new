@@ -135,7 +135,7 @@
             };
         },
        created() {
-           console.log(this.$store.state.active)
+           //console.log(this.$store.state.active)
             this.getBaojiaMode();
         },
         methods: {
@@ -408,13 +408,6 @@
 
 <style lang="scss">
     .allUser_container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 53px;
-        right: 0;
-        display: flex;
-        flex-direction: column;
         background-color: #f6f6f6;
         .header_btn {
             height: 44px;
@@ -481,10 +474,6 @@
         }
         .group {
             margin-bottom: 8px;
-        }
-        .content {
-            flex: 1;
-            overflow: auto;
         }
     }
 </style>

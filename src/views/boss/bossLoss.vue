@@ -233,11 +233,7 @@
 
 <style lang="scss">
   .bossLoss_cintainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 53px;
-    right: 0;
+    background-color: #f6f6f6;
     // 重新tabs
     .van-tabs {
       height: 100%;
