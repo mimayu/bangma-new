@@ -233,26 +233,7 @@
 
 <style lang="scss">
   .bossLoss_cintainer {
-    background-color: #f6f6f6;
-    // 重新tabs
-    .van-tabs {
-      height: 100%;
-      overflow: hidden;
-    }
-    .van-tabs--line {
-      padding-top: 0;
-      display: flex;
-      flex-direction: column;
-      background-color: #f6f6f6;
-    }
-    .van-tabs__wrap {
-      position: static;
-    }
-    .van-tabs__content {
-      flex: 1;
-      overflow: auto;
-    }
-    
+    background-color: #f6f6f6;  
     .van-cell__title, .van-field .van-cell__title {
         max-width: 100px;
     }
@@ -264,6 +245,9 @@
     }
     .btn_wrap {
         justify-content: flex-end;
+        button {
+            margin: 4px;
+        }
     }
     .assign_btn {
       padding: 6px 8px;
