@@ -72,7 +72,7 @@
                 <h3>签单占比</h3>
                 <Tabs v-model="active1"  @click="toggleTab1">
                 <Tab title="接单数">
-                    <h3>上门数</h3>
+                    <h3>接单数</h3>
                     <canvas id="visit00" class="piechart"></canvas>
                 </Tab>
                 <Tab title="上门数">
