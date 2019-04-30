@@ -8,7 +8,7 @@
         <span>+</span>
       </li>
       <li style="float:right;width:50%;">                
-        <Search v-model="searchtext" placeholder="请输入搜索关键词">/Search>
+        <Search v-model="searchtext" placeholder="请输入搜索关键词"></Search>
       </li>
     </ul>
     <section class="quote_contents list-box">
