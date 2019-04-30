@@ -2,23 +2,23 @@
   <div class="assignHome_container">
     <div class="homepage">
       <a :href="'http://www.51bangma.com/client/add/'" class="alink">
-        <img class="all_user" src="../../assets/img/home.png">
+        <img class="all_user" src="../../assets/img/kh.png">
         新建客户
       </a>
       <router-link to="underAssignList" class="alink">
-        <img class="all_user" src="../../assets/img/5.png">
+        <img class="all_user" src="../../assets/img/11.png">
         待分配列表
       </router-link>
       <router-link to="assignList" class="alink">
-        <img class="all_user" src="../../assets/img/6.png">
+        <img class="all_user" src="../../assets/img/list.png">
         已分配列表
       </router-link>
       <router-link to="allStaff" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/ylist.png">
         员工列表
       </router-link>
       <router-link to="allLabourer" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
+        <img class="all_user" src="../../assets/img/66.png">
         工长列表
       </router-link>
     </div>

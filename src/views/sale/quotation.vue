@@ -7,6 +7,9 @@
       <li class="quote_item_add" @click="handleAddQuote">
         <span>+</span>
       </li>
+      <li style="float:right;width:50%;">                
+        <Search v-model="searchtext" placeholder="请输入搜索关键词">/Search>
+        </li>
     </ul>
     <section class="quote_contents list-box">
       <div class="left-box" ref="menuWrapper">
@@ -18,7 +21,7 @@
       </div>
       <div class="right-box" ref="foodsWrapper">
         <ul>
-          <li v-for="(items, index) in details" ref="foodList">
+          <li v-for="(items, index) in filterSearch" ref="foodList">
             <h3>{{goods[index]}}</h3>
             <section class="info" v-for="item in items">
               <h4>{{item.project}}</h4>
@@ -92,12 +95,13 @@
 
 <script>
   import BScroll from 'better-scroll';
-  import { Toast, Dialog } from 'vant';
+  import {Search, Toast, Dialog } from 'vant';
   import { getQuote, getAddQuote, postSubmit } from '@/server';
 
   export default {
     name: 'quotation',
     components: {
+      Search,
       Toast,
       Dialog
     },
@@ -113,6 +117,7 @@
         tabActive: 0, // 顶部tab激活
         detailActive: false,
         typeLists:[],
+        searchtext:'',
       }
     },
      props:{
@@ -166,7 +171,35 @@
         total = parseInt(total+total*0.15);
         return total
       },
+
+     filterSearch: function() {
+          //console.log(this.details);
+          var _search = this.searchtext;
+          if (_search) {
+              //不区分大小写处理
+              var searchRegex = new RegExp(_search, 'ig');
+              var arr = [];
+
+              //es6 filter过滤匹配，有则返回当前，无则返回所有
+              this.details.forEach(function(detail,indexs) {
+                arr[indexs] = [];
+            
+                detail.forEach(function(e,index) {
+                  if(searchRegex.test(e.project)){
+                    arr[indexs].push(e);
+                  }
+                })  
+              })
+              //console.log(arr);
+              return arr;
+          }else{
+            return this.details;
+          }
+
+      },
+
     },
+
     methods: {
       /*
       * 初始化操作

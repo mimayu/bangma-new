@@ -31,7 +31,7 @@
       </router-link>
       
       <a :href="'http://www.51bangma.com/anli/browse/'" class="alink">
-        <img class="all_user" src="../../assets/img/service_icon01.png">
+        <img class="all_user" src="../../assets/img/11.png">
         案例
       </a>
 
