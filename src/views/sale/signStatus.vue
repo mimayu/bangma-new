@@ -126,6 +126,7 @@
       * 4 -> 报价调整
       * 5 -> 合同解除
       * 6 -> 派工
+      * 14->上传合同
       */
       handleClick(type, id) {
         switch(type) {
@@ -148,6 +149,9 @@
             this.handleGo(id, type);
             break;
           case 11:
+            this.handleGo(id, type);
+            break;
+          case 14:
             this.handleGo(id, type);
             break;
           default:
@@ -194,6 +198,9 @@
         }
         if(type == 11) {
           name = 'followup' 
+        }
+        if(type == 14) {
+          name = 'uploadimg' 
         }
         this.$router.push(
           {

@@ -38,6 +38,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "visit" */ './views/sale/visit')
     },
     {
+      path: '/uploadimg',
+      name: 'uploadimg',
+      component: () => import(/* webpackChunkName: "uploadimg" */ './views/sale/uploadimg')
+    },
+    {
       path: '/followup',
       name: 'followup',
       component: () => import(/* webpackChunkName: "followup" */ './views/sale/followup')

@@ -7,7 +7,7 @@
       <li class="quote_item_add" @click="handleAddQuote">
         <span>+</span>
       </li>
-      <li style="float:right;width:50%;">                
+      <li style="float:right;width:50%;background: rgb(255, 255, 255);">                
         <Search v-model="searchtext" placeholder="请输入搜索关键词"></Search></li>
     </ul>
     <section class="quote_contents list-box">

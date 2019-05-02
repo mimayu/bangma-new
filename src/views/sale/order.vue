@@ -108,7 +108,8 @@
             * 提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id || 0;
+                let active = this.$route.params.active || 0;
                 let params = {
                     'iCustomerId': iCustomerId
                 }
@@ -137,7 +138,7 @@
                                 {
                                     name: 'detection',
                                     query: {
-                                        active: params.active
+                                        active: active
                                     }
                                 }
                             )
