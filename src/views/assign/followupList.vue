@@ -93,13 +93,6 @@
 
 <style lang="scss">
     .assignList_container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 53px;
-        right: 0;
-        display: flex;
-        flex-direction: column;
         background-color: #f6f6f6;
         .van-cell__title, .van-field .van-cell__title {
             max-width: 100px;
@@ -107,10 +100,7 @@
         .van-cell__title, .van-cell__value{
             text-align: left;
         }
-        .content {
-            flex: 1;
-            overflow: auto;
-        }
+
         .btn_wrap {
             justify-content: flex-end;
         }

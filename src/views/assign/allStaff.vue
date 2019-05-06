@@ -138,18 +138,7 @@
 
 <style lang="scss">
     .allStaff_container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 53px;
-        right: 0;
-        display: flex;
-        flex-direction: column;
         background-color: #f6f6f6;
-        .content {
-            flex: 1;
-            overflow: auto;
-        }
         .search_bar {
             display: flex;
             align-items: center;
