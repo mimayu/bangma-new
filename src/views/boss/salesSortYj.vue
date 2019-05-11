@@ -25,7 +25,7 @@
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
                         <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                        <Col span="6">{{item.allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -41,7 +41,7 @@
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
                         <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                        <Col span="6">{{item.allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -57,7 +57,7 @@
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
                         <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                        <Col span="6">{{item.allFee|NumFormat}}</Col>
                     </Row>
                      
                 </div>
@@ -74,7 +74,7 @@
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
                         <Col span="6">{{item.qianyue_num}}</Col>
-                        <Col span="6">{{item.allFee}}</Col>
+                        <Col span="6">{{item.allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -101,6 +101,17 @@
             Toast,Tab, Tabs,Popup,
             footerNav: footerNav
         },
+        filters:{
+            NumFormat: function(value) {
+                if(!value) return '0';
+                
+                /*原来用的是Number(value).toFixed(0)，这样取整时有问题，例如0.51取整之后为1，感谢Nils指正*/
+                var intPart =  Number(value)|0; //获取整数部分
+                var intPartFormat = intPart.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'); //将整数部分逢三一断
+                return intPartFormat;
+            }
+
+		},
         data () {
             return {
                 // typeShow: false,
