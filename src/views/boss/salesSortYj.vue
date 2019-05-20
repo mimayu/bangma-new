@@ -24,7 +24,7 @@
                      <Row v-for="(item, index) in list">
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
+                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
                         <Col span="7">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
@@ -40,7 +40,7 @@
                     <Row v-for="(item, index) in list">
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
+                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
                         <Col span="7">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
@@ -56,7 +56,7 @@
                     <Row v-for="(item, index) in list">
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
+                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
                         <Col span="7">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                      
@@ -73,7 +73,7 @@
                     <Row v-for="(item, index) in list">
                         <Col span="6">{{index+1}}</Col>
                         <Col span="6">{{item.sSalesName}}</Col>
-                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
                         <Col span="7">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
