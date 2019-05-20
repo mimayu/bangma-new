@@ -62,12 +62,18 @@
                 <Col span="6">签单率{{data.qiandan_rate}}%</Col>
                 <Col span="6">%</Col>
             </Row>
-            <Row class="order">
-                <Col span="6">{{data.all_num}}<br/>总接单数</Col>
-                <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
-                <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
-                <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
-            </Row>
+          <Row class="order" style="border-bottom: 0px solid;">
+            <Col span="6">{{data.all_num}}<br/>总接单数</Col>
+            <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>派单签单数</Col>
+            <Col span="6">{{data.qiandan_fee|NumFormat}}<br/>派单签单金额</Col>
+          </Row>
+          <Row class="order">
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">{{data.all_qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.all_qiandan_fee|NumFormat}}<br/>总签单金额</Col>
+          </Row>
             <div class="chart-wrapper">
                 <h3>签单占比</h3>
                 <Tabs v-model="active1"  @click="toggleTab1">
@@ -79,13 +85,21 @@
                     <h3>上门数</h3>
                     <canvas id="visit01" class="piechart"></canvas>
                 </Tab>
-                 <Tab title="签单数">
-                     <h3>签单数</h3>
+                 <Tab title="派单签单数">
+                     <h3>派单签单数</h3>
                     <canvas id="visit02" class="piechart"></canvas>
+                </Tab>
+                <Tab title="派单签约额">
+                    <h3>派单签约额</h3>
+                    <canvas id="visit03" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签单数">
+                     <h3>签单数</h3>
+                    <canvas id="visit04" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
                     <h3>签约额</h3>
-                    <canvas id="visit03" class="piechart"></canvas>
+                    <canvas id="visit05" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
             </div>
@@ -98,12 +112,18 @@
                 <Col span="6">签单率{{data.qiandan_rate}}%</Col>
                 <Col span="6">%</Col>
             </Row>
-            <Row class="order">
-                <Col span="6">{{data.all_num}}<br/>总接单数</Col>
-                <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
-                <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
-                <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
-            </Row>
+          <Row class="order" style="border-bottom: 0px solid;">
+            <Col span="6">{{data.all_num}}<br/>总接单数</Col>
+            <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>派单签单数</Col>
+            <Col span="6">{{data.qiandan_fee|NumFormat}}<br/>派单签单金额</Col>
+          </Row>
+          <Row class="order">
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">{{data.all_qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.all_qiandan_fee|NumFormat}}<br/>总签单金额</Col>
+          </Row>
             <div class="chart-wrapper">
                 <h3>签单占比</h3>
                 <Tabs v-model="active1" @click="toggleTab1">
@@ -115,13 +135,21 @@
                     <h3>上门数</h3>
                     <canvas id="visit11" class="piechart"></canvas>
                 </Tab>
+                 <Tab title="派单签单数">
+                     <h3>派单签单数</h3>
+                    <canvas id="visit12" class="piechart"></canvas>
+                </Tab>
+                <Tab title="派单签约额">
+                    <h3>派单签约额</h3>
+                    <canvas id="visit13" class="piechart"></canvas>
+                </Tab>
                  <Tab title="签单数">
                      <h3>签单数</h3>
-                    <canvas id="visit12" class="piechart"></canvas>
+                    <canvas id="visit14" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
                     <h3>签约额</h3>
-                    <canvas id="visit13" class="piechart"></canvas>
+                    <canvas id="visit15" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
             </div>
@@ -135,11 +163,17 @@
             <Col span="6">%</Col>
 
           </Row>
-          <Row class="order">
+          <Row class="order" style="border-bottom: 0px solid;">
             <Col span="6">{{data.all_num}}<br/>总接单数</Col>
             <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
-            <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
-            <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>派单签单数</Col>
+            <Col span="6">{{data.qiandan_fee|NumFormat}}<br/>派单签单金额</Col>
+          </Row>
+          <Row class="order">
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">{{data.all_qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.all_qiandan_fee|NumFormat}}<br/>总签单金额</Col>
           </Row>
             <div class="chart-wrapper">
                 <h3>签单占比</h3>
@@ -152,13 +186,21 @@
                     <h3>上门数</h3>
                     <canvas id="visit21" class="piechart"></canvas>
                 </Tab>
+                 <Tab title="派单签单数">
+                     <h3>派单签单数</h3>
+                    <canvas id="visit22" class="piechart"></canvas>
+                </Tab>
+                <Tab title="派单签约额">
+                    <h3>派单签约额</h3>
+                    <canvas id="visit23" class="piechart"></canvas>
+                </Tab>
                  <Tab title="签单数">
                      <h3>签单数</h3>
-                    <canvas id="visit22" class="piechart"></canvas>
+                    <canvas id="visit24" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
                     <h3>签约额</h3>
-                    <canvas id="visit23" class="piechart"></canvas>
+                    <canvas id="visit25" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
             </div>
@@ -173,11 +215,17 @@
             <Col span="6">%</Col>
 
           </Row>
-          <Row class="order">
+          <Row class="order" style="border-bottom: 0px solid;">
             <Col span="6">{{data.all_num}}<br/>总接单数</Col>
             <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
-            <Col span="6">{{data.qiandan_num}}<br/>总签单数</Col>
-            <Col span="6">{{data.qiandan_fee}}<br/>总签单金额</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>派单签单数</Col>
+            <Col span="6">{{data.qiandan_fee|NumFormat}}<br/>派单签单金额</Col>
+          </Row>
+          <Row class="order">
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">{{data.all_qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.all_qiandan_fee|NumFormat}}<br/>总签单金额</Col>
           </Row>
             <div class="chart-wrapper">
                 <h3>签单占比</h3>
@@ -190,13 +238,21 @@
                     <h3>上门数</h3>
                     <canvas id="visit31" class="piechart"></canvas>
                 </Tab>
+                 <Tab title="派单签单数">
+                     <h3>派单签单数</h3>
+                    <canvas id="visit32" class="piechart"></canvas>
+                </Tab>
+                <Tab title="派单签约额">
+                    <h3>派单签约额</h3>
+                    <canvas id="visit33" class="piechart"></canvas>
+                </Tab>
                  <Tab title="签单数">
                      <h3>签单数</h3>
-                    <canvas id="visit32" class="piechart"></canvas>
+                    <canvas id="visit34" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
                     <h3>签约额</h3>
-                    <canvas id="visit33" class="piechart"></canvas>
+                    <canvas id="visit35" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
             </div>
@@ -230,6 +286,17 @@ export default {
         Tabs,
         footerNav: footerNav
     },
+    filters:{
+        NumFormat: function(value) {
+            if(!value) return '0';
+            
+            /*原来用的是Number(value).toFixed(0)，这样取整时有问题，例如0.51取整之后为1，感谢Nils指正*/
+            var intPart =  Number(value)|0; //获取整数部分
+            var intPartFormat = intPart.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'); //将整数部分逢三一断
+            return intPartFormat;
+        }
+
+    },
     data () {
         return {
             data: {},
@@ -259,8 +326,12 @@ export default {
                         this.list_all = res.statistics.shangmen_num_groupby_res;
                     }else if(this.index2 == 2){
                         this.list_all = res.statistics.qiandan_num_groupby_res;
-                    }else{
+                    }else if(this.index2 == 3){
                         this.list_all = res.statistics.qiandan_fee_groupby_res;
+                    }else if(this.index2 == 4){
+                        this.list_all = res.statistics.all_qiandan_num_groupby_res;
+                    }else if(this.index2 == 5){
+                        this.list_all = res.statistics.all_qiandan_fee_groupby_res;
                     }
                     
                     this.list_all.map(item => {
@@ -270,6 +341,10 @@ export default {
                         }else if(this.index2 == 1){
                             item.num = +item.num;
                         }else if(this.index2 == 2){
+                            item.num = +item.num;
+                        }else if(this.index2 == 3){
+                            item.num = +item.allFee;
+                        }else if(this.index2 == 4){
                             item.num = +item.num;
                         }else{
                             item.num = +item.allFee;
