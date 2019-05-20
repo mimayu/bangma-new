@@ -27,7 +27,7 @@
                         <Col span="2">{{index+1}}</Col>
                         <Col span="5">{{item.sSourceName}}</Col>
                         <Col span="3">{{item.allnum}}</Col>
-                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
                         <Col span="8" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
@@ -47,7 +47,7 @@
                         <Col span="2">{{index+1}}</Col>
                         <Col span="5">{{item.sSourceName}}</Col>
                         <Col span="3">{{item.allnum}}</Col>
-                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
                         <Col span="9" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="2"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
@@ -67,7 +67,7 @@
                         <Col span="2">{{index+1}}</Col>
                         <Col span="5">{{item.sSourceName}}</Col>
                         <Col span="3">{{item.allnum}}</Col>
-                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
                         <Col span="9" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="2"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
@@ -87,7 +87,7 @@
                         <Col span="2">{{index+1}}</Col>
                         <Col span="5">{{item.sSourceName}}</Col>
                         <Col span="3">{{item.allnum}}</Col>
-                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num|0}}</Col>
                         <Col span="8" align="right">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
