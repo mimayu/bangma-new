@@ -17,18 +17,18 @@
                 <div>
                     <Row>
                         <Col span="2">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col align="right" span="4">单数</Col>
-                        <Col align="right" span="4">签单数</Col>
-                        <Col span="5">签约额</Col>
+                        <Col span="5">渠道名称</Col>
+                        <Col span="3">单数</Col>
+                        <Col span="3">派/总签单数</Col>
+                        <Col span="8" align="right">派/总签约额</Col>
                         <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="2">{{index+1}}</Col>
-                        <Col span="6">{{item.sSourceName}}</Col>
-                        <Col align="right" span="4">{{item.allnum}}</Col>
-                        <Col align="right" span="4">{{item.qianyue_num}}</Col>
-                        <Col align="right" span="5">{{item.allFee}}</Col>
+                        <Col span="5">{{item.sSourceName}}</Col>
+                        <Col span="3">{{item.allnum}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="8" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
@@ -37,19 +37,19 @@
                 <div>
                     <Row>
                         <Col span="2">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col align="right" span="4">单数</Col>
-                        <Col align="right" span="4">签单数</Col>
-                        <Col span="5">签约额</Col>
-                        <Col span="3">操作</Col>
+                        <Col span="5">渠道名称</Col>
+                        <Col span="3">单数</Col>
+                        <Col span="3">派/总签单数</Col>
+                        <Col span="9" align="right">派/总签约额</Col>
+                        <Col span="2">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="2">{{index+1}}</Col>
-                        <Col span="6">{{item.sSourceName}}</Col>
-                        <Col align="right" span="4">{{item.allnum}}</Col>
-                        <Col align="right" span="4">{{item.qianyue_num}}</Col>
-                        <Col align="right" span="5">{{item.allFee}}</Col>
-                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
+                        <Col span="5">{{item.sSourceName}}</Col>
+                        <Col span="3">{{item.allnum}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="9" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
+                        <Col span="2"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
@@ -57,19 +57,19 @@
                 <div>
                     <Row>
                         <Col span="2">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col align="right" span="4">单数</Col>
-                        <Col align="right" span="4">签单数</Col>
-                        <Col span="5">签约额</Col>
-                        <Col span="3">操作</Col>
+                        <Col span="5">渠道名称</Col>
+                        <Col span="3">单数</Col>
+                        <Col span="3">派/总签单数</Col>
+                        <Col span="9" align="right">派/总签约额</Col>
+                        <Col span="2">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="2">{{index+1}}</Col>
-                        <Col span="6">{{item.sSourceName}}</Col>
-                        <Col align="right" span="4">{{item.allnum}}</Col>
-                        <Col align="right" span="4">{{item.qianyue_num}}</Col>
-                        <Col align="right" span="5">{{item.allFee}}</Col>
-                        <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
+                        <Col span="5">{{item.sSourceName}}</Col>
+                        <Col span="3">{{item.allnum}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="9" align="right">{{item.allFee}}/{{item.all_allFee|NumFormat}}</Col>
+                        <Col span="2"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
             </Tab>
@@ -77,18 +77,18 @@
                  <div>
                     <Row>
                         <Col span="2">排行</Col>
-                        <Col span="6">渠道名称</Col>
-                        <Col align="right" span="4">单数</Col>
-                        <Col align="right" span="4">签单数</Col>
-                        <Col span="5">签约额</Col>
+                        <Col span="5">渠道名称</Col>
+                        <Col span="3">单数</Col>
+                        <Col span="3">派/总签单数</Col>
+                        <Col span="8" align="right">派/总签约额</Col>
                         <Col span="3">操作</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="2">{{index+1}}</Col>
-                        <Col span="6">{{item.sSourceName}}</Col>
-                        <Col align="right" span="4">{{item.allnum}}</Col>
-                        <Col align="right" span="4">{{item.qianyue_num}}</Col>
-                        <Col align="right" span="5">{{item.allFee|NumFormat}}</Col>
+                        <Col span="5">{{item.sSourceName}}</Col>
+                        <Col span="3">{{item.allnum}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num}}</Col>
+                        <Col span="8" align="right">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                         <Col span="3"><a @click="handleGo(item.iSource)">查看</a></Col>
                     </Row>
                 </div>
