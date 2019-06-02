@@ -205,6 +205,57 @@
                 </Tabs>
             </div>
       </Tab>
+      <Tab title="上月">
+         <h3>数据统计</h3>
+          <Row class=mini>
+            <Col span="6">%</Col>
+            <Col span="6">上门率{{data.shangmen_rate}}%</Col>
+            <Col span="6">签单率{{data.qiandan_rate}}%</Col>
+            <Col span="6">%</Col>
+
+          </Row>
+          <Row class="order" style="border-bottom: 0px solid;">
+            <Col span="6">{{data.all_num}}<br/>总接单数</Col>
+            <Col span="6">{{data.shangmen_num}}<br/>总上门数</Col>
+            <Col span="6">{{data.qiandan_num}}<br/>派单签单数</Col>
+            <Col span="6">{{data.qiandan_fee|NumFormat}}<br/>派单签单金额</Col>
+          </Row>
+          <Row class="order">
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">&nbsp;</Col>
+            <Col span="6">{{data.all_qiandan_num}}<br/>总签单数</Col>
+            <Col span="6">{{data.all_qiandan_fee|NumFormat}}<br/>总签单金额</Col>
+          </Row>
+            <div class="chart-wrapper">
+                <h3>签单占比</h3>
+                <Tabs v-model="active1" @click="toggleTab1">
+                 <Tab title="接单数">
+                    <h3>上门数</h3>
+                    <canvas id="visit30" class="piechart"></canvas>
+                </Tab>
+                <Tab title="上门数">
+                    <h3>上门数</h3>
+                    <canvas id="visit31" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="派单签单数">
+                     <h3>派单签单数</h3>
+                    <canvas id="visit32" class="piechart"></canvas>
+                </Tab>
+                <Tab title="派单签约额">
+                    <h3>派单签约额</h3>
+                    <canvas id="visit33" class="piechart"></canvas>
+                </Tab>
+                 <Tab title="签单数">
+                     <h3>签单数</h3>
+                    <canvas id="visit34" class="piechart"></canvas>
+                </Tab>
+                <Tab title="签约额">
+                    <h3>签约额</h3>
+                    <canvas id="visit35" class="piechart"></canvas>
+                </Tab>
+                </Tabs>
+            </div>
+      </Tab>
       <Tab title="本年">
          <h3>数据统计</h3>
 
@@ -232,27 +283,27 @@
                 <Tabs v-model="active1" @click="toggleTab1">
                 <Tab title="接单数">
                     <h3>上门数</h3>
-                    <canvas id="visit30" class="piechart"></canvas>
+                    <canvas id="visit40" class="piechart"></canvas>
                 </Tab>
                 <Tab title="上门数">
                     <h3>上门数</h3>
-                    <canvas id="visit31" class="piechart"></canvas>
+                    <canvas id="visit41" class="piechart"></canvas>
                 </Tab>
                  <Tab title="派单签单数">
                      <h3>派单签单数</h3>
-                    <canvas id="visit32" class="piechart"></canvas>
+                    <canvas id="visit42" class="piechart"></canvas>
                 </Tab>
                 <Tab title="派单签约额">
                     <h3>派单签约额</h3>
-                    <canvas id="visit33" class="piechart"></canvas>
+                    <canvas id="visit43" class="piechart"></canvas>
                 </Tab>
                  <Tab title="签单数">
                      <h3>签单数</h3>
-                    <canvas id="visit34" class="piechart"></canvas>
+                    <canvas id="visit44" class="piechart"></canvas>
                 </Tab>
                 <Tab title="签约额">
                     <h3>签约额</h3>
-                    <canvas id="visit35" class="piechart"></canvas>
+                    <canvas id="visit45" class="piechart"></canvas>
                 </Tab>
                 </Tabs>
             </div>
@@ -398,6 +449,8 @@ export default {
                 this.type = "today"
             }else if(index == 2){
                 this.type="month"
+            }else if(index == 3){
+                this.type="lastmonth"
             }else{
                 this.type="year"
             }
