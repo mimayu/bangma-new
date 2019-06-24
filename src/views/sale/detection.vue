@@ -18,6 +18,8 @@
                   </template>
               </Cell>
               <Cell title="来源" :value="item.iSource_name" />
+              <Cell title="配合人" :value="item.coordinatorName" v-if="item.coordinatorName!=null&&item.coordinatorName!=''"/>
+              <Cell title="推荐人" :value="item.introducerName"  v-if="item.introducerName!=null&&item.introducerName!=''"/>
               <Cell title="姓名" :value="item.sUsername" />
               <Cell title="手机号" :value="item.sMobile"  @click="doTel(item.sMobile)"/>
               <Cell title="地址" :value="item.sAddress" />

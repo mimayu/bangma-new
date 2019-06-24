@@ -36,7 +36,7 @@
                 <Cell title="推荐人" :value="item.introducer_name" />
                 <Cell title="姓名" :value="item.sUsername" />
                 <Cell title="手机号" :value="item.sMobile" />
-                <Cell title="固话" :value="item.sTelphone" />
+                <Cell title="固话" :value="item.sTelPhone" />
                 <Cell title="区域" :value="item.region_name" />
                 <Cell title="地址" :value="item.sAddress" />
                 <Cell title="施工内容" :value="item.sRemarks" />
