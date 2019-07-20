@@ -30,11 +30,17 @@
                             </div>
                         </template>
                     </Cell>
+                    <Cell title="来源" :value="item.iSource_name" />
+                    <Cell title="配合人" :value="item.coordinator_name" v-if="item.coordinator_name!=null&&item.coordinator_name!=''"/>
+                    <Cell title="推荐人" :value="item.introducer_name"  v-if="item.introducer_name!=null&&item.introducer_name!=''"/>
                     <Cell title="姓名" :value="item.sUsername" />
                     <Cell title="手机号" :value="item.sMobile" />
+                    <Cell title="固话" :value="item.sTelPhone" v-if="item.sTelPhone!=null&&item.sTelPhone!=''"/>
+                    <Cell title="区域" :value="item.region_name" />
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
                     <Cell title="接单日期" :value="item.tOrderDate || '-'" />
+                    <Cell title="业务员" :value="item.iSalesName" />
                     <div class="van-cell btn_wrap" v-if="item.actions">
                         <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                     </div>

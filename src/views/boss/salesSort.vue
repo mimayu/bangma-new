@@ -73,6 +73,26 @@
                     </Row>
                 </div>
             </Tab>
+            <Tab  title="上月" >
+                <div>
+                    <Row>
+                        <Col span="2">排行</Col>
+                        <Col span="5">渠道名称</Col>
+                        <Col span="3">单数</Col>
+                        <Col span="3">派/总签单数</Col>
+                        <Col span="9" align="right">派/总签约额</Col>
+                        <Col span="2">操作</Col>
+                    </Row>
+                     <Row v-for="(item, index) in list">
+                        <Col span="2">{{index+1}}</Col>
+                        <Col span="5">{{item.sSourceName}}</Col>
+                        <Col span="3">{{item.allnum}}</Col>
+                        <Col span="3">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="9" align="right">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
+                        <Col span="2"><a @click="handleGo(item.iSource)">查看</a></Col>
+                    </Row>
+                </div>
+            </Tab>
             <Tab title="本年" >
                  <div>
                     <Row>
@@ -208,7 +228,8 @@
                        this.type = "week"
                   }else if(index == 2){
                       this.type="month"
-
+                  }else if(index == 3){
+                      this.type="lastmonth"
                   }else{
                       this.type="year"
 

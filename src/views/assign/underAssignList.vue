@@ -25,6 +25,8 @@
             <Cell-group class="group" v-for="item in assignLists" :key="item.iCustomerId">
                 <Cell title="订单号" :value="item.iCustomerId" is-link />
                 <Cell title="来源" :value="item.iSource_name" />
+                <Cell title="配合人" :value="item.coordinator_name" v-if="item.coordinator_name!=null&&item.coordinator_name!=''"/>
+                <Cell title="推荐人" :value="item.introducer_name"  v-if="item.introducer_name!=null&&item.introducer_name!=''"/>
                 <Cell title="姓名" :value="item.sUsername" />
                 <Cell title="手机号" :value="item.sMobile" />
                 <Cell title="固话" :value="item.sTelPhone" />

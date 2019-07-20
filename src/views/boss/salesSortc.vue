@@ -19,15 +19,15 @@
                         <Col span="4">排行</Col>
                         <Col span="7">业务员</Col>
                         <Col span="4">接单数</Col>
-                        <Col span="4">签单数</Col>
-                        <Col span="5">签单额</Col>
+                        <Col span="4">派/总签单数</Col>
+                        <Col span="5">派/总签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
                         <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
-                        <Col span="4">{{item.qianyue_num}}</Col>
-                        <Col span="5">{{item.allFee}}</Col>
+                        <Col span="4">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="5">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -37,15 +37,15 @@
                         <Col span="4">排行</Col>
                         <Col span="7">业务员</Col>
                         <Col span="4">接单数</Col>
-                        <Col span="4">签单数</Col>
-                        <Col span="5">签单额</Col>
+                        <Col span="4">派/总签单数</Col>
+                        <Col span="5">派/总签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
                         <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
-                        <Col span="4">{{item.qianyue_num}}</Col>
-                        <Col span="5">{{item.allFee}}</Col>
+                        <Col span="4">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="5">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -55,15 +55,33 @@
                         <Col span="4">排行</Col>
                         <Col span="7">业务员</Col>
                         <Col span="4">接单数</Col>
-                        <Col span="4">签单数</Col>
-                        <Col span="5">签单额</Col>
+                        <Col span="4">派/总签单数</Col>
+                        <Col span="5">派/总签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
                         <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
-                        <Col span="4">{{item.qianyue_num}}</Col>
-                        <Col span="5">{{item.allFee}}</Col>
+                        <Col span="4">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="5">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
+                    </Row>
+                </div>
+            </Tab>
+            <Tab  title="上月" >
+                <div>
+                    <Row>
+                        <Col span="4">排行</Col>
+                        <Col span="7">业务员</Col>
+                        <Col span="4">接单数</Col>
+                        <Col span="4">派/总签单数</Col>
+                        <Col span="5">派/总签单额</Col>
+                    </Row>
+                     <Row v-for="(item, index) in list">
+                        <Col span="4">{{index+1}}</Col>
+                        <Col span="7">{{item.sSalesName}}</Col>
+                        <Col span="4">{{item.allnum}}</Col>
+                        <Col span="4">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="5">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -73,15 +91,15 @@
                         <Col span="4">排行</Col>
                         <Col span="7">业务员</Col>
                         <Col span="4">总单数</Col>
-                        <Col span="4">签单数</Col>
-                        <Col span="5">签单额</Col>
+                        <Col span="4">派/总签单数</Col>
+                        <Col span="5">派/总签单额</Col>
                     </Row>
                      <Row v-for="(item, index) in list">
                         <Col span="4">{{index+1}}</Col>
                         <Col span="7">{{item.sSalesName}}</Col>
                         <Col span="4">{{item.allnum}}</Col>
-                        <Col span="4">{{item.qianyue_num}}</Col>
-                        <Col span="5">{{item.allFee}}</Col>
+                        <Col span="4">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="5">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
                     </Row>
                 </div>
             </Tab>
@@ -108,6 +126,17 @@
             Toast,Tab, Tabs,Popup,
             footerNav: footerNav
         },
+        filters:{
+            NumFormat: function(value) {
+                if(!value) return '0';
+                
+                /*原来用的是Number(value).toFixed(0)，这样取整时有问题，例如0.51取整之后为1，感谢Nils指正*/
+                var intPart =  Number(value)|0; //获取整数部分
+                var intPartFormat = intPart.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'); //将整数部分逢三一断
+                return intPartFormat;
+            }
+
+		},
         data () {
             return {
                 // typeShow: false,
@@ -196,6 +225,8 @@
                        this.type = "week"
                   }else if(index == 2){
                       this.type="month"
+                  }else if(index == 3){
+                      this.type="lastmonth"
 
                   }else{
                       this.type="year"

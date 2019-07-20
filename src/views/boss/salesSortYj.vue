@@ -62,6 +62,23 @@
                      
                 </div>
             </Tab>
+            <Tab  title="上月" >
+                <div>
+                    <Row>
+                        <Col span="6">排行</Col>
+                        <Col span="6">姓名</Col>
+                        <Col span="5">派/总签单数</Col>
+                        <Col span="7">派/总签约金额</Col>
+                    </Row>
+                    <Row v-for="(item, index) in list">
+                        <Col span="6">{{index+1}}</Col>
+                        <Col span="6">{{item.sSalesName}}</Col>
+                        <Col span="5">{{item.qianyue_num}}/{{item.all_qianyue_num||0}}</Col>
+                        <Col span="7">{{item.allFee|NumFormat}}/{{item.all_allFee|NumFormat}}</Col>
+                    </Row>
+                     
+                </div>
+            </Tab>
             <Tab title="本年" >
                 <div>
                     <Row>
@@ -193,7 +210,8 @@
                        this.type = "week"
                   }else if(index == 2){
                       this.type="month"
-
+                  }else if(index == 3){
+                      this.type="lastmonth"
                   }else{
                       this.type="year"
 
