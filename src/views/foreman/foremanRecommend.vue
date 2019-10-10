@@ -311,7 +311,7 @@
 </script>
 
 <style lang="scss">
-    .allUser_container {
+    .foremanRecommend_container {
         background-color: #f6f6f6;
         .header_btn {
             height: 44px;
