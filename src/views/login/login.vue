@@ -67,6 +67,8 @@ export default {
                 this.$router.push('/managerHome');
               }else if(res.role_type == 4){
                 this.$router.push('/assignHome');
+              }else if(res.role_type == 5){
+                this.$router.push('/foremanHome');
               }
               return;
           }

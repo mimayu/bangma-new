@@ -447,5 +447,29 @@ export default new Router({
       name: 'managerFinish',
       component: () => import(/* webpackChunkName: "manager" */ './views/manager/managerFinish')
     },
+    /** 
+    * foreman - > 工长主页
+    */
+    {
+      path: '/foremanHome',
+      name: 'foremanHome',
+      component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanHome')
+    },
+    /*
+    * recommend -> 我的推荐
+    */
+    {
+      path: '/foremanRecommend',
+      name: 'foremanRecommend',
+      component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanRecommend')
+    },
+    /*
+    * recommend -> 我的推荐
+    */
+    {
+      path: '/foremanBaoming',
+      name: 'foremanBaoming',
+      component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanBaoming')
+    },
   ]
 })

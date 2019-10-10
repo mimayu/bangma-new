@@ -60,6 +60,11 @@ import {
     datastatistical
 } from './boss'
 
+import {
+    getForemanRecommend,
+    getSaomaBaoming
+} from './foreman'
+
 export {
     checkRoleType,
     postShangmenAdd,
@@ -105,5 +110,7 @@ export {
     datastatistical,
     getLabourerList,
     getAssignedList,
-    getFollowupList
+    getFollowupList,
+    getForemanRecommend,
+    getSaomaBaoming
 }
