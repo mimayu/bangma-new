@@ -26,7 +26,7 @@
                 @load="handleLoad"
                 >
                 <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
-                    <Cell title="订单号">
+                    <Cell title="报名ID">
                         <template>
                             <div class="custom_wrap">
                                 <span class="order_id">{{item.id}}</span>
@@ -281,7 +281,7 @@
 </script>
 
 <style lang="scss">
-    .allUser_container {
+    .foremanBaoming_container {
         background-color: #f6f6f6;
         .header_btn {
             height: 44px;

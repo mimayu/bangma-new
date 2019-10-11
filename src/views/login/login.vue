@@ -96,11 +96,11 @@ export default {
                 const self = this;
               //判断复选框是否被勾选 勾选则调用配置cookie方法
               if (self.checked == true) {
-                  console.log("checked == true");
+                  //console.log("checked == true");
                   //传入账号名，密码，和保存天数3个参数
                   self.setCookie(self.mobile, self.passwd, 7);
               }else {
-                console.log("清空Cookie");
+                //console.log("清空Cookie");
                 //清空Cookie
                 self.clearCookie();
               }
@@ -113,6 +113,8 @@ export default {
                 this.$router.push('/managerHome');
               }else if(res.role_type == 4){
                 this.$router.push('/assignHome');
+              }else if(res.role_type == 5){
+                this.$router.push('/foremanHome');
               }
                 
 
