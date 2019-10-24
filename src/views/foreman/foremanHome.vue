@@ -9,6 +9,10 @@
         <img class="all_user" src="../../assets/img/5.png">
         扫码客户
       </router-link>
+      <router-link to="foremanConstruction" class="alink">
+        <img src="/img/4.51235a66.png" class="all_user">
+        施工工地
+      </router-link>
     </div>
     <footerNav></footerNav>
   </div>

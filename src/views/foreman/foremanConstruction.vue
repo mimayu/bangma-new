@@ -1,5 +1,5 @@
 <template>
-    <div class="foremanRecommend_container">
+    <div class="allUser_container">
         <Row class="header">
             <Col span="6">
                 <Cell title="筛选" is-link arrow-direction="down" @click="choseType"/>
@@ -41,28 +41,14 @@
                     <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
-                    <Cell title="接单日期" :value="item.tOrderDate || '-'" />
+                    <Cell title="签约日期" :value="item.dateOrder || '-'" />
+                    <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
                     <Cell title="家居顾问" :value="item.iSales_name || '-'" />
-
-                    <Cell title="签约金额" :value="item.orderFee" v-if="item.orderFee!=null&&item.orderFee>0"/>
-                    <Cell title="签约定金" :value="item.orderDingjin"  v-if="item.orderDingjin!=null&&item.orderDingjin>0"/>
-                    <Cell title="合同首付款" :value="item.orderSoufu" v-if="item.orderSoufu!=null&&item.orderSoufu>0"/>
-                    <Cell title="派工工长" :value="item.iForeman_name" v-if="item.iForeman_name!=null&&item.iForeman_name!=''"/>
-                    <Cell title="签约日期" :value="item.dateOrder" v-if="item.dateOrder!=null&&item.dateOrder!=''"/>
-                    <Cell title="开工日期" :value="item.dateKaigong" v-if="item.dateKaigong!=null&&item.dateKaigong!=''"/>
-                    <Cell title="完工日期" :value="item.dateWangong" v-if="item.dateWangong!=null&&item.dateWangong!=''"/>
-
-                    <Cell title="解约日期" :value="item.dateQuxiao" v-if="item.dateQuxiao!=null&&item.dateQuxiao!=''"/>
-                    <Cell title="解约原因" :value="item.quxiaoContent" v-if="item.quxiaoContent!=null&&item.quxiaoContent!=''"/>
-
-
-                    <Cell-group v-if="item.followup_total >= 1">
-                        <Cell title="查看跟进记录" value="" is-link @click="handleCheckRecord(item.iCustomerId)" class="check-record"/>
-                    </Cell-group>
-
-
+                    <Cell title="签约金额" :value="item.orderFee || '-'" />
+                    <Cell title="首付金额" :value="item.orderDingjin || '-'" />
+                    
                     <div class="van-cell btn_wrap" v-if="item.actions">
-                        <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
+                        <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId,action.mode)">{{action.name}}</button>
                     </div>
                 </Cell-group>
             </List>
@@ -80,18 +66,23 @@
         <Popup v-model="typeShow" position="bottom">
             <Picker show-toolbar :columns="typeLists" @cancel="handleTypeCancel" @confirm="handleTypeComfirm" />
         </Popup>
+        <Actionsheet
+            v-model="modeShow"
+            :actions="actions"
+            @select="handleSelect"
+        />
         <footerNav class="footer"></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List } from 'vant';
-    import { getForemanRecommend } from '@/server';
+    import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List, Actionsheet } from 'vant';
+    import { getForemanConstruction } from '@/server';
     import { timetrans } from '@/utils/time';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
-        name: 'foremanRecommend',
+        name: 'allUser',
         components: {
             Cell,
             CellGroup,
@@ -103,6 +94,7 @@
             Search,
             Toast,
             List,
+            Actionsheet,
             footerNav: footerNav
         },
         data() {
@@ -115,25 +107,11 @@
                 typeShow: false,
                 timeShow: false,
                 typeLists: [ 
-                    '全部状态',
-                    '基检未约',
-                    '基检确认',
-                    '基检再约',
-                    '基检取消',
-                    '签约等待',
-                    '签约成功',
                     '派工完成',
                     '开工进场',
-                    '完工验收',
-                    '完工付款',
-                    '审核完成',
-                    '已结算',
-                    '签约失败',
-                    '合同取消',
-                    '施工暂停'
                 ],
                 typeCode: [
-                    '', '1', '2', '103', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102', '104'
+                    '6', '7'
                 ],
                 customerLists: [],
                 value: '', // 搜索
@@ -142,8 +120,9 @@
                 page: 1,
                 loading: false,
                 finished: false,
-                actions: [],
-                actionids:[],
+                modeShow: false, // 选择报价模式
+                actions: [{'name':'卫生间改造'},{'name':'厨房改造'},{'name':'厨卫改造'},{'name':'其他'}],
+                actionids:[1,2,3,4],
                 currentId: '' // 选择的id 
             };
         },
@@ -158,14 +137,14 @@
             /*
             * 初始化数据加载
             */
-            getForemanRecommend() {
+            getForemanConstruction() {
                 let params = {
                     status: this.status,
                     page: this.page,
                     keywords: this.value,
                     fromdate: this.time
                 }
-                getForemanRecommend(params).then(
+                getForemanConstruction(params).then(
                     res => {
                         if(res.success == 1) {
                             this.customerLists = res.list;
@@ -190,7 +169,7 @@
                     keywords: this.value,
                     fromdate: this.time
                 }
-                getForemanRecommend(params).then(
+                getForemanConstruction(params).then(
                     res => {
                         if(res.success == 1) {
                             this.customerLists = this.customerLists.concat(res.list);
@@ -226,7 +205,7 @@
                 this.status = status;
                 this.typeShow = false;
                 this.reset();
-                this.getForemanRecommend();
+                this.getForemanConstruction();
             },
             handleTypeCancel() {
                 this.typeShow = false;
@@ -242,7 +221,7 @@
                 this.time = data;
                 this.timeShow = false;
                 this.reset();
-                this.getForemanRecommend();
+                this.getForemanConstruction();
             },
             handleCancel() {
                 this.timeShow = false;
@@ -252,19 +231,23 @@
             */
             handleSearch() {
                 this.reset();
-                this.getForemanRecommend();
+                this.getForemanConstruction();
             },
             /*
             * 点击操作
-            * 5 -> 合同解除
-            * 8 -> 完工
+            * 0 -> 预约
+            * 1 -> 上门
+            * 2 -> 报价
             */
-            handleClick(type, id) {
+            handleClick(type, id, mode) {
                 switch(type) {
                     case 0:
-                        this.handleGo(id, type);
-                        break;  
-                    case 11:
+                        this.handleQuote(id);
+                        break;
+                    case 1:
+                        this.handleGo(id, type,mode);
+                        break;
+                    case 2:
                         this.handleGo(id, type);
                         break; 
                     default:
@@ -274,37 +257,31 @@
             /*
             * 处理预约/上门
             */
-            handleGo(id, type) {
+            handleGo(id, type, mode) {
                 let name = '';
-               if(type == 0) {
-                    name = 'previewCustom' 
+                if(type == 1) {
+                    name = 'setting';
+                    window.location.href = 'http://www.51bangma.com/gongqi/setting/?iCustomerId='+id+'&type='+mode;
                 }
-                if(type == 11) {
-                    name = 'followup' 
+                if(type == 2) {
+                    window.location.href = 'http://www.51bangma.com/gongqi/yanshou/?iCustomerId='+id;
                 }
-                this.$router.push(
-                    {
-                        name: name,
-                        params: {
-                            id: id,
-                            backurl: 'foremanRecommend'
-                        }
-                    }
-                )
 
             },
+            handleQuote(id) {
+                this.modeShow = true;
+                this.currentId = id;
+            },
             /*
-            * 处理查看记录
+            * 处理报价选择
             */
-            handleCheckRecord(iCustomerId) {
-                this.$router.push(
-                    {
-                        name: 'followupList',
-                        params: {
-                            iCustomerId: iCustomerId
-                        }
-                    }
-                )
+            handleSelect(value) {
+                let index = this.actions.findIndex(item => {
+                    return item.name == value.name;
+                })
+                let mode = this.actionids[index];
+                this.modeShow = false;
+                window.location.href = 'http://www.51bangma.com/gongqi/setting/?iCustomerId='+this.currentId+'&type='+mode;
             }
 
         }
@@ -312,7 +289,7 @@
 </script>
 
 <style lang="scss">
-    .foremanRecommend_container {
+    .allUser_container {
         background-color: #f6f6f6;
         .header_btn {
             height: 44px;

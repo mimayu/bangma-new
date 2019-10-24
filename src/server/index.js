@@ -62,7 +62,8 @@ import {
 
 import {
     getForemanRecommend,
-    getSaomaBaoming
+    getSaomaBaoming,
+    getForemanConstruction
 } from './foreman'
 
 export {
@@ -95,7 +96,6 @@ export {
     getProgress,
     getOrganization,
     doLogout,
-    salesSort,
     getCalendar,
     postAddWork,
     postAddFugong,
@@ -112,5 +112,6 @@ export {
     getAssignedList,
     getFollowupList,
     getForemanRecommend,
-    getSaomaBaoming
+    getSaomaBaoming,
+    getForemanConstruction
 }

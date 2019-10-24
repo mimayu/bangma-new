@@ -471,5 +471,13 @@ export default new Router({
       name: 'foremanBaoming',
       component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanBaoming')
     },
+    /*
+    * recommend -> 在建工地
+    */
+   {
+      path: '/foremanConstruction',
+      name: 'foremanConstruction',
+      component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanConstruction')
+    },
   ]
 })
