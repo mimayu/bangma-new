@@ -209,7 +209,13 @@
             break;  
           case 13:
             this.handleGo(id, type);
-            break;           
+            break;  
+          case 14:
+            this.handleGo(id, type);
+            break; 
+          case 15:
+              window.location.href = 'http://www.51bangma.com/gongqi/yanshou/?iCustomerId='+id;
+              break;         
           default:
             break;
         }
@@ -252,7 +258,9 @@
         if(type == 13) {
             name = 'bossFugongAdd';
         }
-        
+        if(type == 14) {
+          name = 'uploadimg' 
+        }
         this.$router.push(
           {
               name: name,
