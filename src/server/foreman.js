@@ -24,8 +24,17 @@ const getSaomaBaoming = (params) => {
     return request('/api/getSaomaBaoming/', params, 'GET')
 }
 
+/**
+ * 获取工长在建工地
+ * @param {*} params 
+ */
+const getForemanConstruction = (params) => {
+    return request('/api/getForemanConstruction/', params, 'GET')
+}
+
 export {
     checkRoleType,
     getForemanRecommend,
     getSaomaBaoming,
+    getForemanConstruction,
 }

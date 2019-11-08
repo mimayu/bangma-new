@@ -42,6 +42,7 @@
                     <Cell title="地址" :value="item.sAddress" />
                     <Cell title="施工内容" :value="item.sRemarks || '-'" />
                     <Cell title="接单日期" :value="item.tOrderDate || '-'" />
+                    <Cell title="家居顾问" :value="item.iSales_name || '-'" />
 
                     <Cell title="签约金额" :value="item.orderFee" v-if="item.orderFee!=null&&item.orderFee>0"/>
                     <Cell title="签约定金" :value="item.orderDingjin"  v-if="item.orderDingjin!=null&&item.orderDingjin>0"/>

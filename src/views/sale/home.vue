@@ -29,7 +29,10 @@
         <img class="all_user" src="../../assets/img/7.png">
         流失
       </router-link>
-      
+      <a :href="'http://www.51bangma.com/client/kaigongdatelistformobile/'" class="alink">
+        <img class="all_user" src="../../assets/img/mgicon06.gif">
+        开工日期
+      </a>
       <a :href="'http://www.51bangma.com/anli/browse/'" class="alink">
         <img class="all_user" src="../../assets/img/11.png">
         案例

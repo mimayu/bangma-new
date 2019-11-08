@@ -5,12 +5,12 @@
       <Field v-model="passwd" placeholder="请输入密码" type="password"/>
     </Cell-group>
     <Row gutter="20">
-      <Col span="14">
+      <!--Col span="14">
         <Field v-model="code" placeholder="请输入验证码" />
       </Col>
       <Col span="10" class="pic-wrap">
         <img class="yzm-pic" :src='picCode' @click="handleGetCode">
-      </Col>
+      </Col-->
       <Col span="20" style="margin-left:12px;font-size:14px;color:#ccc;line-height:24px;">
         <input type="checkbox" v-model="checked" style="color:#ccc;">记住密码
       </Col>
@@ -49,7 +49,7 @@ export default {
   },
   created() {
     this.getIsLogin();
-    this.picCode = this.createPicCode();
+    //this.picCode = this.createPicCode();
     this.checked = true;
     this.getCookie();
   },
@@ -75,18 +75,18 @@ export default {
         }
       )
     },
-    createPicCode() {
-      let time = new Date().getTime();
-      return `/api/getcode/?${time}`;
-    },
-    handleGetCode() {
-      this.picCode = this.createPicCode();
-    },
+    //createPicCode() {
+    //  let time = new Date().getTime();
+    //  return `/api/getcode/?${time}`;
+    //},
+    //handleGetCode() {
+    //  this.picCode = this.createPicCode();
+    //},
     handleSubmit(name) {
       let params = {
         'sUsername': this.mobile,
         'sPassword': this.passwd,
-        'sCode': this.code
+        //'sCode': this.code
       }
       postLogin(params).then(
         res => {
@@ -121,9 +121,9 @@ export default {
               return;
           }
           if(res.success == 2) {
-            if(res.msg == '验证码输入有误') {
-                this.picCode = this.createPicCode();
-            }
+            //if(res.msg == '验证码输入有误') {
+            //    this.picCode = this.createPicCode();
+            //}
             Toast(res.msg);
           }
         }
