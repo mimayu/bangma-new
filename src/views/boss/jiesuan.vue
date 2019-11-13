@@ -17,15 +17,14 @@
         <div class="quote_item">
           <p></p>
           <span class="area"></span>
-          <span class="price">小计：￥{{items.total}}</span>
+          <span class="price">人辅核算：{{items.total}}*55%=￥{{Math.ceil(items.total*0.55)}}</span>
         </div>
       </Collapse-item>
     </Collapse>
     <section class="quote_toolbar">
       <div class="quote_toolbar_content">
-        <span class="quote_price">¥{{totalPrice}}</span>
+        <span class="quote_price">人辅结算金额：{{totalPrice}}*55%=¥{{Math.ceil(totalPrice*0.55)}}</span>
       </div>
-      <Button size="large" @click="handleSubmit">请打开"邦马"公众号打印</Button>
     </section>
     
   </div>
@@ -65,7 +64,7 @@ export default {
           total += item.price * Math.round(item.quantity*100)/100;
         })
       });
-      total = parseInt(total+total*0.15);
+      //total = parseInt(total+total*0.15);
       return total;
     },
   },
@@ -73,7 +72,7 @@ export default {
     getSubmitInfo() {
       let params = {
         'iCustomerId': this.iCustomerId,
-        'iMode': this.iMode,
+        'category': this.category,
       }
       getSubmitInfo(params).then(
         res => {
@@ -132,14 +131,15 @@ export default {
       line-height: 50px;
       .quote_toolbar_content {
         flex: 1;
-        padding-left: 15px;
-        background: #333333;
+        padding-right: 15px;
+        background: #FF5C12;
         font-size: 14px;
         color: #fff;
         .quote_price {
           margin-left: 4px;
           margin-right:12px;
           font-size: 18px;
+          float:right;
         }
       }
       button {
