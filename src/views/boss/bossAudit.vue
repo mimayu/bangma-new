@@ -76,7 +76,10 @@
                         break;
                     case 10:
                         window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/bossAudit/';
-                        break;  
+                        break; 
+                    case 16:
+                        this.handleGo(id, type);
+                        break; 
                     default:
                         break;
                 }
@@ -88,6 +91,9 @@
                 let name = '';
                if(type == 0) {
                     name = 'previewCustom' 
+                }
+               if(type == 16) {
+                    name = 'jiesuan' 
                 }
                 this.$router.push(
                     {

@@ -151,6 +151,14 @@ export default new Router({
       name: 'quotationList',
       component: () => import(/* webpackChunkName: "quotationList" */ './views/sale/quotationList')
     },
+        /** 
+    * boss - > 工队人辅结算
+    */
+    {
+      path: '/jiesuan',
+      name: 'jiesuan',
+      component: () => import(/* webpackChunkName: "jiesuan" */ './views/boss/jiesuan.vue')
+    },
     {
       path: '/profile',
       name: 'profile',
