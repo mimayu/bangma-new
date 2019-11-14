@@ -27,8 +27,8 @@
               <h4>{{item.project}}</h4>
               <p class="pricem">单价：￥{{item.price}}   单位：{{item.unit}}</p>
               <span class="price">小计
-                <b class="red" v-show="item.quantity > 0">{{getSinglePrice(item.price,item.quantity)}}</b>
-                <b class="red" v-show="item.quantity <= 0">0</b>
+                <b class="red" v-show="item.quantity != 0">{{getSinglePrice(item.price,item.quantity)}}</b>
+                <b class="red" v-show="item.quantity == 0">0</b>
               </span>
               <section class="price-edit">
                 <a class="minus" @click="minusCart(item)">-</a>
@@ -151,7 +151,7 @@
           type = index + 1;
           this.typeLists[type] = 0;
           items.forEach((item) => {
-            if(item.quantity > 0) {
+            if(item.quantity != 0) {
               lists.push(item)
               if(item.type == type)
                 this.typeLists[type] += 1;
@@ -376,12 +376,14 @@
       */
       minusCart(item, type) {
         if(item.quantity == 0) {
-          return;
+          //return;
         }
         item.quantity --;
+        console.log(this.selectGoods.length);
         if(!this.selectGoods.length) {
           this.detailActive = false;
         }
+        //this.selectGoods;
       },
       /*
       * 增加

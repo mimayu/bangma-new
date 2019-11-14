@@ -21,12 +21,37 @@
         </div>
       </Collapse-item>
     </Collapse>
+
+
+    <Collapse v-model="activeNames" v-for="(listss, index) in zengxiang_lists" :key="index">
+        <div style="text-align:center;font-size: 16px;padding: 8px 15px;">
+            <span>
+                增减项订单号：{{zengxiang_keys[index]}}
+            </span>
+        </div>
+      <Collapse-item :title="items.name" name="1" v-for="(items, index) in listss" :key="index" :name="index">
+        <div class="quote_item" v-for="item in items.list" :key="item.id" >
+          <p>{{item.project}}</p>
+          <span class="area">{{item.quantity}}{{item.unit}}</span>
+          <span class="price">￥{{item.total}}</span>
+        </div>
+        <div class="quote_item">
+          <p></p>
+          <span class="area"></span>
+          <span class="price">小计：￥{{items.total}}</span>
+        </div>
+      </Collapse-item>
+    </Collapse>
+
+
+
     <section class="quote_toolbar">
       <div class="quote_toolbar_content">
         <span class="quote_price">¥{{totalPrice}}</span>
       </div>
       <Button size="large" @click="handleSubmit">请打开"邦马"公众号打印</Button>
     </section>
+
     
   </div>
 </template>
@@ -48,6 +73,8 @@ export default {
       iCustomerId: '',
       activeNames: [0],
       lists: [],
+      zengxiang_lists: [],
+      zengxiang_keys: [],
       iMode:0,
     }
   },
@@ -65,6 +92,15 @@ export default {
           total += item.price * Math.round(item.quantity*100)/100;
         })
       });
+
+      this.zengxiang_lists.forEach((items,key) => {
+        Object.values(items).forEach((item) => {
+          item.list.forEach((each) => {
+            total += each.price * Math.round(each.quantity*100)/100;
+          })
+        })
+      });
+
       total = parseInt(total+total*0.15);
       return total;
     },
@@ -79,6 +115,8 @@ export default {
         res => {
           if(res.success == 1) {
             this.lists = Object.values(res.result);
+            this.zengxiang_lists = Object.values(res.zengxiang_result);
+            this.zengxiang_keys = Object.keys(res.zengxiang_result);
             //console.log('this.lists', this.lists);
           }
         }

@@ -1,12 +1,11 @@
 <template>
   <div class="quoteDetail_container">
 
-        <div style="text-align:center;font-size: 16px;padding: 8px 15px;">
-            <span>
-                订单号：{{iCustomerId}}
-            </span>
-        </div>
-
+    <div style="text-align:center;font-size: 16px;padding: 8px 15px;">
+        <span>
+            订单号：{{iCustomerId}}
+        </span>
+    </div>
     <Collapse v-model="activeNames">
       <Collapse-item :title="items.name" name="1" v-for="(items, index) in lists" :key="index" :name="index">
         <div class="quote_item" v-for="item in items.list" :key="item.id" >
@@ -21,11 +20,43 @@
         </div>
       </Collapse-item>
     </Collapse>
+
+
+    <Collapse v-model="activeNames" v-for="(listss, index) in zengxiang_lists" :key="index">
+        <div style="text-align:center;font-size: 16px;padding: 8px 15px;">
+            <span>
+                增减项订单号：{{zengxiang_keys[index]}}
+            </span>
+        </div>
+      <Collapse-item :title="items.name" name="1" v-for="(items, index) in listss" :key="index" :name="index">
+        <div class="quote_item" v-for="item in items.list" :key="item.id" >
+          <p>{{item.project}}</p>
+          <span class="area">{{item.quantity}}{{item.unit}}</span>
+          <span class="price">￥{{item.total}}</span>
+        </div>
+        <div class="quote_item">
+          <p></p>
+          <span class="area"></span>
+          <span class="price">人辅核算：{{items.total}}*55%=￥{{Math.ceil(items.total*0.55)}}</span>
+        </div>
+      </Collapse-item>
+    </Collapse>
+
+
+
     <section class="quote_toolbar">
       <div class="quote_toolbar_content">
         <span class="quote_price">人辅结算金额：{{totalPrice}}*55%=¥{{Math.ceil(totalPrice*0.55)}}</span>
       </div>
     </section>
+
+
+
+
+
+
+
+
     
   </div>
 </template>
@@ -44,9 +75,11 @@ export default {
   },
   data () {
     return {
-      iCustomerId: '',
+      iCustomerId: 0,
       activeNames: [0],
       lists: [],
+      zengxiang_lists: [],
+      zengxiang_keys: [],
       iMode:0,
     }
   },
@@ -64,9 +97,20 @@ export default {
           total += item.price * Math.round(item.quantity*100)/100;
         })
       });
+
+      this.zengxiang_lists.forEach((items,key) => {
+        Object.values(items).forEach((item) => {
+          item.list.forEach((each) => {
+            total += each.price * Math.round(each.quantity*100)/100;
+          })
+        })
+      });
+
+
       //total = parseInt(total+total*0.15);
       return total;
     },
+
   },
   methods: {
     getSubmitInfo() {
@@ -78,7 +122,9 @@ export default {
         res => {
           if(res.success == 1) {
             this.lists = Object.values(res.result);
-            //console.log('this.lists', this.lists);
+            this.zengxiang_lists = Object.values(res.zengxiang_result);
+            this.zengxiang_keys = Object.keys(res.zengxiang_result);
+            //console.log(Object.keys(res.zengxiang_result));
           }
         }
       )
