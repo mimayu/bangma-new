@@ -63,8 +63,16 @@ import {
 import {
     getForemanRecommend,
     getSaomaBaoming,
-    getForemanConstruction
+    getForemanConstruction,
+    postDownloadRefuBaojia
 } from './foreman'
+
+import {
+    getMaterial,
+    postNoNeed,
+    getOrderList,
+    getSupplement
+} from './orderer'
 
 export {
     checkRoleType,
@@ -113,5 +121,10 @@ export {
     getFollowupList,
     getForemanRecommend,
     getSaomaBaoming,
-    getForemanConstruction
+    getForemanConstruction,
+    postDownloadRefuBaojia,
+    getMaterial,
+    postNoNeed,
+    getOrderList,
+    getSupplement
 }

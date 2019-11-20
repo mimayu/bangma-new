@@ -35,7 +35,10 @@
     -loss  //流失名单
 - manager
     -managerHome // manager 首页
-
+- foreman
+    -foremanHome // foreman 工长首页
+- orderer
+    -ordererHome // orderer 材料下单首页
 
 
 

@@ -1,33 +1,33 @@
 <template>
   <div class="manageHome_container">
     <div class="homepage">
-      <router-link to="allUser" class="alink">
-        <img class="all_user" src="../../assets/img/home.png">
-        全部客户
-      </router-link>
-      <router-link to="managerSign" class="alink">
-        <img class="all_user" src="../../assets/img/3.png">
-        签约成功
-      </router-link>
-      <router-link to="managerAssign" class="alink">
-        <img class="all_user" src="../../assets/img/4.png">
-        派工完成
-      </router-link>
-      <router-link to="managerWork" class="alink">
+      <router-link to="material" class="alink">
         <img class="all_user" src="../../assets/img/5.png">
-        开工实施
+        主材下单待确认
       </router-link>
-      <router-link to="managerDone" class="alink">
+      <router-link to="orderlist" class="alink">
         <img class="all_user" src="../../assets/img/6.png">
-        完工·收款中
+        主材确认待下单
       </router-link>
-      <router-link to="managerFinish" class="alink">
-        <img class="all_user" src="../../assets/img/7.png">
-        完工·已结清
+      <router-link to="orderlist?active=1" class="alink">
+        <img class="all_user" src="../../assets/img/kh.png">
+        待主材商反馈
       </router-link>
-      <router-link to="ordererHome" class="alink">
+      <router-link to="orderlist?active=2" class="alink">
         <img class="all_user" src="../../assets/img/order.png">
-        主材下单模块
+        主材商已反馈
+      </router-link>
+      <router-link to="orderlist?active=3" class="alink">
+        <img class="all_user" src="../../assets/img/55.png">
+        安装完成
+      </router-link>
+      <router-link to="nomaterial" class="alink">
+        <img class="all_user" src="../../assets/img/7.png">
+        无主材下单
+      </router-link>
+      <router-link to="supplement" class="alink">
+        <img class="all_user" src="../../assets/img/kh.png">
+        主材补单
       </router-link>
     </div>
     <footerNav></footerNav>

@@ -32,9 +32,18 @@ const getForemanConstruction = (params) => {
     return request('/api/getForemanConstruction/', params, 'GET')
 }
 
+/**
+ * 获取工长在建工地
+ * @param {*} params 
+ */
+const postDownloadRefuBaojia = (params) => {
+    return request('/api/doDownloadRenfuBaojia/', params);
+}
+
 export {
     checkRoleType,
     getForemanRecommend,
     getSaomaBaoming,
     getForemanConstruction,
+    postDownloadRefuBaojia,
 }

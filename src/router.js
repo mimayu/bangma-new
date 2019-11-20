@@ -487,5 +487,33 @@ export default new Router({
       name: 'foremanConstruction',
       component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanConstruction')
     },
+      /*
+      * manager - 工程部首页
+      */
+    {
+      path: '/ordererHome',
+      name: 'ordererHome',
+      component: () => import(/* webpackChunkName: "manager" */ './views/orderer/ordererHome')
+    },
+    {
+      path: '/material',
+      name: 'material',
+      component: () => import(/* webpackChunkName: "material" */ './views/orderer/material')
+    },
+    {
+      path: '/nomaterial',
+      name: 'nomaterial',
+      component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/nomaterial')
+    },
+    {
+      path: '/orderlist',
+      name: 'orderlist',
+      component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/orderlist')
+    },
+    {
+      path: '/supplement',
+      name: 'supplement',
+      component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/supplement')
+    },
   ]
 })

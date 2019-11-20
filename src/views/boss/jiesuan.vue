@@ -44,10 +44,18 @@
 
 
 
-    <section class="quote_toolbar">
+    <!--section class="quote_toolbar">
       <div class="quote_toolbar_content">
         <span class="quote_price">人辅结算金额：{{totalPrice}}*55%=¥{{Math.ceil(totalPrice*0.55)}}</span>
       </div>
+    </section-->
+
+    <section class="quote_toolbar">
+      <div class="quote_toolbar_content">
+        人辅结算金额
+        <span class="quote_price">{{totalPrice}}*55%=¥{{Math.ceil(totalPrice*0.55)}}</span>
+      </div>
+      <button @click="handleSubmit">导出excel</button>
     </section>
 
 
@@ -64,6 +72,7 @@
 <script>
 import { Collapse, CollapseItem, Toast, Button } from 'vant';
 import { getSubmitInfo } from '@/server';
+import { postDownloadRefuBaojia } from '@/server';
 
 export default {
   name: 'quoteDetail',
@@ -130,8 +139,22 @@ export default {
       )
     },   
     handleSubmit() {
-      //console.log(11);
+      let params = {
+          'iCustomerId': this.iCustomerId
+      }
+      postDownloadRefuBaojia(params).then(
+            res => {
+                if(res.success == 1) {
+                    Toast(res.msg);
+                    window.location.href = res.filename;
+                    return;
+                }
+                Toast(res.msg);
+            }
+        )
     }
+
+
   }
 }
 </script>
@@ -177,15 +200,13 @@ export default {
       line-height: 50px;
       .quote_toolbar_content {
         flex: 1;
-        padding-right: 15px;
-        background: #FF5C12;
+        padding-left: 15px;
+        background: #333333;
         font-size: 14px;
         color: #fff;
         .quote_price {
           margin-left: 4px;
-          margin-right:12px;
           font-size: 18px;
-          float:right;
         }
       }
       button {
