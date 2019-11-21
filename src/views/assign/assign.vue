@@ -2,7 +2,7 @@
     <div class="assign_container">
         <Radio-group v-model="iSalesId" @change="handleChange">
             <Cell-group>
-                <Cell value="查看" is-link v-for="(item, index) in lists" :key="item.iId">
+                <Cell :value="item.iId == ai_sale_id?'人工智能推荐此顾问':''" is-link v-for="(item, index) in lists" :key="item.iId">
                     <template slot="title">
                         <span class="custom-text">{{item.sName}}</span>
                         <Radio class="custom-radio" :name="item.iId"></Radio>
@@ -34,6 +34,7 @@
         data() {
             return {
                lists: [],
+               ai_sale_id:'',
                iSalesId: 0
             };
         },
@@ -48,6 +49,8 @@
                     res => {
                         if(res.success == 1) {
                             this.lists = res.accountlist;
+                            this.ai_sale_id = res.ai_sale_id;
+                            this.iSalesId = res.ai_sale_id;
                         }
                     }
                 )

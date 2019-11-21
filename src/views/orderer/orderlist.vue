@@ -323,6 +323,7 @@
                         break;
                     case 2:
                     case 4:
+                    case 6:
                         window.location.href= "http://www.51bangma.com/zhucai/order/?iOrderId="+iOrderId+"&backurl=http://m.51bangma.com/orderlist/";
                         break;
                       case 3:
