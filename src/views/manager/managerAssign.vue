@@ -84,6 +84,7 @@
                 modeShow: false, // 选择报价模式
                 actions: [],
                 actionids:[],
+                value:'',
                 currentId: '' // 选择的id 
             };
         },

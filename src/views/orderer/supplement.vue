@@ -228,16 +228,6 @@
             width: 60px;
             text-align: center;
         }
-        .search_bar {
-            display: flex;
-            align-items: center;
-            height: 44px;
-            background: #fff;
-        }
-        .van-search {
-            background: #fff !important;
-            padding: 0;
-        }
         .group {
             margin-bottom: 8px;
         }

@@ -138,7 +138,7 @@
 </template>
 
 <script>
-    import { Tab, Tabs, Cell, CellGroup, Button, Field, Toast, Popup, Row, Search, Picker, List, Actionsheet } from 'vant';
+    import { Tab, Tabs, Cell, CellGroup, Button, Field, Toast, Popup, Row, Col, Search, Picker, List, Actionsheet } from 'vant';
     import { getOrderList } from '@/server';
     import { postNoNeed } from '@/server';
     import { timetrans } from '@/utils/time';
@@ -155,6 +155,7 @@
             Field,
             Toast,
             Row,
+            Col,
             Popup, 
             Search,
             Picker,
@@ -394,16 +395,6 @@
         .status {
             width: 60px;
             text-align: center;
-        }
-        .search_bar {
-            display: flex;
-            align-items: center;
-            height: 44px;
-            background: #fff;
-        }
-        .van-search {
-            background: #fff !important;
-            padding: 0;
         }
         .group {
             margin-bottom: 8px;
