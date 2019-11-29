@@ -33,15 +33,15 @@ export default {
   methods: {
     handleSubmit(name) {
       let params = {
-        'sPassword': this.mobile,
-        'sNewPassword': this.passwd,
-        'sReNewPassword': this.code
+        'sPassword': this.passwd,
+        'sNewPassword': this.newPasswd,
+        'sReNewPassword': this.newRPasswd
       }
       postReset(params).then(
         res => {
           if(res.success == 1) {
               Toast('修改密码成功');
-              this.$router.push('/home');
+              this.$router.push('/');
               return;
           }
           if(res.success == 2) {
