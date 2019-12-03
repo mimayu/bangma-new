@@ -69,6 +69,8 @@ export default {
                 this.$router.push('/assignHome');
               }else if(res.role_type == 5){
                 this.$router.push('/foremanHome');
+              }else if(res.role_type == 6){
+                this.$router.push('/supervisorHome');
               }
               return;
           }
@@ -115,6 +117,8 @@ export default {
                 this.$router.push('/assignHome');
               }else if(res.role_type == 5){
                 this.$router.push('/foremanHome');
+              }else if(res.role_type == 6){
+                this.$router.push('/supervisorHome');
               }
                 
 

@@ -487,33 +487,53 @@ export default new Router({
       name: 'foremanConstruction',
       component: () => import(/* webpackChunkName: "foreman" */ './views/foreman/foremanConstruction')
     },
-      /*
-      * manager - 工程部首页
-      */
+    /*
+    * orderer - 主材下单模块
+    */
     {
       path: '/ordererHome',
       name: 'ordererHome',
       component: () => import(/* webpackChunkName: "manager" */ './views/orderer/ordererHome')
     },
+    /*
+    * 主材确认待下单模块
+    */
     {
       path: '/material',
       name: 'material',
       component: () => import(/* webpackChunkName: "material" */ './views/orderer/material')
     },
+    /*
+    * 无主材下单
+    */
     {
       path: '/nomaterial',
       name: 'nomaterial',
       component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/nomaterial')
     },
+    /*
+    * 主材下单列表
+    */
     {
       path: '/orderlist',
       name: 'orderlist',
       component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/orderlist')
     },
+    /** 
+    * supplement - > 主材补单
+    */
     {
       path: '/supplement',
       name: 'supplement',
       component: () => import(/* webpackChunkName: "nomaterial" */ './views/orderer/supplement')
     },
+    /** 
+    * supervise - > 工长主页
+    */
+   {
+    path: '/supervisorHome',
+    name: 'supervisorHome',
+    component: () => import(/* webpackChunkName: "foreman" */ './views/supervisor/supervisorHome')
+  },
   ]
 })
