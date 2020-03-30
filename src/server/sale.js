@@ -64,6 +64,10 @@ const getQuestions = (params) => {
     return request('/api/getQuestionList/', params, 'get');
 }
 
+const getQuestionInfo = (params) => {
+    return request('/api/getQuestionInfo/', params, 'get');
+}
+
 /**
  * 问题
  * @param {*} params 
@@ -143,6 +147,7 @@ export {
     postQuxiaoAdd,
     getCustomer,
     getQuestions,
+    getQuestionInfo,
     getQuote,
     postQuestionAdd,
     postAnswerAdd,

@@ -2,7 +2,7 @@
     <div class="visit_container">
         <div style="text-align:left;font-size: 20px;padding: 18px 10px 0px 10px;color:#ccc">
             <span>
-                问题：发生大师傅大势发生撒旦飞洒发大师傅大势斗法大赛发的发生放大打发发达？
+                问题：{{questioninfo.content}}
             </span>
         </div>
         <Cell>
@@ -27,6 +27,7 @@
 <script>
     import { Cell, Popup, Button, Field, Toast } from 'vant';
     import { postAnswerAdd } from '@/server';
+    import { getQuestionInfo } from '@/server';
 
     export default {
         name: 'visit',
@@ -40,11 +41,29 @@
         data() {
             return {
                 message: '',
+                questioninfo:''
             }
         },
         created() {
+            this.getQuestionInfo();
         },
         methods: {
+
+            getQuestionInfo() {
+                let iQuestionId = this.$route.query.iQuestionId || 0;
+                let params = {
+                    'iQuestionId': iQuestionId
+                }
+                getQuestionInfo(params).then(
+                    res => {
+                        if(res.success == 1) {
+                            this.questioninfo = res.questioninfo;
+                            //console.log(this.questioninfo.content);
+                        }
+                    }
+                )
+            }, 
+
             /*
             * 处理提交
             */
