@@ -57,6 +57,28 @@ const getCustomer = (params) => {
 }
 
 /**
+ * 获取问答信息
+ * @param {*} params 
+ */
+const getQuestions = (params) => {
+    return request('/api/getQuestionList/', params, 'get');
+}
+
+/**
+ * 问题
+ * @param {*} params 
+ */
+const postQuestionAdd = (params) => {
+    return request('/api/questionadd/', params);
+}
+/**
+ * 回答
+ * @param {*} params 
+ */
+const postAnswerAdd = (params) => {
+    return request('/api/answeradd/', params);
+}
+/**
  * 获取匹配小区信息
  * @param {*} params 
  */
@@ -120,7 +142,10 @@ export {
     postYuyueAdd,
     postQuxiaoAdd,
     getCustomer,
+    getQuestions,
     getQuote,
+    postQuestionAdd,
+    postAnswerAdd,
     getEstate,
     getAddQuote,
     postSubmit,

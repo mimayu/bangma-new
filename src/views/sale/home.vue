@@ -37,7 +37,10 @@
         <img class="all_user" src="../../assets/img/11.png">
         案例
       </a>
-
+      <router-link to="faq" class="alink">
+        <img class="all_user" src="../../assets/img/faq.png">
+        过单提问
+      </router-link>
     </div>
     <footerNav></footerNav>
   </div>

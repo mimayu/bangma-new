@@ -97,11 +97,29 @@ export default new Router({
     /** 
     * sale - > 流失 
     */
-   {
-    path: '/saleLoss',
-    name: 'saleLoss',
-    component: () => import(/* webpackChunkName: "saleLoss" */ './views/sale/saleLoss')
-  },
+    {
+      path: '/saleLoss',
+      name: 'saleLoss',
+      component: () => import(/* webpackChunkName: "saleLoss" */ './views/sale/saleLoss')
+    },
+    /** 
+    * sale - > 问答 
+    */
+    {
+      path: '/faq',
+      name: 'faq',
+      component: () => import(/* webpackChunkName: "faq" */ './views/sale/faq')
+    },
+    {
+      path: '/question',
+      name: 'question',
+      component: () => import(/* webpackChunkName: "faq" */ './views/sale/question')
+    },
+    {
+      path: '/answer',
+      name: 'answer',
+      component: () => import(/* webpackChunkName: "faq" */ './views/sale/answer')
+    },
     {
       path: '/tinggonglist',
       name: 'tinggonglist',

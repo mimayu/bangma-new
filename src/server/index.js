@@ -10,8 +10,11 @@ import {
     getAddQuote,
     postSubmit,
     getSubmitInfo,
+    getQuestions,
     postCancel,
-    getQuoteChange
+    getQuoteChange,
+    postQuestionAdd,
+    postAnswerAdd
 } from './sale'
 
 import {
@@ -83,10 +86,13 @@ export {
     postQuxiaoAdd,
     getCustomer,
     getQuote,
+    postQuestionAdd,
+    postAnswerAdd,
     getEstate,
     getAddQuote,
     postSubmit,
     getSubmitInfo,
+    getQuestions,
     postCancel,
     getQuoteChange,
     getIsLogin,
