@@ -136,6 +136,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "quotation" */ './views/sale/quotation')
     },
     {
+      path: '/prebaojia',
+      name: 'prebaojia',
+      component: () => import(/* webpackChunkName: "prebaojia" */ './views/sale/prebaojia')
+    },
+    {
       path: '/customInfo',
       name: 'customInfo',
       component: () => import(/* webpackChunkName: "customInfo" */ './views/sale/customInfo')

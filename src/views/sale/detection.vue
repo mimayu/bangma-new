@@ -299,6 +299,20 @@ export default {
         })
         let mode = this.actionids[index];
         this.modeShow = false;
+
+        //名高特有的快速报价入口
+        if(mode == 100){
+          this.$router.push(
+              {
+                  name: 'prebaojia',
+                  query: {
+                      iCustomerId: this.currentId
+                  }
+              }
+          )
+          return false;
+        }
+
         this.$router.push(
             {
                 name: 'quotation',

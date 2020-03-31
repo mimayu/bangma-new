@@ -107,6 +107,14 @@ const getQuote = (params) => {
 }
 
 /**
+ * 名高定制的快速报价
+ * @param {*} params 
+ */
+const postPreBaojiaAdd = (params) => {
+    return request('/api/doPreBaojia/', params);
+}
+
+/**
  * 提交报价操作
  * @param {*} params 
  */
@@ -149,6 +157,7 @@ export {
     getQuestions,
     getQuestionInfo,
     getQuote,
+    postPreBaojiaAdd,
     postQuestionAdd,
     postAnswerAdd,
     getEstate,
