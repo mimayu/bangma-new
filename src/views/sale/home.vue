@@ -41,6 +41,10 @@
         <img class="all_user" src="../../assets/img/faq.png">
         过单提问
       </router-link>
+      <router-link to="foremanRecommend" class="alink">
+        <img class="all_user" src="../../assets/img/order.png">
+        我的推荐
+      </router-link>
     </div>
     <footerNav></footerNav>
   </div>
