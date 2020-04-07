@@ -20,15 +20,21 @@
                 finished-text="没有更多了"
                 @load="handleLoad"
                 >
-
-
 			<div class="queueItem" v-for="(item,index) of list" :key="index" @click="titleClick(index)" :class="item.open?'active':''">
 				<div class="title">
 					{{item.content}}
 					<img src="../../assets/img/41.jpg" class="icon">
 				</div>
-				<div class="answer" :id="item.pid">
-					<div v-for="(item2,index2) of item.answerlist" :key="index2">{{item2.content}}
+				<div class="answer" :id="item.pid"  v-if="item.open != null">
+					<div v-for="(item2,index2) of item.answerlist" :key="index2">
+                        {{item2.content}}
+                    </div>
+                    <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
+				</div>
+
+				<div class="answer" :id="item.pid"  v-else>
+					<div v-for="(item2,index2) of item.answerlist" :key="index2">
+                        {{item2.content}}
                     </div>
                     <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
 				</div>
@@ -66,6 +72,7 @@
         },
         data() {
             return {
+                    defaultOp: -1,
                     value:"",
 					title: "",
 					list: [],
@@ -80,39 +87,49 @@
         mounted: function() {
             //this.getData();
         },
-				methods: {
-                         handleClick(){
-                            this.$router.push(
-                                {
-                                    name: "question"
-                                }
-                            )
-                         },
-                         handleAnswerClick(id){
-                            this.$router.push(
-                                {
-                                    name: "answer",
-                                    query: {
-                                        iQuestionId: id
-                                    }
-                                }
-                            )
-                         },
+		methods: {
 
-
+            handleClick(){
+                this.$router.push(
+                    {
+                        name: "question"
+                    }
+                )
+            },
+            handleAnswerClick(id){
+                this.$router.push(
+                    {
+                        name: "answer",
+                        query: {
+                            iQuestionId: id
+                        }
+                    }
+                )
+            },
 
             /*
             * 初始化数据加载
             */
             getQuestions() {
+                var that = this;
                 let params = {
                     page: this.page,
                 }
                 getQuestions(params).then(
                     res => {
                         if(res.success == 1) {
-                            this.list = res.list;
-                            //console.log(this.list);
+ 
+                           if(res.list) {
+                                var list = res.list;
+                                var arr = [];
+                                for(var i = 0; i < list.length; i++) {
+                                    var obj = list[i];
+                                    obj["open"] = null;
+                                    obj["pid"] = "itemPId" + i;
+                                    arr.push(obj);
+                                }
+                                that.list = arr;
+                            }
                             this.page += 1;
                             this.loading = false;
                             if(res.list.length == 0) {
@@ -174,7 +191,7 @@
             * 处理搜索
             */
             handleSearch() {
-
+                var that = this;
                 let params = {
                     'page': 1,
                     'keywords': this.value,
@@ -182,7 +199,20 @@
                 getQuestions(params).then(
                     res => {
                         if(res.success == 1) {
-                            this.list = res.list;
+
+                           if(res.list) {
+                                var list = res.list;
+                                var arr = [];
+                                for(var i = 0; i < list.length; i++) {
+                                    var obj = list[i];
+                                    obj["open"] = null;
+                                    obj["pid"] = "itemPId" + i;
+                                    arr.push(obj);
+                                }
+                                that.list = arr;
+                            }
+
+
                             this.page += 1;
                             this.loading = false;
                             if(res.list.length == 0) {
