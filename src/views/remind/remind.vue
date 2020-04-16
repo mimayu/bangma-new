@@ -69,7 +69,7 @@
                             <span>签约额:</span>
                             {{item.orderFee}}
                         </dd>
-                        <dd>
+                        <dd  v-if="item.type_name!=''">
                             <span>施工项:</span>
                             {{item.type_name}}
                         </dd>
