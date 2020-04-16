@@ -65,6 +65,14 @@
                             <span>地址:</span>
                             {{item.sAddress}}
                         </dd>
+                        <dd>
+                            <span>签约额:</span>
+                            {{item.orderFee}}
+                        </dd>
+                        <dd>
+                            <span>施工项:</span>
+                            {{item.type_name}}
+                        </dd>
                     </dl>
                 </div>
                 <div v-else>
