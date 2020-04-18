@@ -26,15 +26,15 @@
 					<img src="../../assets/img/41.jpg" class="icon">
 				</div>
 				<div class="answer" :id="item.pid"  v-if="item.open != null">
-					<div v-for="(item2,index2) of item.answerlist" :key="index2">
-                        <pre>{{item2.content}}</pre>
+					<div v-for="(item2,index2) of item.answerlist" :key="index2" style="white-space:pre-line">
+                        {{item2.content}}
                     </div>
                     <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
 				</div>
 
 				<div class="answer" :id="item.pid"  v-else>
-					<div v-for="(item2,index2) of item.answerlist" :key="index2">
-                        <pre>{{item2.content}}</pre>
+					<div v-for="(item2,index2) of item.answerlist" :key="index2" style="white-space:pre-line">
+                        {{item2.content}}
                     </div>
                     <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
 				</div>
