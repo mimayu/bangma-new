@@ -27,14 +27,14 @@
 				</div>
 				<div class="answer" :id="item.pid"  v-if="item.open != null">
 					<div v-for="(item2,index2) of item.answerlist" :key="index2">
-                        {{item2.content}}
+                        <pre>{{item2.content}}</pre>
                     </div>
                     <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
 				</div>
 
 				<div class="answer" :id="item.pid"  v-else>
 					<div v-for="(item2,index2) of item.answerlist" :key="index2">
-                        {{item2.content}}
+                        <pre>{{item2.content}}</pre>
                     </div>
                     <Button type="primary" size="large" @click="handleAnswerClick(item.id)">回答</Button>
 				</div>
