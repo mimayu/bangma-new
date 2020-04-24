@@ -73,6 +73,10 @@
                             <span>施工项:</span>
                             {{item.type_name}}
                         </dd>
+                        <dd  v-if="item.forman_name!=''">
+                            <span>工长:</span>
+                            {{item.forman_name}}
+                        </dd>
                     </dl>
                 </div>
                 <div v-else>
