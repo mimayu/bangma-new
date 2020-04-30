@@ -22,7 +22,7 @@
           finished-text="没有更多了"
           @load="handleLoad"
         >
-            <Cell-group class="group" v-for="item in assignLists" :key="item.iCustomerId">
+            <Cell-group class="group" v-for="item in assignLists" :key="item.iCustomerId" :id="item.iCustomerId">
                 <Cell title="订单号">
                     <template>
                         <div class="custom_wrap">
@@ -42,6 +42,7 @@
                 <Cell title="施工内容" :value="item.sRemarks" />
                 <Cell title="业务员" :value="item.iSalesName" />
                 <Cell title="建单日期" :value="item.tOrderDate" />
+
                 <div class="van-cell btn_wrap" v-if="item.actions">
                     <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
                 </div>
@@ -160,9 +161,12 @@
                     case 1:
                         this.handleGo(id, type);
                         break;
-                        case 10:
+                    case 10:
                         window.location.href = 'http://www.51bangma.com/client/edit/?iCustomerId='+id+'&backurl=http://m.51bangma.com/assignList/';
                         break; 
+                    case 11:
+                        this.doCopy(id);
+                        break;     
                     default:
                         break;
                 }
@@ -227,6 +231,33 @@
             handleSourceCancel() {
                 this.sourceShow = false;
             },
+
+
+            doCopy: function (id) {
+                var oInput = document.createElement('textarea');
+                oInput.value =                     
+                document.getElementById(id).innerHTML
+                    .replace(/<\/?.+?>/g,"\n")
+                    .replace(/\n+/g,"\n")
+                    .replace("\n查看\n改派\n编辑\n复制","")
+                    .replace("\n订单号\n","订单号：")
+                    .replace("来源\n","来源：")
+                    .replace("姓名\n","姓名：")
+                    .replace("手机号\n","手机号：")
+                    .replace("固话\n","固话：")
+                    .replace("区域\n","区域：")
+                    .replace("地址\n","地址：")
+                    .replace("施工内容\n","施工内容：")
+                    .replace("业务员\n","业务员：")
+                    .replace("建单日期\n","建单日期：");
+                document.body.appendChild(oInput);
+                oInput.select(); 
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                oInput.className = 'oInput';
+                oInput.style.display = 'none';
+                console.log('复制成功');
+            }
+
 
         }
     }
