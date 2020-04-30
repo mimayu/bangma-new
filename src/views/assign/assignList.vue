@@ -243,6 +243,8 @@
                     .replace("\n订单号\n","订单号：")
                     .replace("来源\n","来源：")
                     .replace("姓名\n","姓名：")
+                    .replace("配合人\n","配合人：")
+                    .replace("推荐人\n","推荐人：")
                     .replace("手机号\n","手机号：")
                     .replace("固话\n","固话：")
                     .replace("区域\n","区域：")
