@@ -239,7 +239,7 @@
                 document.getElementById(id).innerHTML
                     .replace(/<\/?.+?>/g,"\n")
                     .replace(/\n+/g,"\n")
-                    .replace("\n查看\n改派\n编辑\n复制","")
+                    .replace("\n查看\n改派\n编辑\n复制\n","")
                     .replace("\n订单号\n","订单号：")
                     .replace("来源\n","来源：")
                     .replace("姓名\n","姓名：")
@@ -258,6 +258,7 @@
                 oInput.className = 'oInput';
                 oInput.style.display = 'none';
                 console.log('复制成功');
+                Toast('复制成功');
             }
 
 

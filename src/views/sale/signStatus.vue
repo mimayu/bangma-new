@@ -8,7 +8,7 @@
           :finished-text="finished_under_text"
           @load="handleUnderLoad"
         >
-          <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_under" :key="item.iCustomerId" :id="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
@@ -21,7 +21,15 @@
             <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
-            <Cell title="上门日期" :value="item.dateShangmen || '-'" />
+            <Cell title="基检日期" :value="item.dateShangmen || '-'" />
+
+            <Cell title="客户紧急" :value="item.iLevel || '-'" v-if="item.iLevel!=null&&item.iLevel!=''&&item.iLevel!=0"/>
+            <Cell title="环保意识" :value="item.iHuanbao || ''" v-if="item.iHuanbao!=null&&item.iHuanbao!=''"/>
+            <Cell title="价格接受度" :value="item.iJiage || ''" v-if="item.iJiage!=null&&item.iJiage!=''"/>
+            <Cell title="所报金额" :value="item.baojia_total || ''" v-if="item.baojia_total!=null&&item.baojia_total!=''"/>
+            <Cell title="施工项目" :value="item.type_name || ''" v-if="item.type_name!=null&&item.type_name!=''"/>
+
+            <Cell title="基检反馈" :value="item.shangmenContent || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -35,7 +43,7 @@
           :finished-text="finished_success_text"
           @load="handleSuccessLoad"
         >
-          <Cell-group class="group" v-for="item in data_success" :key="item.iCustomerId">
+          <Cell-group class="group" v-for="item in data_success" :key="item.iCustomerId"  :id="item.iCustomerId">
             <Cell title="订单号">
                 <template>
                     <div class="custom_wrap">
@@ -51,7 +59,7 @@
             <Cell title="签约日期" :value="item.dateOrder || '-'" />
             <Cell title="签约金额" :value="item.orderFee || '-'" />
             <Cell title="合同定金" :value="item.orderDingjin || '-'" />
-            <Cell title="留言" :value="item.shangmenContent || '-'" />
+            <Cell title="基检反馈" :value="item.shangmenContent || '-'" />
             <Cell title="预计开工日期" :value="item.dateYujiKaigong || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
@@ -157,6 +165,9 @@
           case 14:
             this.handleGo(id, type);
             break;
+          case 17:
+              this.doCopy(id);
+              break; 
           default:
             break;
         }
@@ -289,7 +300,56 @@
             }
           }
         )
-      }
+      },
+          doCopy: function (id) {
+            var oInput = document.createElement('textarea');
+            oInput.value =                     
+            document.getElementById(id).innerHTML
+                .replace(/<\/?.+?>/g,"\n")
+                .replace(/\n+/g,"\n")
+                .replace("\n查看","")
+                .replace("\n上门","")
+                .replace("\n报价调整","")
+                .replace("\n报价","")
+                .replace("\n编辑","")
+                .replace("\n复制","")
+                .replace("\n合同取消","")
+                .replace("\n派工","")
+                
+
+                .replace("\n订单号\n","订单号：")
+                .replace("来源\n","来源：")
+                .replace("姓名\n","姓名：")
+                .replace("配合人\n","配合人：")
+                .replace("推荐人\n","推荐人：")
+                .replace("手机号\n","手机号：")
+                .replace("固话\n","固话：")
+                .replace("客户紧急\n","客户紧急：")
+                .replace("基检日期\n","基检日期：")
+                .replace("环保意识\n","环保意识：")
+                .replace("价格接受度\n","价格接受度：")
+                .replace("所报金额\n","报价金额：")
+                .replace("施工项目\n","施工项目：")
+                .replace("区域\n","区域：")
+                .replace("签约日期\n","签约日期：")
+                .replace("签约金额\n","签约金额：")
+                .replace("合同定金\n","合同定金：")
+                .replace("基检反馈\n","基检反馈：")
+                .replace("预计开工日期\n","预计开工日期：")
+
+                .replace("地址\n","地址：")
+                .replace("施工内容\n","施工内容：")
+                .replace("业务员\n","业务员：")
+                .replace("建单日期\n","建单日期：");
+            document.body.appendChild(oInput);
+            oInput.select(); 
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            oInput.className = 'oInput';
+            oInput.style.display = 'none';
+            console.log('复制成功');
+            Toast('复制成功');
+        }
+
     }
   }
 </script>

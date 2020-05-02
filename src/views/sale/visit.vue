@@ -4,6 +4,10 @@
             <Cell title="订单状态" is-link :value="status" @click="choseOrder" />
             <Cell title="上门时间" is-link :value="time" @click="choseTime" />
             <Cell title="重点跟进" is-link :value="level" @click="choseLevel" v-if="status !== '签约成功'"/>
+
+            <Cell title="环保意识" is-link :value="huanbao" @click="choseHuanbao" v-if="status !== '签约成功'"/>
+            <Cell title="价格接受度" is-link :value="jiage" @click="choseJiage" v-if="status !== '签约成功'"/>
+
             <Cell title="客户反馈" is-link :value="action" @click="choseCustom"  v-if="status !== '签约成功'"/>
             <Cell title="跟进时间" is-link :value="nextTime" @click="choseNextTime" v-if="status === '签约等待'" />
             <Cell title="签约日期" is-link :value="dateOrder" @click="showOrderTime" v-if="status === '签约成功'" />
@@ -14,9 +18,9 @@
         <Cell-group>
             <Field
                 v-model="message"
-                label="留言"
+                label="上门情况"
                 type="textarea"
-                placeholder="请输入留言"
+                placeholder="请输入内容"
                 rows="2"
                 autosize
             />
@@ -96,6 +100,12 @@
         <Popup v-model="levelShow" position="bottom">
             <Picker show-toolbar :columns="levelActions" @cancel="handleLevelCancel" @confirm="handleLevelConfirm"/>
         </Popup>
+        <Popup v-model="huanbaoShow" position="bottom">
+            <Picker show-toolbar :columns="huanbaoActions" @cancel="handleHuanbaoCancel" @confirm="handleHuanbaoConfirm"/>
+        </Popup>
+        <Popup v-model="jiageShow" position="bottom">
+            <Picker show-toolbar :columns="jiageActions" @cancel="handleJiageCancel" @confirm="handleJiageConfirm"/>
+        </Popup>
         <Popup v-model="customShow" position="bottom">
             <Picker show-toolbar :columns="customActions" @cancel="handleCustomCancel" @confirm="handleCustomConfirm"/>
         </Popup>
@@ -137,6 +147,10 @@
                 nextShow: false, //跟进日期 签约等待
                 orderShow: false,
                 levelShow: false,
+
+                huanbaoShow: false,
+                jiageShow:false,
+
                 customShow: false,
                 showOrder: false, // 处理成功 -> 签约日期
                 showWork: false,  //处理成功 -> 预计开工日期
@@ -147,6 +161,20 @@
                 levelActions: [
                     'A', 'B', 'C', 'D'
                 ],
+
+                huanbaoActions: [
+                    '非常重视', '重视', '一般', '无所谓'
+                ],
+                huanbaoCode: [
+                    '1', '2', '3', '4'
+                ],
+                jiageActions: [
+                    '能接受立邦价格', '觉得立邦价格略高', '立邦价格不能接受'
+                ],
+                jiageCode: [
+                    '1', '2', '3'
+                ],
+
                 customActions: [
                     '',
                     '客户需要商量考虑。', 
@@ -158,6 +186,12 @@
                 status: '签约等待', // 状态
                 time: '', // 时间
                 level: '', // 客户重要程度
+
+                huanbao:'',// 客户对环保的意识
+                iHuanbao:'',
+                jiage:'',// 客户对立邦价格接受程度
+                iJiage:'',
+
                 action: '', // 操作
                 nextTime: '', //跟进日期 签约等待
                 dateOrder: '', // 签约成功 签约日期 2018-12-08
@@ -191,7 +225,9 @@
                     'iCustomerId': iCustomerId,
                     'dateShangmen': this.time,
                     'shangmenContent': `${this.action}${this.message}`,
-                    'iLevel': this.level
+                    'iLevel': this.level,
+                    'iHuanbao': this.iHuanbao,
+                    'iJiage':this.iJiage
                 }
                 if(this.status == '签约等待') {
                    params.iStatus = 4;
@@ -268,6 +304,46 @@
             handleLevelCancel() {
                 this.levelShow = false;
             },
+
+            /*
+            * 选择客户环保意识
+            */
+            choseHuanbao() {
+                this.huanbaoShow = true;
+            },
+            handleHuanbaoConfirm(value) {
+                let index = this.huanbaoActions.findIndex((item) => {
+                    return item == value
+                });
+                let iHuanbao = this.huanbaoCode[index];
+                this.huanbao = value;
+                this.iHuanbao = iHuanbao;
+                
+                this.huanbaoShow = false;
+            },
+            handleHuanbaoCancel() {
+                this.huanbaoShow = false;
+            },
+            /*
+            * 选择客户价格接受
+            */
+            choseJiage() {
+                this.jiageShow = true;
+            },
+            handleJiageConfirm(value) {
+                let index = this.jiageActions.findIndex((item) => {
+                    return item == value
+                });
+                let iJiage = this.jiageCode[index];
+                this.jiage = value;
+                this.iJiage = iJiage;
+
+                this.jiageShow = false;
+            },
+            handleJiageCancel() {
+                this.jiageShow = false;
+            },
+
             /*
             * 选择客户反馈
             */
