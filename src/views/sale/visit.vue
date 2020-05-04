@@ -6,7 +6,12 @@
             <Cell title="重点跟进" is-link :value="level" @click="choseLevel" v-if="status !== '签约成功'"/>
 
             <Cell title="环保意识" is-link :value="huanbao" @click="choseHuanbao" v-if="status !== '签约成功'"/>
-            <Cell title="价格接受度" is-link :value="jiage" @click="choseJiage" v-if="status !== '签约成功'"/>
+            <Cell title="消费能力" is-link :value="jiage" @click="choseJiage" v-if="status !== '签约成功'"/>
+            <Cell title="业主标签" is-link :value="biaoqian" @click="choseBiaoqian" v-if="status !== '签约成功'"/>
+            <Cell title="业主年龄" is-link :value="age" @click="choseAge" v-if="status !== '签约成功'"/>
+            <Cell title="家庭成员" is-link :value="chengyuan" @click="choseChengyuan" v-if="status !== '签约成功'"/>
+            <Cell title="决策人" is-link :value="jueceren" @click="choseJueceren" v-if="status !== '签约成功'"/>
+            <Cell title="翻新目的" is-link :value="mudi" @click="choseMudi" v-if="status !== '签约成功'"/>
 
             <Cell title="客户反馈" is-link :value="action" @click="choseCustom"  v-if="status !== '签约成功'"/>
             <Cell title="跟进时间" is-link :value="nextTime" @click="choseNextTime" v-if="status === '签约等待'" />
@@ -106,6 +111,24 @@
         <Popup v-model="jiageShow" position="bottom">
             <Picker show-toolbar :columns="jiageActions" @cancel="handleJiageCancel" @confirm="handleJiageConfirm"/>
         </Popup>
+
+        <Popup v-model="biaoqianShow" position="bottom">
+            <Picker show-toolbar :columns="biaoqianActions" @cancel="handleBiaoqianCancel" @confirm="handleBiaoqianConfirm"/>
+        </Popup>
+        <Popup v-model="ageShow" position="bottom">
+            <Picker show-toolbar :columns="ageActions" @cancel="handleAgeCancel" @confirm="handleAgeConfirm"/>
+        </Popup>
+        <Popup v-model="chengyuanShow" position="bottom">
+            <Picker show-toolbar :columns="chengyuanActions" @cancel="handleChengyuanCancel" @confirm="handleChengyuanConfirm"/>
+        </Popup>
+        <Popup v-model="juecerenShow" position="bottom">
+            <Picker show-toolbar :columns="juecerenActions" @cancel="handleJuecerenCancel" @confirm="handleJuecerenConfirm"/>
+        </Popup>
+        <Popup v-model="mudiShow" position="bottom">
+            <Picker show-toolbar :columns="mudiActions" @cancel="handleMudiCancel" @confirm="handleMudiConfirm"/>
+        </Popup>
+
+
         <Popup v-model="customShow" position="bottom">
             <Picker show-toolbar :columns="customActions" @cancel="handleCustomCancel" @confirm="handleCustomConfirm"/>
         </Popup>
@@ -150,6 +173,11 @@
 
                 huanbaoShow: false,
                 jiageShow:false,
+                biaoqianShow:false,
+                ageShow:false,
+                chengyuanShow:false,
+                juecerenShow:false,
+                mudiShow:false,
 
                 customShow: false,
                 showOrder: false, // 处理成功 -> 签约日期
@@ -169,11 +197,43 @@
                     '1', '2', '3', '4'
                 ],
                 jiageActions: [
-                    '能接受立邦价格', '觉得立邦价格略高', '立邦价格不能接受'
+                    '追求品质', '正常消费', '追求性价比'
                 ],
                 jiageCode: [
                     '1', '2', '3'
                 ],
+                biaoqianActions:[
+                    '上海本地人','新上海人','非上海人'
+                ],
+                biaoqianCode: [
+                    '1', '2', '3'
+                ],
+                ageActions:[
+                    '25~35','36~45','45~55','55岁以上'
+                ],
+                ageCode: [
+                    '1', '2', '3','4'
+                ],
+                chengyuanActions:[
+                    '有小孩','有老人','既有小孩又有老人'
+                ],
+                chengyuanCode: [
+                    '1', '2', '3'
+                ],
+                juecerenActions:[
+                    '老婆决策','老公决策','2人决策（夫妻）','4人决策（夫妻发，父母参与）','4人决策（父母发起，子女参与）'
+                ],
+                juecerenCode: [
+                    '1', '2', '3','4','5'
+                ],
+                mudiActions:[
+                    '老房子（改善自住环境）','解决房屋问题（漏水、水电路等）','翻新后出售','翻新后出租'
+                ],
+                mudiCode: [
+                    '1', '2', '3','4'
+                ],
+                
+
 
                 customActions: [
                     '',
@@ -191,6 +251,16 @@
                 iHuanbao:'',
                 jiage:'',// 客户对立邦价格接受程度
                 iJiage:'',
+                biaoqian:'',// 客户标签
+                iBiaoqian:'',
+                age:'',// 客户年龄
+                iAge:'',                
+                chengyuan:'',// 客户家庭组成成员
+                iChengyuan:'', 
+                jueceren:'',// 客户年龄
+                iJueceren:'', 
+                mudi:'',//翻新目的
+                iMudi:'',
 
                 action: '', // 操作
                 nextTime: '', //跟进日期 签约等待
@@ -227,7 +297,12 @@
                     'shangmenContent': `${this.action}${this.message}`,
                     'iLevel': this.level,
                     'iHuanbao': this.iHuanbao,
-                    'iJiage':this.iJiage
+                    'iJiage':this.iJiage,
+                    'iBiaoqian':this.iBiaoqian,
+                    'iAge':this.iAge,
+                    'iChengyuan':this.iChengyuan,
+                    'iJueceren':this.iJueceren,
+                    'iMudi':this.iMudi
                 }
                 if(this.status == '签约等待') {
                    params.iStatus = 4;
@@ -343,6 +418,111 @@
             handleJiageCancel() {
                 this.jiageShow = false;
             },
+
+            /*
+            * 业主标签
+            */
+            choseBiaoqian() {
+                this.biaoqianShow = true;
+            },
+            handleBiaoqianConfirm(value) {
+                let index = this.biaoqianActions.findIndex((item) => {
+                    return item == value
+                });
+                let iBiaoqian = this.biaoqianCode[index];
+                this.biaoqian = value;
+                this.iBiaoqian = iBiaoqian;
+
+                this.biaoqianShow = false;
+            },
+            handleBiaoqianCancel() {
+                this.biaoqianShow = false;
+            },
+
+            /*
+            * 业主年龄
+            */
+            choseAge() {
+                this.ageShow = true;
+            },
+            handleAgeConfirm(value) {
+                let index = this.ageActions.findIndex((item) => {
+                    return item == value
+                });
+                let iAge = this.ageCode[index];
+                this.age = value;
+                this.iAge = iAge;
+
+                this.ageShow = false;
+            },
+            handleAgeCancel() {
+                this.ageShow = false;
+            },
+
+
+            /*
+            * 家庭成员
+            */
+            choseChengyuan() {
+                this.chengyuanShow = true;
+            },
+            handleChengyuanConfirm(value) {
+                let index = this.chengyuanActions.findIndex((item) => {
+                    return item == value
+                });
+                let iChengyuan = this.chengyuanCode[index];
+                this.chengyuan = value;
+                this.iChengyuan = iChengyuan;
+
+                this.chengyuanShow = false;
+            },
+            handleChengyuanCancel() {
+                this.chengyuanShow = false;
+            },
+
+            /*
+            * 家庭成员
+            */
+            choseJueceren() {
+                this.juecerenShow = true;
+            },
+            handleJuecerenConfirm(value) {
+                let index = this.juecerenActions.findIndex((item) => {
+                    return item == value
+                });
+                let iJueceren = this.juecerenCode[index];
+                this.jueceren = value;
+                this.iJueceren = iJueceren;
+
+                this.juecerenShow = false;
+            },
+            handleJuecerenCancel() {
+                this.juecerenShow = false;
+            },
+
+            /*
+            * 翻新目的
+            */
+            choseMudi() {
+                this.mudiShow = true;
+            },
+            handleMudiConfirm(value) {
+                let index = this.mudiActions.findIndex((item) => {
+                    return item == value
+                });
+                let iMudi = this.mudiCode[index];
+                this.mudi = value;
+                this.iMudi = iMudi;
+
+                this.mudiShow = false;
+            },
+            handleMudiCancel() {
+                this.mudiShow = false;
+            },
+
+
+
+
 
             /*
             * 选择客户反馈

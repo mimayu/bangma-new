@@ -22,15 +22,21 @@
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
             <Cell title="接单日期" :value="item.tOrderDate || '-'" />
-            <Cell title="基检日期" :value="item.dateShangmen || '-'" />
+            <Cell title="上门日期" :value="item.dateShangmen || '-'" />
 
             <Cell title="客户紧急" :value="item.iLevel || '-'" v-if="item.iLevel!=null&&item.iLevel!=''&&item.iLevel!=0"/>
             <Cell title="环保意识" :value="item.iHuanbao || ''" v-if="item.iHuanbao!=null&&item.iHuanbao!=''"/>
-            <Cell title="价格接受度" :value="item.iJiage || ''" v-if="item.iJiage!=null&&item.iJiage!=''"/>
-            <Cell title="所报金额" :value="item.baojia_total || ''" v-if="item.baojia_total!=null&&item.baojia_total!=''"/>
+            <Cell title="消费能力" :value="item.iJiage || ''" v-if="item.iJiage!=null&&item.iJiage!=''"/>
+            <Cell title="业主标签" :value="item.iBiaoqian || ''" v-if="item.iBiaoqian!=null&&item.iBiaoqian!=''"/>
+            <Cell title="业主年龄" :value="item.iAge || ''" v-if="item.iAge!=null&&item.iAge!=''"/>
+            <Cell title="家庭成员" :value="item.iChengyuan || ''" v-if="item.iChengyuan!=null&&item.iChengyuan!=''"/>
+            <Cell title="决策人" :value="item.iJueceren || ''" v-if="item.iJueceren!=null&&item.iJueceren!=''"/>
+            <Cell title="翻新目的" :value="item.iMudi || ''" v-if="item.iMudi!=null&&item.iMudi!=''"/>
+
+            <Cell title="报价金额" :value="item.baojia_total || ''" v-if="item.baojia_total!=null&&item.baojia_total!=''"/>
             <Cell title="施工项目" :value="item.type_name || ''" v-if="item.type_name!=null&&item.type_name!=''"/>
 
-            <Cell title="基检反馈" :value="item.shangmenContent || '-'" />
+            <Cell title="上门反馈" :value="item.shangmenContent || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
             </div>
@@ -58,6 +64,7 @@
             <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
             <Cell title="地址" :value="item.sAddress" />
             <Cell title="施工内容" :value="item.sRemarks || '-'" />
+            <Cell title="接单日期" :value="item.tOrderDate || '-'" />
             <Cell title="取消日期" :value="item.dateQuxiao || '-'" />
             <div class="van-cell btn_wrap" v-if="item.actions">
               <button plain type="primary" class="assign_btn" v-for="(action, index) in item.actions" :key="action.type" @click="handleClick(action.type, item.iCustomerId)">{{action.name}}</button>
@@ -296,13 +303,14 @@
                 .replace(/<\/?.+?>/g,"\n")
                 .replace(/\n+/g,"\n")
                 .replace("\n查看","")
-                .replace("\n上门","")
+                .replace("\n上门\n","")
                 .replace("\n报价调整","")
-                .replace("\n报价","")
+                .replace("\n报价\n","")
                 .replace("\n编辑","")
                 .replace("\n复制","")
                 .replace("\n合同取消","")
                 .replace("\n派工","")
+                .replace("\n跟进","")
                 
 
                 .replace("\n订单号\n","订单号：")
@@ -313,16 +321,24 @@
                 .replace("手机号\n","手机号：")
                 .replace("固话\n","固话：")
                 .replace("客户紧急\n","客户紧急：")
-                .replace("基检日期\n","基检日期：")
+                .replace("上门日期\n","上门日期：")
                 .replace("环保意识\n","环保意识：")
-                .replace("价格接受度\n","价格接受度：")
-                .replace("所报金额\n","报价金额：")
+                .replace("消费能力\n","消费能力：")
+
+                .replace("业主标签\n","业主标签：")
+                .replace("业主年龄\n","业主年龄：")
+                .replace("家庭成员\n","家庭成员：")
+                .replace("决策人\n","决策人：")
+                .replace("翻新目的\n","翻新目的：")
+
+
+                .replace("报价金额\n","报价金额：")
                 .replace("施工项目\n","施工项目：")
                 .replace("区域\n","区域：")
                 .replace("签约日期\n","签约日期：")
                 .replace("签约金额\n","签约金额：")
                 .replace("合同定金\n","合同定金：")
-                .replace("基检反馈\n","基检反馈：")
+                .replace("上门反馈\n","上门反馈：")
                 .replace("预计开工日期\n","预计开工日期：")
 
                 .replace("地址\n","地址：")
