@@ -357,7 +357,7 @@
                 .replace("地址\n","地址：")
                 .replace("施工内容\n","施工内容：")
                 .replace("业务员\n","业务员：")
-                .replace("接单日期\n","接单日期");
+                .replace("接单日期\n","接单日期：");
             document.body.appendChild(oInput);
             oInput.select(); 
             document.execCommand("Copy"); // 执行浏览器复制命令
