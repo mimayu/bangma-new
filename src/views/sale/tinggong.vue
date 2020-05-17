@@ -75,7 +75,7 @@
             };
         },
         created() {
-            this.active = this.$route.params.active || 0;
+            this.active = this.$route.params.active || this.$route.query.active || 0;
             this.minDate.setMonth(this.minDate.getMonth()-1);
             this.maxDate.setMonth(this.minDate.getMonth()+2);
         },
@@ -84,8 +84,8 @@
             * 处理提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 0;
-                let from = this.$route.params.from || '';
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
+                let from = this.$route.params.from || this.$route.query.from || '';
                 let name = from == 'boss' ? 'bossWorking' : 'saleWorking';
                 let params = {
                     'iCustomerId': iCustomerId,

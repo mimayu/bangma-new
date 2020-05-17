@@ -76,8 +76,8 @@
             * 提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 0;
-                let from = this.$route.params.from || '';
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
+                let from = this.$route.params.from || this.$route.query.from || '';
                 let name = from == 'boss' ? 'bossLoss' : 'signStatus';
                 let active = from == 'boss' ? '2' : '3';
 

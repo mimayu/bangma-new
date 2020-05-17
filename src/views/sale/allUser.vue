@@ -366,7 +366,11 @@
                             }
                         }
                     )
-                }else{
+                }else if(type == 11){
+                   let url = this.$router.resolve({name: name, query: {id: id,backurl: 'allUser'}});
+                   window.open(url.href,'_blank')
+                }
+                else{
                     this.$router.push(
                         {
                             name: name,

@@ -126,8 +126,8 @@
       step: {type: Number, default:1},
     },   
     created() {
-      this.iCustomerId = this.$route.params.id || this.$route.query.id;
-      this.iMode = this.$route.params.mode || this.$route.query.mode;
+      this.iCustomerId = this.$route.params.id || this.$route.query.id || 0;
+      this.iMode = this.$route.params.mode || this.$route.query.mode || 1;
       this.tabs.push(this.iCustomerId); // 头部
       this.getQuote(true);
     },
@@ -249,7 +249,7 @@
           return;
         }
         let idAndNumberValues = [];
-        let iCustomerId = this.$route.params.id || 1;
+        let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
         this.selectGoods.map(item => {
           idAndNumberValues.push(`${item.id}|${item.quantity}`)
         })
@@ -312,7 +312,7 @@
           message: '<p>确定需要增项？</p>'
         }).then(() => {
 
-          let iCustomerId = this.$route.params.id || 1;
+          let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
           let params = {
             'iCustomerId': iCustomerId
           }

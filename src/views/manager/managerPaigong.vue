@@ -40,7 +40,7 @@
         },
         methods: {
             getPaigong() {
-                let { id } = this.$route.params || 1;
+                let { id } = this.$route.params || this.$route.query || 0;
                 let params = {
                     'iCustomerId': id
                 }
@@ -56,7 +56,7 @@
                 this.iForeman = res;
             },
             handleSubmit() {
-                let { id } = this.$route.params || 1;
+                let { id } = this.$route.params || this.$route.query || 0;
                 let params = {
                     'iCustomerId': id,
                     'iForeman': this.iForeman

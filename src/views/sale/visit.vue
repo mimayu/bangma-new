@@ -290,7 +290,7 @@
             * 处理提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateShangmen': this.time,
@@ -804,7 +804,7 @@
                 formData.append('type', blob.type);
                 formData.append('size', blob.size);
                 formData.append('file', blob, imgFile.name);
-                formData.append('customer_id', this.$route.params.id || 0);
+                formData.append('customer_id', this.$route.params.id || this.$route.query.id || 0);
                 this.uploadImg(data, formData);
             },
             uploadImg (data, formData) {

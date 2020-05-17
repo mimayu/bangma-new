@@ -78,7 +78,7 @@
                     {
                         name: 'signStatus',
                         query: {
-                            active: this.$route.params.active
+                            active: this.$route.params.active || this.$route.query.active || 0
                         }
                     }
                 )
@@ -309,7 +309,7 @@
                 formData.append('type', blob.type);
                 formData.append('size', blob.size);
                 formData.append('file', blob, imgFile.name);
-                formData.append('customer_id', this.$route.params.id || 0);
+                formData.append('customer_id', this.$route.params.id || this.$route.query.id || 0);
                 this.uploadImg(data, formData);
             },
             uploadImg (data, formData) {

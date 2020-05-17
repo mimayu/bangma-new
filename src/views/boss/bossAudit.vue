@@ -1,5 +1,18 @@
 <template>
     <div class="bossAudit_container">
+            <Row class="header">
+            <Col span="24" class="search_bar">
+                <Search
+                    v-model="value"
+                    placeholder="请输入关键词"
+                    show-action
+                    @search="handleSearch"
+                >
+                    <div slot="action" @click="handleSearch">搜索</div>
+                </Search>
+            </Col>
+        </Row>
+        <div class="content">
         <List
           v-model="loading"
           :finished="finished"
@@ -33,32 +46,36 @@
                 </div>
             </Cell-group>
         </List>
+        </div>
         <footerNav></footerNav>
     </div>
 </template>
 
 <script>
-    import { Cell, CellGroup, Button, Field, Toast, Popup, Picker, List } from 'vant';
+    import { Tab, Tabs, Cell, CellGroup, Toast, Row, Col, Search, List, Actionsheet } from 'vant';
     import footerNav from "@/components/footerNav"; // 引入页脚    
     import { getCustomer } from '@/server';
 
     export default {
         name: 'bossAudit',
         components: {
+            Tab,
+            Tabs,
             Cell,
             CellGroup,
-            Button,
-            Field,
             Toast,
-            Popup, 
-            Picker,
+            Row,
+            Col,
+            Search,
             List,
+            Actionsheet,
             footerNav
         },
         data() {
             return {
                 page: 1,
                 auditLists: [],
+                value: '', // 搜索
                 loading: false, // 是否加载
                 finished: false, // 是否结束
             };
@@ -111,12 +128,32 @@
             handleLoad() {
                 this.getCustomer();
             },
+
+            /*
+            * 重置
+            */
+            reset() {
+                this.auditLists = [];
+                this.loading = true;
+                this.finished = false;
+                this.page = 1;
+            },
+            /*
+            * 搜索
+            */
+            handleSearch() {
+                this.reset();
+                this.getCustomer();
+            },
+
+
             /*
             * 请求数据
             */
             getCustomer() {
                 let params = {
                     status: 10,
+                    keywords: this.value,
                     page: this.page
                 }
                 getCustomer(params).then(

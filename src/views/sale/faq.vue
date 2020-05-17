@@ -82,7 +82,7 @@
             };
         },
         created() {
-            this.active = this.$route.params.active || 0;
+            this.active = this.$route.params.active || this.$route.query.active || 0;
         },
         mounted: function() {
             //this.getData();

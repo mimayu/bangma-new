@@ -54,7 +54,7 @@
             };
         },
         created() {
-            this.iCustomerId = this.$route.params.iCustomerId || 0;
+            this.iCustomerId = this.$route.params.iCustomerId || this.$route.query.iCustomerId || 0;
             this.getFollowupList();
         },
         methods: {

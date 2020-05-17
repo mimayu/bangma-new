@@ -1,5 +1,20 @@
 <template>
   <div class="sale_loss_cintainer">
+        <Row class="header">
+            <Col span="24" class="search_bar">
+                <Search
+                    v-model="value"
+                    placeholder="请输入关键词"
+                    show-action
+                    @search="handleSearch"
+                >
+                    <div slot="action" @click="handleSearch">搜索</div>
+                </Search>
+            </Col>
+        </Row>
+
+
+    <div class="content">
     <Tabs v-model="active">
       <Tab title="签约失败">
         <List
@@ -75,6 +90,7 @@
 
 
     </Tabs>
+    </div>
     <Actionsheet
       v-model="modeShow"
       :actions="actions"
@@ -85,7 +101,7 @@
 </template>
 
 <script>
-  import { Tab, Tabs, Cell, CellGroup, Toast, List, Actionsheet } from 'vant';
+  import { Tab, Tabs, Cell, CellGroup, Toast, Row, Col, Search, List, Actionsheet } from 'vant';
   import { getCustomer } from '@/server';
   import { getBaojiaMode } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
@@ -101,7 +117,7 @@
         actions: [],
         actionids:[],
         currentId: '', // 选择的id
-        
+        value: '', // 搜索
         loading_cancel: false, // 签约失败 
         finished_cancel: false, // 签约失败 
         finished_cancel_text: '没有更多了', // 签约成功 
@@ -113,14 +129,17 @@
       }
     },
     components: {
-      Tab,
-      Tabs,
-      Cell, 
-      CellGroup,
-      Toast,
-      List,
-      Actionsheet,
-      'footerNav': footerNav,
+        Tab,
+        Tabs,
+        Cell,
+        CellGroup,
+        Toast,
+        Row,
+        Col,
+        Search,
+        List,
+        Actionsheet,
+        footerNav
     },
     created() {
       this.active = this.$route.query.active || 0;
@@ -253,6 +272,7 @@
       handleCancelLoad() {
         let params = {
           status: 101,
+          keywords: this.value,
           page: this.page_cancel,
         }
         this.getInfo(params, 'cancel');
@@ -263,10 +283,55 @@
       handleQuxiaoLoad() {
         let params = {
           status: 102,
+          keywords: this.value,
           page: this.page_quxiao,
         }
         this.getInfo(params, 'quxiao');
       },
+
+      /*
+      * 重置
+      */
+      reset(type) {
+          let dataType = `data_${type}`;
+          let finishedType = `finished_${type}`;
+          let loadingType = `loading_${type}`;
+          let pageType = `page_${type}`;
+
+          this[dataType] = [];
+          this[loadingType] = true;
+          this[finishedType] = false;
+          this[pageType] = 1;
+      },
+      /*
+      * 处理搜索
+      */
+      handleSearch() {
+          let active = this.active;
+          let type = 'cancel';
+          switch(active) {
+              case 0:
+                  status =  101;
+                  type = 'cancel';
+                  break;
+              case 1:
+                  status =  102;
+                  type = 'quxiao';
+                  break;    
+          }
+
+          this.reset(type);
+          let pageType = `page_${type}`;
+          let params = {
+              page: this[pageType],
+              keywords: this.value,
+              status: status,
+          }
+
+          this.getInfo(params, type);
+      },
+
+
       /*
       * 获取数据
       */

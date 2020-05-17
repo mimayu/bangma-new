@@ -50,8 +50,8 @@
         },
         methods: {
             Confirm() {
-                let iCustomerId = this.$route.params.id || 1;
-                let from = this.$route.params.from || '';
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
+                let from = this.$route.params.from || this.$route.query.from || '';
                 let name = from == 'boss' ? 'bossFinish' : 'saleFinish';
                 let active = from == 'boss' ? '0' : '0';
                 let params = {

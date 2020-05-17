@@ -1,5 +1,20 @@
 <template>
   <div class="saleFinish_container">
+          <Row class="header">
+            <Col span="24" class="search_bar">
+                <Search
+                    v-model="value"
+                    placeholder="请输入关键词"
+                    show-action
+                    @search="handleSearch"
+                >
+                    <div slot="action" @click="handleSearch">搜索</div>
+                </Search>
+            </Col>
+        </Row>
+
+
+    <div class="content">
     <Tabs v-model="active">
       <Tab title="完工验收">
         <List
@@ -73,6 +88,7 @@
 
 
     </Tabs>
+    </div>
     <Actionsheet
       v-model="modeShow"
       :actions="actions"
@@ -83,7 +99,7 @@
 </template>
 
 <script>
-  import { Tab, Tabs, Cell, CellGroup, Toast, List, Actionsheet } from 'vant';
+  import { Tab, Tabs, Cell, CellGroup, Toast, Row, Col, Search, List, Actionsheet } from 'vant';
   import { getCustomer } from '@/server';
   import { getBaojiaMode } from '@/server';
   import footerNav from '../../components/footerNav' // 引入login.vue组件
@@ -109,17 +125,21 @@
         finished_wancheng: false, // 完工收款 
         finished_wancheng_text: '没有更多了', // 完工收款 
         page_wancheng: 1, // 完工收款 
+        value: '', // 搜索
       }
     },
     components: {
-      Tab,
-      Tabs,
-      Cell, 
-      CellGroup,
-      Toast,
-      List,
-      Actionsheet,
-      'footerNav': footerNav,
+        Tab,
+        Tabs,
+        Cell,
+        CellGroup,
+        Toast,
+        Row,
+        Col,
+        Search,
+        List,
+        Actionsheet,
+        footerNav
     },
     created() {
       this.active = this.$route.query.active || 0;
@@ -273,6 +293,7 @@
       handleYanshouLoad() {
         let params = {
           status: 8,
+          keywords: this.value,
           page: this.page_yanshou,
         }
         this.getInfo(params, 'yanshou');
@@ -283,10 +304,55 @@
       handleWanchengLoad() {
         let params = {
           status: 9,
+          keywords: this.value,
           page: this.page_wancheng,
         }
         this.getInfo(params, 'wancheng');
       },
+
+      /*
+      * 重置
+      */
+      reset(type) {
+          let dataType = `data_${type}`;
+          let finishedType = `finished_${type}`;
+          let loadingType = `loading_${type}`;
+          let pageType = `page_${type}`;
+
+          this[dataType] = [];
+          this[loadingType] = true;
+          this[finishedType] = false;
+          this[pageType] = 1;
+      },
+      /*
+      * 处理搜索
+      */
+      handleSearch() {
+          let active = this.active;
+          let type = 'yanshou';
+          switch(active) {
+              case 0:
+                  status =  8;
+                  type = 'yanshou';
+                  break;
+              case 1:
+                  status =  9;
+                  type = 'wancheng';
+                  break;    
+          }
+
+          this.reset(type);
+          let pageType = `page_${type}`;
+          let params = {
+              page: this[pageType],
+              keywords: this.value,
+              status: status,
+          }
+
+          this.getInfo(params, type);
+      },
+
+
       /*
       * 获取数据
       */

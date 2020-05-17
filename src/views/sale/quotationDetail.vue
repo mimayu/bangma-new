@@ -79,8 +79,8 @@ export default {
     }
   },
   created() {
-    this.iCustomerId = this.$route.params.id || 0;
-    this.iMode = this.$route.params.iMode || 1;
+    this.iCustomerId = this.$route.params.id || this.$route.query.id || 0;
+    this.iMode = this.$route.params.iMode || this.$route.query.iMode || 1;
     this.getSubmitInfo();
   },
   computed: {

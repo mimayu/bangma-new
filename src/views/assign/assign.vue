@@ -40,7 +40,7 @@
         },
         methods: {
             getAssign() {
-                let { id } = this.$route.params || 1;
+                let { id } = this.$route.params || this.$route.query || 0;
                 let params = {
                     'iCustomerId': id,
                     'doAction': ''
@@ -62,7 +62,7 @@
                 this.iSalesId = res;
             },
             handleSubmit() {
-                let { id } = this.$route.params || 0;
+                let { id } = this.$route.params || this.$route.query || 0;
                 let params = {
                     'iCustomerId': id,
                     'iSalesId': this.iSalesId,

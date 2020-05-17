@@ -53,8 +53,8 @@
             };
         },
         created() {
-            this.active = this.$route.params.active || 0;
-            this.backurl = this.$route.params.backurl || 0;
+            this.active = this.$route.params.active || this.$route.query.active || 0;
+            this.backurl = this.$route.params.backurl || this.$route.query.backurl || 0;
         },
         methods: {
             /*

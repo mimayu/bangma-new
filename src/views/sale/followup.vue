@@ -107,8 +107,8 @@
             };
         },
         created() {
-            this.active = this.$route.params.active || 0;
-            this.backurl = this.$route.params.backurl || 0;
+            this.active = this.$route.params.active || this.$route.query.active || 0;
+            this.backurl = this.$route.params.backurl || this.$route.query.backurl || 0;
             this.minDate.setMonth(this.minDate.getMonth()-1);
             this.maxDate.setMonth(this.minDate.getMonth()+2);
         },
@@ -117,7 +117,7 @@
             * 处理提交
             */
             handleSubmit() {
-                let iCustomerId = this.$route.params.id || 0;
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
                 let params = {
                     'iCustomerId': iCustomerId,
                     'timeFollow': this.time,
@@ -130,14 +130,15 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
-                            this.$router.push(
-                                {
-                                    name: this.backurl,
-                                    query: {
-                                        active: this.active
-                                    }
-                                }
-                            )
+                            //this.$router.push(
+                            //    {
+                            //        name: this.backurl,
+                            //        query: {
+                            //            active: this.active
+                            //        }
+                            //    }
+                            //)
+                            window.close();
                             return;
                         }
                         Toast(res.msg);

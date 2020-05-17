@@ -175,7 +175,7 @@
             },
             Confirm() {
                 console.log("Confirm")
-                let iCustomerId = this.$route.params.id || 1;
+                let iCustomerId = this.$route.params.id || this.$route.query.id || 0;
                 let params = {
                     'iCustomerId': iCustomerId,
                     'dateWeikuan': this.startTime,
