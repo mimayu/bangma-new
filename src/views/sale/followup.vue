@@ -130,15 +130,15 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
-                            //this.$router.push(
-                            //    {
-                            //        name: this.backurl,
-                            //        query: {
-                            //            active: this.active
-                            //        }
-                            //    }
-                            //)
-                            window.close();
+                            this.$router.push(
+                                {
+                                    name: this.backurl,
+                                    query: {
+                                        active: this.active
+                                    }
+                                }
+                            )
+                            //window.close();
                             return;
                         }
                         Toast(res.msg);
