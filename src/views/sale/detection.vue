@@ -473,30 +473,7 @@ export default {
         }
       )
     },
-    right:function(){
-
-          let recruitScrollY = this.$store.state.recruitScrollY
-          if(recruitScrollY>0)
-          window.scrollTo(0, recruitScrollY);
-
-          var  end = setInterval(function(){}, 100);
-          var start = (end - 100) > 0 ? end -100 : 0;
-          for(var i = start; i < end; i++)
-          {
-               clearInterval(i);
-          } 
-    },
   },
-  beforeRouteLeave(to, from, next) {
-    let position = window.scrollY  //记录离开页面的位置
-    if (position == null) position = 0
-    this.$store.commit('changeRecruitScrollY', position) //离开路由时把位置存起来
-    next()
-  },
-  mounted:function(){
-    var int = setInterval(this.right,1000)
-  }
-  
 }
 </script>
 

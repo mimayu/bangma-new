@@ -217,7 +217,10 @@
                         break;    
                     case 13:
                         this.handleGo(id, type);
-                        break; 
+                        break;
+                    case 15:
+                        window.location.href = 'http://www.51bangma.com/gongqi/yanshou/?iCustomerId='+id;
+                        break;  
                     default:
                         break;
                 }

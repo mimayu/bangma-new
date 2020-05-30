@@ -1,6 +1,6 @@
 <template>
     <div class="bossFinish_container">
-            <Row class="header">
+        <Row class="header">
             <Col span="24" class="search_bar">
                 <Search
                     v-model="value"

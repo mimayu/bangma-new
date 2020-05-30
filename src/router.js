@@ -5,6 +5,15 @@ import Login from './views/login/login'
 Vue.use(Router)
 
 export default new Router({
+
+	scrollBehavior(to,from,savedPosition){
+		if (savedPosition) {
+			return savedPosition
+		}else {
+			return {x:0,y:0}
+		}
+	},
+
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -63,12 +72,20 @@ export default new Router({
     {
       path: '/allUser',
       name: 'allUser',
-      component: () => import(/* webpackChunkName: "allUser" */ './views/sale/allUser')
+      component: () => import(/* webpackChunkName: "allUser" */ './views/sale/allUser'),
+      meta:{
+				title:'allUser',
+				keepAlive:true,
+			}
     },
     {
       path: '/detection',
       name: 'detection',
-      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection')
+      component: () => import(/* webpackChunkName: "detection" */ './views/sale/detection'),
+      meta:{
+				title:'detection',
+				keepAlive:true,
+			}
     },
     /** 
     * sale - > 开工实施 
@@ -76,7 +93,11 @@ export default new Router({
     {
       path: '/saleWorking',
       name: 'saleWorking',
-      component: () => import(/* webpackChunkName: "saleWorking" */ './views/sale/saleWorking')
+      component: () => import(/* webpackChunkName: "saleWorking" */ './views/sale/saleWorking'),
+      meta:{
+				title:'saleWorking',
+				keepAlive:true,
+			}
     },
     /** 
     * sale - > 签约
@@ -84,7 +105,11 @@ export default new Router({
     {
       path: '/signStatus',
       name: 'signStatus',
-      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus')
+      component: () => import(/* webpackChunkName: "signStatus" */ './views/sale/signStatus'),
+      meta:{
+				title:'signStatus',
+				keepAlive:true,
+			}
     },
     /** 
     * sale - > 完工 
@@ -92,7 +117,11 @@ export default new Router({
     {
       path: '/saleFinish',
       name: 'saleFinish',
-      component: () => import(/* webpackChunkName: "saleFinish" */ './views/sale/saleFinish')
+      component: () => import(/* webpackChunkName: "saleFinish" */ './views/sale/saleFinish'),
+      meta:{
+				title:'saleFinish',
+				keepAlive:true,
+			}
     },
     /** 
     * sale - > 流失 
@@ -100,7 +129,11 @@ export default new Router({
     {
       path: '/saleLoss',
       name: 'saleLoss',
-      component: () => import(/* webpackChunkName: "saleLoss" */ './views/sale/saleLoss')
+      component: () => import(/* webpackChunkName: "saleLoss" */ './views/sale/saleLoss'),
+      meta:{
+				title:'saleLoss',
+				keepAlive:true,
+			}
     },
     /** 
     * sale - > 问答 
@@ -123,7 +156,11 @@ export default new Router({
     {
       path: '/tinggonglist',
       name: 'tinggonglist',
-      component: () => import(/* webpackChunkName: "tinggonglist" */ './views/sale/tinggonglist')
+      component: () => import(/* webpackChunkName: "tinggonglist" */ './views/sale/tinggonglist'),
+      meta:{
+				title:'tinggonglist',
+				keepAlive:true,
+			}
     },
     {
       path: '/record',
@@ -260,7 +297,11 @@ export default new Router({
     {
       path: '/bossWorking',
       name: 'bossWorking',
-      component: () => import(/* webpackChunkName: "bossWorking" */ './views/boss/bossWorking.vue')
+      component: () => import(/* webpackChunkName: "bossWorking" */ './views/boss/bossWorking.vue'),
+      meta:{
+				title:'bossWorking',
+				keepAlive:true,
+			}
     },
     /** 
     * boss - > 完工
@@ -268,7 +309,11 @@ export default new Router({
     {
       path: '/bossFinish',
       name: 'bossFinish',
-      component: () => import(/* webpackChunkName: "bossFinish" */ './views/boss/bossFinish.vue')
+      component: () => import(/* webpackChunkName: "bossFinish" */ './views/boss/bossFinish.vue'),
+      meta:{
+				title:'bossFinish',
+				keepAlive:true,
+			}
     },
     /** 
     * boss - > 审核完成
@@ -276,7 +321,11 @@ export default new Router({
     {
       path: '/bossAudit',
       name: 'bossAudit',
-      component: () => import(/* webpackChunkName: "bossAudit" */ './views/boss/bossAudit.vue')
+      component: () => import(/* webpackChunkName: "bossAudit" */ './views/boss/bossAudit.vue'),
+      meta:{
+				title:'bossAudit',
+				keepAlive:true,
+			}
     },
     /** 
     * boss - > 结算
@@ -284,7 +333,11 @@ export default new Router({
     {
       path: '/bossSettle',
       name: 'bossSettle',
-      component: () => import(/* webpackChunkName: "bossSettle" */ './views/boss/bossSettle')
+      component: () => import(/* webpackChunkName: "bossSettle" */ './views/boss/bossSettle'),
+      meta:{
+				title:'bossSettle',
+				keepAlive:true,
+			}
     },
     /** 
     * boss - > 流失率
@@ -292,7 +345,11 @@ export default new Router({
     {
       path: '/bossLoss',
       name: 'bossLoss',
-      component: () => import(/* webpackChunkName: "bossLoss" */ './views/boss/bossLoss')
+      component: () => import(/* webpackChunkName: "bossLoss" */ './views/boss/bossLoss'),
+      meta:{
+				title:'bossLoss',
+				keepAlive:true,
+			}
     },
     /** 
     * boss - > 增加开工
