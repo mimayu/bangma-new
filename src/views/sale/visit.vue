@@ -325,14 +325,7 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
-                            this.$router.push(
-                                {
-                                    name: 'signStatus',
-                                    query: {
-                                        active: params.active
-                                    }
-                                }
-                            )
+                            this.$router.go(-1);//返回上一层
                             return;
                         }
                         Toast(res.msg);

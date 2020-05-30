@@ -134,15 +134,7 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
-                            this.$router.push(
-                                {
-                                    name: 'detection',
-                                    query: {
-                                        active: active
-                                    }
-                                }
-                            )
-                            //window.close();
+                            this.$router.go(-1);//返回上一层
                             return;
                         }
                         Toast(res.msg);

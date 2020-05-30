@@ -98,14 +98,7 @@
                     res => {
                         if(res.success == 1) {
                             Toast(res.msg);
-                            this.$router.push(
-                                {
-                                    name: name,
-                                    query: {
-                                        active: 2
-                                    }
-                                }
-                            )
+                            this.$router.go(-1);//返回上一层
                             return;
                         }
                         Toast(res.msg);

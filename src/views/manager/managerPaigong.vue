@@ -66,14 +66,7 @@
                         console.log('res', res);
                         if(res.success == 1) {
                             Toast(res.msg);
-                            this.$router.push(
-                                {
-                                    name: 'signStatus',
-                                    query: {
-                                        active: 1
-                                    }
-                                }
-                            )
+                            this.$router.go(-1);//返回上一层
                         }
                     }
                 )
