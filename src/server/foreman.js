@@ -25,6 +25,14 @@ const getSaomaBaoming = (params) => {
 }
 
 /**
+ * 通过接单人获取刷新列表
+ * @param {*} params 
+ */
+const getShuaxinJiedan = (params) => {
+    return request('/api/getShuaxinJiedan/', params, 'GET')
+}
+
+/**
  * 获取工长在建工地
  * @param {*} params 
  */
@@ -44,6 +52,7 @@ export {
     checkRoleType,
     getForemanRecommend,
     getSaomaBaoming,
+    getShuaxinJiedan,
     getForemanConstruction,
     postDownloadRefuBaojia,
 }

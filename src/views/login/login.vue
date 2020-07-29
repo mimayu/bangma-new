@@ -71,6 +71,8 @@ export default {
                 this.$router.push('/foremanHome');
               }else if(res.role_type == 6){
                 this.$router.push('/supervisorHome');
+              }else if(res.role_type == 7){
+                this.$router.push('/daogouHome');
               }
               return;
           }
@@ -119,6 +121,8 @@ export default {
                 this.$router.push('/foremanHome');
               }else if(res.role_type == 6){
                 this.$router.push('/supervisorHome');
+              }else if(res.role_type == 7){
+                this.$router.push('/daogouHome');
               }
                 
 

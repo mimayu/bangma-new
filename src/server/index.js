@@ -79,6 +79,10 @@ import {
     getSupplement
 } from './orderer'
 
+import {
+    getShuaxinJiedan
+} from './daogou'
+
 export {
     checkRoleType,
     postShangmenAdd,
@@ -136,5 +140,6 @@ export {
     getMaterial,
     postNoNeed,
     getOrderList,
-    getSupplement
+    getSupplement,
+    getShuaxinJiedan
 }

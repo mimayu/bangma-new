@@ -615,5 +615,23 @@ export default new Router({
     name: 'supervisorHome',
     component: () => import(/* webpackChunkName: "foreman" */ './views/supervisor/supervisorHome')
   },
+    /** 
+    * daogou - > 导购主页
+    */
+   {
+    path: '/daogouHome',
+    name: 'daogouHome',
+    component: () => import(/* webpackChunkName: "daogou" */ './views/daogou/daogouHome')
+  },
+    /*
+    * recommend -> 导购接单
+    */
+   {
+    path: '/daogouJiedan',
+    name: 'daogouJiedan',
+    component: () => import(/* webpackChunkName: "foreman" */ './views/daogou/daogouJiedan')
+  },
+
+
   ]
 })

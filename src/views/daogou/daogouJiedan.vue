@@ -1,5 +1,5 @@
 <template>
-    <div class="foremanBaoming_container">
+    <div class="daogouJiedan_container">
         <Row class="header">
             <Col span="6">
                 <Cell title="筛选" is-link arrow-direction="down" @click="choseType"/>
@@ -26,29 +26,25 @@
                 @load="handleLoad"
                 >
                 <Cell-group class="group" v-for="item in customerLists" :key="item.iCustomerId">
-                    <Cell title="报名ID">
+                    <Cell title="立邦订单号">
                         <template>
                             <div class="custom_wrap">
-                                <span class="order_id">{{item.id}}</span>
+                                <span class="order_id">{{item.sLibangCode}}</span>
                                 <span class="status">{{item.iStatus_name}}</span>
                             </div>
                         </template>
                     </Cell>
-                    <Cell title="姓名" :value="item.uname" />
-                    <Cell title="手机号" :value="item.phone" @click="doTel(item.phone)"/>
-                    <Cell title="装修类型" :value="item.type_name" />
+                    <Cell title="姓名" :value="item.sUsername" />
+                    <Cell title="手机号" :value="item.sMobile" @click="doTel(item.sMobile)"/>
                     <Cell title="区域" :value="item.city_name" />
                     <Cell title="小区" :value="item.sXiaoqu" />
                     <Cell title="地址" :value="item.sAddress" />
-
-                    <Cell title="预约上门时间" :value="item.dateYuyue"/>
-                    <Cell title="上门时间" :value="item.dateShangmen" v-if="item.dateShangmen!=NULL"/>
 
                     <Cell title="业务员" :value="item.iSales_name" v-if="item.iSales_name!=''"/>
                     <Cell title="签约金额" :value="item.orderFee" v-if="item.orderFee!='0.00'"/>
 
 
-                    <Cell title="报名时间" :value="item.baoming_time || '-'" />
+                    <Cell title="建单日期" :value="item.tOrderDate || '-'" />
 
 
                     <div class="van-cell btn_wrap">
@@ -76,12 +72,12 @@
 
 <script>
     import { Cell, CellGroup, Popup, DatetimePicker, Row, Col, Picker, Search, Toast, List } from 'vant';
-    import { getSaomaBaoming } from '@/server';
+    import { getShuaxinJiedan } from '@/server';
     import { timetrans } from '@/utils/time';
     import footerNav from "../../components/footerNav"; // 引入页脚
 
     export default {
-        name: 'foremanBaoming',
+        name: 'daogouJiedan',
         components: {
             Cell,
             CellGroup,
@@ -99,18 +95,33 @@
             return {
                 minHour: 10,
                 maxHour: 20,
-                minDate: new Date(2018, 1, 1),
-                maxDate: new Date(2019, 10, 1),
+                minDate: new Date(2019, 1, 1),
+                maxDate: new Date(2020, 10, 1),
                 currentDate: new Date(),
                 typeShow: false,
                 timeShow: false,
                 typeLists: [ 
                     '全部状态',
-                    '未处理',
-                    '已处理'
+                    '基检未约',
+                    '基检确认',
+                    '基检取消',
+                    '签约等待',
+                    '签约成功',
+                    '派工完成',
+                    '开工进场',
+                    '完工验收',
+                    '收款完成',
+                    '审核完成',
+                    '已结算',
+                    '签约失败',
+                    '合同取消',
+                    '基检再约',
+                    '施工暂停',
+                    '客户取消',
+                    '基检暂缓',
                 ],
                 typeCode: [
-                    '', '1', '2'
+                    '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '101', '102', '103', '104', '105', '106'
                 ],
                 customerLists: [],
                 value: '', // 搜索
@@ -135,14 +146,14 @@
             /*
             * 初始化数据加载
             */
-            getForemanBaoming() {
+            getDaogouJiedan() {
                 let params = {
                     status: this.status,
                     page: this.page,
                     keywords: this.value,
                     fromdate: this.time
                 }
-                getSaomaBaoming(params).then(
+                getShuaxinJiedan(params).then(
                     res => {
                         if(res.success == 1) {
                             this.customerLists = res.list;
@@ -167,7 +178,7 @@
                     keywords: this.value,
                     fromdate: this.time
                 }
-                getSaomaBaoming(params).then(
+                getShuaxinJiedan(params).then(
                     res => {
                         if(res.success == 1) {
                             this.customerLists = this.customerLists.concat(res.list);
@@ -203,7 +214,7 @@
                 this.status = status;
                 this.typeShow = false;
                 this.reset();
-                this.getForemanBaoming();
+                this.getDaogouJiedan();
             },
             handleTypeCancel() {
                 this.typeShow = false;
@@ -219,7 +230,7 @@
                 this.time = data;
                 this.timeShow = false;
                 this.reset();
-                this.getForemanBaoming();
+                this.getDaogouJiedan();
             },
             handleCancel() {
                 this.timeShow = false;
@@ -229,7 +240,7 @@
             */
             handleSearch() {
                 this.reset();
-                this.getForemanBaoming();
+                this.getDaogouJiedan();
             },
             /*
             * 点击操作
@@ -264,7 +275,7 @@
                         name: name,
                         params: {
                             id: id,
-                            backurl: 'getForemanBaoming'
+                            backurl: 'getDaogouJiedan'
                         }
                     }
                 )
@@ -289,7 +300,7 @@
 </script>
 
 <style lang="scss">
-    .foremanBaoming_container {
+    .daogouJiedan_container {
         background-color: #f6f6f6;
         .header_btn {
             height: 44px;
