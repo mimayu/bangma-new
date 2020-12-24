@@ -238,6 +238,7 @@
             * 0 -> 预约
             * 1 -> 上门
             * 2 -> 报价
+            * 3 -> 案例分享
             */
             handleClick(type, id, mode) {
                 switch(type) {
@@ -248,6 +249,9 @@
                         this.handleGo(id, type,mode);
                         break;
                     case 2:
+                        this.handleGo(id, type);
+                        break; 
+                    case 3:
                         this.handleGo(id, type);
                         break; 
                     default:
@@ -266,6 +270,9 @@
                 if(type == 2) {
                     window.location.href = 'http://www.51bangma.com/gongqi/yanshou/?iCustomerId='+id;
                 }
+                if(type == 3) {
+                    window.location.href = 'http://www.51bangma.com/anli/index/?iCustomerId='+id;
+                }               
 
             },
             handleQuote(id) {
